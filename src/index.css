@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+@layer base {
+  :root,
+  [data-theme="dark"] {
+    /* Brand Anchors - Neo Kinpaku (Dark Mode) */
+    --ks-kinpaku: oklch(84% 0.19 80.46);
+    --ks-kinpaku-rich: oklch(77% 0.13 82);
+    --ks-kinpaku-deep: oklch(61% 0.085 78);
+    --ks-kinpaku-pale: oklch(86% 0.07 84);
+    --ks-kinpaku-glint: oklch(95% 0.04 84);
+    --ks-dark-ink: oklch(14% 0.018 95);
+    --ks-kinpaku-contrast: oklch(14% 0.018 95);
+
+    /* Patina Ramp */
+    --ks-patina: oklch(70% 0.12 188);
+    --ks-patina-pale: oklch(82% 0.07 188);
+    --ks-patina-deep: oklch(49% 0.08 188);
+    --ks-patina-rule: oklch(70% 0.105 190);
+    --ks-patina-text: oklch(76% 0.088 190);
+    --ks-patina-contrast: #ffffff;
+
+    /* Surfaces */
+    --ks-lacquer: oklch(7% 0.006 95);
+    --ks-lacquer-deep: oklch(4% 0.004 95);
+    --ks-raised-lacquer: oklch(11% 0.006 95);
+    --ks-graphite: oklch(15% 0.008 95);
+    --ks-graphite-2: oklch(19% 0.008 95);
+    --ks-graphite-pill: oklch(27% 0 0);
+
+    /* Rules & Borders */
+    --ks-rule: oklch(78% 0 0 / 0.16);
+    --ks-rule-strong: oklch(74% 0.09 82 / 0.6);
+    --ks-rule-patina: oklch(70% 0.105 190 / 0.5);
+
+    /* Typography Tiers */
+    --ks-champagne: oklch(91% 0 0);
+    --ks-text-warm: oklch(88% 0 0);
+    --ks-text-muted: oklch(72% 0 0);
+    --ks-text-faint: oklch(62% 0 0);
+    --ks-text-mute-deep: oklch(52% 0 0);
+
+    /* Overlays & Shadows */
+    --ks-surface-overlay: rgba(7, 7, 9, 0.88);
+    --ks-backdrop-modal: rgba(4, 4, 6, 0.85);
+    --ks-map-bg: oklch(4% 0.004 95);
+    --ks-panel-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+    --ks-scroll-track: oklch(4% 0.004 95);
+    --ks-scroll-thumb: oklch(19% 0.008 95);
+
+    /* Fonts */
+    --ks-font-display: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
+    --ks-font-wordmark: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
+    --ks-font-body: 'Albert Sans', Avenir Next, Helvetica Neue, Arial, system-ui, sans-serif;
+    --ks-font-mono: 'Roboto Mono', SFMono-Regular, Consolas, monospace;
+  }
+
+  [data-theme="light"],
+  .light {
+    /* Brand Anchors - Burnished Kinpaku Gold (Light Mode, High Contrast) */
+    --ks-kinpaku: oklch(63% 0.17 76);
+    --ks-kinpaku-rich: oklch(55% 0.16 74);
+    --ks-kinpaku-deep: oklch(45% 0.14 72);
+    --ks-kinpaku-pale: oklch(74% 0.14 78);
+    --ks-kinpaku-glint: oklch(86% 0.10 80);
+    --ks-dark-ink: #ffffff;
+    --ks-kinpaku-contrast: #ffffff;
+
+    /* Patina Ramp - Deep Jewel Verdigris */
+    --ks-patina: oklch(48% 0.14 188);
+    --ks-patina-pale: oklch(62% 0.11 188);
+    --ks-patina-deep: oklch(36% 0.12 188);
+    --ks-patina-rule: oklch(48% 0.14 190 / 0.5);
+    --ks-patina-text: oklch(40% 0.14 190);
+    --ks-patina-contrast: #ffffff;
+
+    /* Surfaces - Clean, crisp white & architectural ivory */
+    --ks-lacquer: #f8fafc;
+    --ks-lacquer-deep: #ffffff;
+    --ks-raised-lacquer: #ffffff;
+    --ks-graphite: #f1f5f9;
+    --ks-graphite-2: #e2e8f0;
+    --ks-graphite-pill: #e2e8f0;
+
+    /* Rules & Borders - Subtle crisp hairlines */
+    --ks-rule: rgba(15, 23, 42, 0.12);
+    --ks-rule-strong: oklch(63% 0.17 76 / 0.65);
+    --ks-rule-patina: oklch(48% 0.14 188 / 0.55);
+
+    /* Typography Tiers - High-contrast editorial ink */
+    --ks-champagne: #0f172a;
+    --ks-text-warm: #1e293b;
+    --ks-text-muted: #475569;
+    --ks-text-faint: #64748b;
+    --ks-text-mute-deep: #94a3b8;
+
+    /* Overlays & Shadows */
+    --ks-surface-overlay: rgba(255, 255, 255, 0.92);
+    --ks-backdrop-modal: rgba(15, 23, 42, 0.65);
+    --ks-map-bg: #dbeafe;
+    --ks-panel-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.15);
+    --ks-scroll-track: #f1f5f9;
+    --ks-scroll-thumb: #cbd5e1;
+
+    /* Fonts remain identical */
+    --ks-font-display: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
+    --ks-font-wordmark: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
+    --ks-font-body: 'Albert Sans', Avenir Next, Helvetica Neue, Arial, system-ui, sans-serif;
+    --ks-font-mono: 'Roboto Mono', SFMono-Regular, Consolas, monospace;
+  }
+
+  body {
+    font-family: var(--ks-font-body);
+    background-color: var(--ks-lacquer);
+    color: var(--ks-text-warm);
+    overflow: hidden;
+    user-select: none;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--ks-font-display);
+}
+
+.font-wordmark {
+  font-family: var(--ks-font-wordmark);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.font-body {
+  font-family: var(--ks-font-body);
+}
+
+.font-mono-eyebrow {
+  font-family: var(--ks-font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.font-mono-label {
+  font-family: var(--ks-font-mono);
+  letter-spacing: 0.22em;
+}
+
+/* Impeccable Neo Kinpaku Brand Mark */
+.ks-mark {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background-color: var(--ks-kinpaku);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ks-mark-slash {
+  position: absolute;
+  width: 140%;
+  height: 2px;
+  background-color: var(--ks-lacquer-deep);
+  transform: rotate(-45deg);
+}
+
+/* Custom Minimal Scrollbar */
+.clean-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.clean-scrollbar::-webkit-scrollbar-track {
+  background: var(--ks-scroll-track);
+}
+.clean-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--ks-scroll-thumb);
+  border-radius: 2px;
+}
+.clean-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--ks-rule-strong);
+}
+
+/* Leaflet Map Customizations */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--ks-map-bg);
+  font-family: var(--ks-font-body);
+  transition: background-color 0.3s ease;
+}
+
+.clean-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Cartographic Filters */
+.civ-tile-lacquer img.leaflet-tile {
+  filter: brightness(0.6) invert(1) contrast(1.25) saturate(0.18) sepia(0.15);
+}
+
+/* In Light Mode, keep Neo Kinpaku map clean and warm without inversion */
+[data-theme="light"] .civ-tile-lacquer img.leaflet-tile,
+.light .civ-tile-lacquer img.leaflet-tile {
+  filter: contrast(1.04) saturate(0.95) brightness(0.98);
+}
+
+.civ-tile-clean img.leaflet-tile {
+  filter: contrast(1.02) saturate(1.05);
+}
+
+.civ-tile-parchment img.leaflet-tile {
+  filter: sepia(0.35) contrast(1.08) brightness(0.95) saturate(0.8);
+}
+
+.civ-tile-soft img.leaflet-tile {
+  filter: brightness(0.95) contrast(1.05) saturate(0.9);
+}
+
+.civ-tile-topo img.leaflet-tile {
+  filter: brightness(0.85) contrast(1.15) saturate(0.75);
+}
+
+.leaflet-control-attribution {
+  background: var(--ks-lacquer-deep) !important;
+  color: var(--ks-text-muted) !important;
+  font-size: 10px !important;
+  border-top-left-radius: 4px;
+  padding: 3px 8px !important;
+  border: 1px solid var(--ks-rule) !important;
+  font-family: var(--ks-font-mono) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-control-attribution a {
+  color: var(--ks-kinpaku) !important;
+}
+
+/* Leaflet Popup Tooltip */
+.clean-custom-popup .leaflet-popup-content-wrapper {
+  background: var(--ks-raised-lacquer);
+  color: var(--ks-champagne);
+  border: 1px solid var(--ks-rule-strong);
+  border-radius: 4px;
+  box-shadow: var(--ks-panel-shadow);
+  padding: 0;
+}
+
+.clean-custom-popup .leaflet-popup-content {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.clean-custom-popup .leaflet-popup-tip {
+  background: var(--ks-raised-lacquer);
+  border: 1px solid var(--ks-rule-strong);
+}
+
+.clean-custom-popup a.leaflet-popup-close-button {
+  color: var(--ks-text-muted) !important;
+  padding: 4px 6px 0 0 !important;
+}

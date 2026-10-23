@@ -2627,4 +2627,67 @@ export const CIV6_WONDERS: CivWonder[] = [
     "visualUrl": "https://static.wikia.nocookie.net/civilization/images/f/fe/Natural_Wonder_Zhangye_Danxia_%28Civ6%29.png/revision/latest?cb=20180430163211",
     "imageUrl": "https://static.wikia.nocookie.net/civilization/images/f/fe/Natural_Wonder_Zhangye_Danxia_%28Civ6%29.png/revision/latest?cb=20180430163211"
 },
+  {
+    "id": "civ6-machu-picchu",
+    "name": "Machu Picchu",
+    "game": "civ6",
+    "type": "world_wonder",
+    "era": "Medieval",
+    "yearApprox": "c. 1450 CE",
+    "location": {
+        "lat": -13.1631,
+        "lng": -72.545,
+        "modernCountry": "Peru",
+        "modernRegion": "Cusco Region, Urubamba Valley"
+    },
+    "placementRequirement": "Must be built on a Mountain tile that does not contain a volcano, adjacent to a city center.",
+    "yields": {
+        "gold": 4
+    },
+    "bonuses": [
+        "Mountain tiles in all cities provide a standard adjacency bonus (+1) to Commercial Hubs, Theater Squares, and Industrial Zones",
+        "+4 Gold per turn to the host city"
+    ],
+    "quote": "In the variety of its charms and the power of its spell, I know of no place in the world which can compare with it.",
+    "quoteAuthor": "Hiram Bingham",
+    "quoteWork": "Inca Land (1922)",
+    "civilopediaExcerpt": "Perched 2,430 meters high on an Andean ridge above the Urubamba River, Machu Picchu was constructed by the Inca emperor Pachacuti as a royal estate. Engineered with intricate mortarless ashlar masonry, agricultural terraces, and natural spring conduits.",
+    "historicalContext": "Brought to global archaeological fame by Hiram Bingham in 1911, recognized as a UNESCO World Heritage site and a masterwork of Andean civil engineering.",
+    "iconUrl": "https://static.wikia.nocookie.net/civilization/images/b/be/Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20201202202551",
+    "visualUrl": "https://static.wikia.nocookie.net/civilization/images/8/87/Wonder_Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20190214234709",
+    "imageUrl": "https://static.wikia.nocookie.net/civilization/images/8/87/Wonder_Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20190214234709",
+    "techRequirement": "Engineering",
+    "productionCost": 400
+},
+  {
+    "id": "civ6-mount-kilimanjaro",
+    "name": "Mount Kilimanjaro",
+    "game": "civ6",
+    "type": "natural_wonder",
+    "era": "Timeless",
+    "yearApprox": "Quaternary stratovolcano",
+    "location": {
+        "lat": -3.0674,
+        "lng": 37.3556,
+        "modernCountry": "Tanzania",
+        "modernRegion": "Kilimanjaro Region, East Africa"
+    },
+    "yields": {
+        "food": 2
+    },
+    "bonuses": [
+        "1-tile impassable Natural Wonder that counts as an active volcano",
+        "Provides +2 Food to adjacent tiles",
+        "Occasional volcanic eruptions fertilize surrounding soil with high yields, but may damage improvements and units"
+    ],
+    "quote": "As far as you could see, end of the world, was Kilimanjaro. Square topped and unbelievable, the great dome of Africa.",
+    "quoteAuthor": "Ernest Hemingway",
+    "quoteWork": "The Snows of Kilimanjaro",
+    "civilopediaExcerpt": "Rising from the savannah plains of northeastern Tanzania, Mount Kilimanjaro is the highest free-standing mountain in the world at 5,895 meters. In Civilization VI: Gathering Storm, it functions as an active volcano, occasionally raining fertile volcanic ash across neighboring tiles.",
+    "historicalContext": "A dormant stratovolcano composed of three cones: Kibo, Mawenzi, and Shira. First summited in modern history by Hans Meyer and Ludwig Purtscheller in 1889.",
+    "iconUrl": "https://static.wikia.nocookie.net/civilization/images/8/8e/Mount_Kilimanjaro_%28Civ6%29.png/revision/latest?cb=20170327210503",
+    "visualUrl": "https://static.wikia.nocookie.net/civilization/images/b/bb/Natural_Wonder_Mount_Kilimanjaro_%28Civ6%29.jpg/revision/latest?cb=20161117164215",
+    "imageUrl": "https://static.wikia.nocookie.net/civilization/images/b/bb/Natural_Wonder_Mount_Kilimanjaro_%28Civ6%29.jpg/revision/latest?cb=20161117164215"
+}
 ];
+

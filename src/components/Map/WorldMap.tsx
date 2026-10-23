@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import { CivWonder, MapTileStyle } from '../../types/wonder';
 import { getYieldIconUrl } from '../../data/yieldIcons';
+import { getCountryFlag } from '../../utils/countryFlags';
 import { Plus, Minus, Maximize2 } from 'lucide-react';
 
 interface WorldMapProps {
@@ -234,33 +235,35 @@ export const WorldMap: React.FC<WorldMapProps> = ({
         </div>
       ` : '';
 
+      const categoryLabel = isWorld
+        ? (wonder.era && wonder.era !== 'Timeless' ? `${wonder.era} · World Wonder` : 'World Wonder')
+        : 'Natural Wonder';
+      const flag = getCountryFlag(wonder.location.modernCountry);
+
       const popupHtml = `
-        <div class="p-3 font-body text-[var(--ks-text-warm)] max-w-[240px] bg-[var(--ks-raised-lacquer)]">
-          <div class="flex items-center gap-2 mb-2">
+        <div class="p-3 font-body text-[var(--ks-text-warm)] max-w-[250px] bg-[var(--ks-raised-lacquer)]">
+          <div class="flex items-center gap-2.5 mb-2">
             ${
               wonder.iconUrl
-                ? `<img src="${wonder.iconUrl}" referrerpolicy="no-referrer" class="w-8 h-8 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] shrink-0 object-cover" alt="" />`
+                ? `<img src="${wonder.iconUrl}" referrerpolicy="no-referrer" class="w-9 h-9 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] shrink-0 object-cover" alt="" />`
                 : ''
             }
-            <div>
-              <div class="font-mono text-[8px] uppercase tracking-[0.18em] font-semibold ${
+            <div class="min-w-0">
+              <div class="font-display text-[22px] font-light text-[var(--ks-champagne)] leading-tight truncate">
+                ${wonder.name}
+              </div>
+              <div class="font-mono text-[8.5px] uppercase tracking-[0.16em] font-semibold mt-0.5 ${
                 isWorld ? 'text-[var(--ks-kinpaku)]' : 'text-[var(--ks-patina)]'
               }">
-                ${wonder.era} · ${isWorld ? 'World Wonder' : 'Natural Wonder'}
-              </div>
-              <div class="font-display text-base font-light text-[var(--ks-champagne)] leading-snug">
-                ${wonder.name}
+                ${categoryLabel}
               </div>
             </div>
           </div>
-          <div class="text-[11px] text-[var(--ks-text-muted)] flex items-center gap-1 font-body">
-            <span>📍 ${wonder.location.modernCountry}</span>
+          <div class="text-[11px] text-[var(--ks-text-muted)] flex items-center gap-1.5 font-body">
+            <span>${flag}</span>
+            <span class="truncate">${wonder.location.modernCountry}</span>
           </div>
           ${yieldsHtml}
-          <div class="mt-2 pt-2 border-t border-[var(--ks-rule)] flex items-center justify-between text-[10px]">
-            <span class="text-[var(--ks-kinpaku)] font-mono text-[9px] uppercase tracking-wider">Inspect Wonder</span>
-            <span class="text-[var(--ks-text-faint)] font-mono text-[9px]">Click marker</span>
-          </div>
         </div>
       `;
 

@@ -30,7 +30,9 @@ const BASE_CIV5_WONDERS: CivWonder[] = [
     quoteWork: 'The Snows of Kilimanjaro',
     civilopediaExcerpt: 'A dormant stratovolcano in Tanzania, Mount Kilimanjaro is the highest peak in Africa at 5,895 meters above sea level. It rises in solitary grandeur from the flat savanna plains. In Civilization V: Brave New World, it bestows the formidable Altitude Training promotion to any passing explorer or army, transforming troops into unstoppable highland skirmishers.',
     historicalContext: 'Composed of three distinct volcanic cones: Kibo, Mawenzi, and Shira. First summited in modern recorded times by Hans Meyer and Ludwig Purtscheller in 1889.',
-    imageUrl: '/src/assets/images/kilimanjaro_civ_1792262638043.jpg'
+    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/8/8e/Mount_Kilimanjaro_%28Civ6%29.png/revision/latest?cb=20170327210503',
+    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/b/bb/Natural_Wonder_Mount_Kilimanjaro_%28Civ6%29.jpg/revision/latest?cb=20161117164215',
+    imageUrl: 'https://static.wikia.nocookie.net/civilization/images/b/bb/Natural_Wonder_Mount_Kilimanjaro_%28Civ6%29.jpg/revision/latest?cb=20161117164215'
   },
   {
     id: 'great-barrier-reef',
@@ -504,7 +506,9 @@ const BASE_CIV5_WONDERS: CivWonder[] = [
     quoteWork: 'Inca Land (1922)',
     civilopediaExcerpt: 'Machu Picchu is a 15th-century Inca citadel situated on a mountain ridge 2,430 meters above sea level in the Eastern Cordillera of southern Peru. Most archaeologists believe that Machu Picchu was constructed as an estate for the Inca emperor Pachacuti.',
     historicalContext: 'Built without mortar using dry-stone walls ("ashlar"), engineered with sophisticated agricultural drainage terraces and celestial alignments.',
-    imageUrl: '/src/assets/images/machu_picchu_civ_1792262637384.jpg'
+    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/b/be/Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20201202202551',
+    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/8/87/Wonder_Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20190214234709',
+    imageUrl: 'https://static.wikia.nocookie.net/civilization/images/8/87/Wonder_Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20190214234709'
   },
   {
     id: 'chichen-itza',
@@ -1141,8 +1145,9 @@ export const CIV5_WONDERS: CivWonder[] = BASE_CIV5_WONDERS.map((w) => {
   return {
     ...w,
     game: 'civ5',
-    iconUrl: fandom?.iconUrl || undefined,
-    visualUrl: fandom?.visualUrl || w.imageUrl,
-    imageUrl: fandom?.visualUrl || w.imageUrl
+    iconUrl: w.iconUrl || fandom?.iconUrl || undefined,
+    visualUrl: w.visualUrl || fandom?.visualUrl || w.imageUrl,
+    imageUrl: w.imageUrl || fandom?.visualUrl || w.visualUrl
   };
 });
+

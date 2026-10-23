@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { X, Play, Square, ChevronLeft, ChevronRight, Sparkles, MapPin, Compass } from 'lucide-react';
+import { X, Play, Square, ChevronLeft, ChevronRight, Sparkles, Compass } from 'lucide-react';
 import { CivWonder } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
 import { civAudio } from '../../utils/audio';
+import { getCountryFlag } from '../../utils/countryFlags';
 
 interface CompletionArtModalProps {
   wonder: CivWonder | null;
@@ -137,8 +138,10 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover sm:object-contain bg-[var(--ks-lacquer-deep)]"
                 onError={(e) => {
-                  if (wonder.imageUrl && (e.target as HTMLImageElement).src !== wonder.imageUrl) {
-                    (e.target as HTMLImageElement).src = wonder.imageUrl;
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  if (wonder.imageUrl && !target.src.endsWith(wonder.imageUrl)) {
+                    target.src = wonder.imageUrl;
                   }
                 }}
               />
@@ -155,7 +158,9 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
                 {wonder.yearApprox}
               </span>
               <span className="flex items-center gap-1.5 font-mono text-[10px] bg-[var(--ks-lacquer-deep)]/90 px-2.5 py-1 rounded-xs border border-[var(--ks-rule)]">
-                <MapPin className="w-3.5 h-3.5 text-[var(--ks-kinpaku)]" />
+                <span className="text-xs leading-none" title={wonder.location.modernCountry}>
+                  {getCountryFlag(wonder.location.modernCountry)}
+                </span>
                 <span>{wonder.location.modernRegion}, {wonder.location.modernCountry}</span>
               </span>
             </div>
@@ -168,7 +173,9 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
                 {wonder.name}
               </h2>
               <p className="font-body text-xs text-[var(--ks-text-muted)] mt-0.5 flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[var(--ks-text-faint)]" />
+                <span className="text-xs leading-none" title={wonder.location.modernCountry}>
+                  {getCountryFlag(wonder.location.modernCountry)}
+                </span>
                 <span>{wonder.location.modernCountry} · {wonder.location.lat.toFixed(4)}°, {wonder.location.lng.toFixed(4)}°</span>
               </p>
             </div>

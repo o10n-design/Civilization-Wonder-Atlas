@@ -12,8 +12,9 @@ import { TopHUD } from './components/Dashboard/TopHUD';
 import { LeftPanel } from './components/Dashboard/LeftPanel';
 import { RightPanel } from './components/Dashboard/RightPanel';
 import { CompletionArtModal } from './components/Dashboard/CompletionArtModal';
+import { LegalModal } from './components/Dashboard/LegalModal';
 import { civAudio } from './utils/audio';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Layers, ChevronDown, Check, Scale } from 'lucide-react';
 
 export default function App() {
   const allWonders = useMemo<CivWonder[]>(() => [...CIV5_WONDERS, ...CIV6_WONDERS], []);
@@ -31,7 +32,10 @@ export default function App() {
   const [isRightOpen, setIsRightOpen] = useState<boolean>(true);
   const [isZenMode, setIsZenMode] = useState<boolean>(false);
   const [isCompletionArtOpen, setIsCompletionArtOpen] = useState<boolean>(false);
+  const [isLegalOpen, setIsLegalOpen] = useState<boolean>(false);
   const [mapStyle, setMapStyle] = useState<MapTileStyle>('lacquer');
+  const [isFooterStyleOpen, setIsFooterStyleOpen] = useState<boolean>(false);
+  const footerStyleRef = useRef<HTMLDivElement>(null);
   const [showWorldWonders, setShowWorldWonders] = useState<boolean>(true);
   const [showNaturalWonders, setShowNaturalWonders] = useState<boolean>(true);
   const [isTourActive, setIsTourActive] = useState<boolean>(false);
@@ -81,6 +85,32 @@ export default function App() {
       return nextTheme;
     });
   }, [mapStyle]);
+
+  // Handle outside click for footer map layer dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (footerStyleRef.current && !footerStyleRef.current.contains(target)) {
+        setIsFooterStyleOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const mapStyleLabels: Record<MapTileStyle, { name: string; desc: string }> = useMemo(
+    () => ({
+      lacquer: {
+        name: 'Neo Kinpaku',
+        desc: theme === 'dark' ? 'Dark mineral lacquer' : 'Archival porcelain'
+      },
+      standard: { name: 'OSM Standard', desc: 'Community tiles' },
+      humanitarian: { name: 'Humanitarian', desc: 'Physical geography' },
+      topographic: { name: 'OpenTopoMap', desc: 'Contour lines & relief' },
+      parchment: { name: 'Warm Archival', desc: 'Antique paper' }
+    }),
+    [theme]
+  );
 
   const tourTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -303,6 +333,8 @@ export default function App() {
       {!isZenMode && isRightOpen && selectedWonder && (
         <RightPanel
           wonder={selectedWonder}
+          allWonders={allWonders}
+          onSelectWonder={handleSelectWonder}
           onClose={() => setIsRightOpen(false)}
           onNext={handleNextWonder}
           onPrev={handlePrevWonder}
@@ -323,40 +355,106 @@ export default function App() {
         onPrev={handlePrevWonder}
       />
 
-      {/* 6. Neo Kinpaku Minimal Footer Bar with Interactive Theme Switcher */}
-      <footer className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-2.5 bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md px-3.5 py-1.5 rounded-xs border border-[var(--ks-rule)] text-[11px] text-[var(--ks-text-muted)] shadow-2xl transition-colors max-w-[calc(100vw-24px)] overflow-x-auto clean-scrollbar">
-        {/* Interactive Theme Switcher Button (Relocated from header) */}
+      {/* 6. Legal Attribution & Disclaimers Modal */}
+      <LegalModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+      />
+
+      {/* 7. Neo Kinpaku Minimal Footer Bar with Map Layer & Interactive Theme Switcher */}
+      <footer className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-2 bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md px-3 py-1.5 rounded-xs border border-[var(--ks-rule)] text-[11px] text-[var(--ks-text-muted)] shadow-2xl transition-colors max-w-[calc(100vw-24px)] overflow-x-auto clean-scrollbar">
+        {/* Interactive Theme Switcher Button (Text: Light / Dark) */}
         <button
           onClick={handleToggleTheme}
           className="flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[var(--ks-graphite)] hover:bg-[var(--ks-graphite-2)] text-[var(--ks-champagne)] border border-[var(--ks-rule)] transition-all cursor-pointer font-medium shadow-xs shrink-0"
-          title={theme === 'dark' ? 'Switch to Porcelain Light Mode (T)' : 'Switch to Mineral Dark Mode (T)'}
+          title={theme === 'dark' ? 'Switch to Light (T)' : 'Switch to Dark (T)'}
           aria-label="Toggle Theme"
         >
           {theme === 'dark' ? (
             <>
               <Sun className="w-3.5 h-3.5 text-[var(--ks-kinpaku)]" />
-              <span className="font-mono text-[10px] font-semibold tracking-wide">Light Mode</span>
+              <span className="font-mono text-[10px] font-semibold tracking-wide">Light</span>
             </>
           ) : (
             <>
               <Moon className="w-3.5 h-3.5 text-[var(--ks-kinpaku)]" />
-              <span className="font-mono text-[10px] font-semibold tracking-wide">Dark Mode</span>
+              <span className="font-mono text-[10px] font-semibold tracking-wide">Dark</span>
             </>
           )}
         </button>
+
+        {/* Map Layer Dropdown in Footer (Directly next to mode button) */}
+        <div className="relative shrink-0" ref={footerStyleRef}>
+          <button
+            onClick={() => setIsFooterStyleOpen(!isFooterStyleOpen)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-[var(--ks-graphite)] hover:bg-[var(--ks-graphite-2)] text-[var(--ks-champagne)] border border-[var(--ks-rule)] transition-all cursor-pointer font-medium shadow-xs"
+            title="Choose cartographic map style"
+          >
+            <Layers className="w-3.5 h-3.5 text-[var(--ks-kinpaku)]" />
+            <span className="font-mono text-[10px] font-semibold tracking-wide">
+              {mapStyleLabels[mapStyle]?.name || 'Cartography'}
+            </span>
+            <ChevronDown
+              className={`w-3 h-3 text-[var(--ks-text-muted)] transition-transform duration-200 ${
+                isFooterStyleOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+
+          {isFooterStyleOpen && (
+            <div className="absolute bottom-full mb-2 left-0 w-56 rounded-xs bg-[var(--ks-raised-lacquer)] border border-[var(--ks-rule-strong)] shadow-2xl p-1 z-50 animate-in fade-in zoom-in-95 duration-100">
+              <div className="px-2.5 py-1 text-[9px] font-mono-eyebrow text-[var(--ks-text-muted)] border-b border-[var(--ks-rule)]">
+                Cartographic Layer
+              </div>
+              {(Object.keys(mapStyleLabels) as MapTileStyle[]).map((style) => (
+                <button
+                  key={style}
+                  onClick={() => {
+                    setMapStyle(style);
+                    setIsFooterStyleOpen(false);
+                  }}
+                  className={`w-full text-left px-2.5 py-1.5 rounded-xs text-xs transition-colors flex items-center justify-between ${
+                    mapStyle === style
+                      ? 'bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] font-medium border-l-2 border-[var(--ks-kinpaku)]'
+                      : 'text-[var(--ks-text-warm)] hover:bg-[var(--ks-graphite)] hover:text-[var(--ks-champagne)]'
+                  }`}
+                >
+                  <div>
+                    <div className="font-medium tracking-wide text-[11px]">{mapStyleLabels[style].name}</div>
+                    <div className="text-[9px] text-[var(--ks-text-muted)]">{mapStyleLabels[style].desc}</div>
+                  </div>
+                  {mapStyle === style && <Check className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0 ml-1.5" />}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <span className="text-[var(--ks-rule)]">|</span>
 
         {/* Legend Indicators */}
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="w-2 h-2 rounded-xs bg-[var(--ks-kinpaku)] inline-block shadow-xs" />
-          <span className="text-[var(--ks-champagne)] font-medium">World Wonders</span>
+          <span className="text-[var(--ks-champagne)] font-medium">World</span>
         </div>
         <span className="text-[var(--ks-rule)]">|</span>
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="w-2 h-2 rounded-xs bg-[var(--ks-patina)] inline-block shadow-xs" />
-          <span className="text-[var(--ks-champagne)] font-medium">Natural Wonders</span>
+          <span className="text-[var(--ks-champagne)] font-medium">Natural</span>
         </div>
+
+        <span className="text-[var(--ks-rule)]">|</span>
+
+        {/* Legal & Sources Button */}
+        <button
+          onClick={() => setIsLegalOpen(true)}
+          className="flex items-center gap-1 px-2 py-0.5 rounded-xs text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)] hover:bg-[var(--ks-graphite)] transition-colors text-[10px] font-mono tracking-wider cursor-pointer shrink-0"
+          title="View Legal Disclosures, Fandom CC-BY-SA, and Trademarks"
+        >
+          <Scale className="w-3 h-3 text-[var(--ks-kinpaku)]" />
+          <span className="hidden sm:inline">Legal &amp; Sources</span>
+          <span className="sm:hidden">Legal</span>
+        </button>
 
         <span className="text-[var(--ks-rule)] hidden lg:inline">|</span>
 

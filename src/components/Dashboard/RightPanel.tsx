@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   X,
   Play,
   Square,
-  MapPin,
   ChevronLeft,
   ChevronRight,
   Sparkles,
@@ -20,9 +19,13 @@ import { CivWonder } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
 import { civAudio } from '../../utils/audio';
 import { getYieldIconUrl } from '../../data/yieldIcons';
+import { getCountryFlag } from '../../utils/countryFlags';
+import { getWonderCounterparts } from '../../utils/wonderCounterparts';
 
 interface RightPanelProps {
   wonder: CivWonder | null;
+  allWonders?: CivWonder[];
+  onSelectWonder?: (wonder: CivWonder) => void;
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
@@ -32,6 +35,8 @@ interface RightPanelProps {
 
 export const RightPanel: React.FC<RightPanelProps> = ({
   wonder,
+  allWonders = [],
+  onSelectWonder,
   onClose,
   onNext,
   onPrev,
@@ -47,6 +52,11 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     setIsNarrating(false);
     civAudio.stopNarration();
   }, [wonder?.id]);
+
+  const counterparts = useMemo(() => {
+    if (!wonder) return { civ5Wonder: null, civ6Wonder: null, hasBoth: false };
+    return getWonderCounterparts(wonder, allWonders);
+  }, [wonder, allWonders]);
 
   if (!wonder) return null;
 
@@ -126,6 +136,65 @@ export const RightPanel: React.FC<RightPanelProps> = ({
           </div>
         </div>
 
+        {/* Edition Switcher Row Directly Below Header */}
+        <div className="px-4 py-2 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)]/90 flex items-center justify-between gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <Sparkles className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] truncate">
+              {counterparts.hasBoth ? 'Available in both games' : 'Game Edition'}
+            </span>
+          </div>
+
+          {counterparts.hasBoth ? (
+            <div className="flex items-center gap-1 bg-[var(--ks-graphite)] p-0.5 rounded-xs border border-[var(--ks-rule)] shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  if (isCiv6 && counterparts.civ5Wonder && onSelectWonder) {
+                    civAudio.playSwitchSound();
+                    onSelectWonder(counterparts.civ5Wonder);
+                  }
+                }}
+                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
+                  !isCiv6
+                    ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-kinpaku)] shadow-xs border border-[var(--ks-rule-strong)]'
+                    : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
+                }`}
+                title="Switch Codex view to Civilization V"
+              >
+                Civ V
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (!isCiv6 && counterparts.civ6Wonder && onSelectWonder) {
+                    civAudio.playSwitchSound();
+                    onSelectWonder(counterparts.civ6Wonder);
+                  }
+                }}
+                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
+                  isCiv6
+                    ? 'bg-amber-500/20 text-amber-400 shadow-xs border border-amber-500/40'
+                    : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
+                }`}
+                title="Switch Codex view to Civilization VI"
+              >
+                Civ VI
+              </button>
+            </div>
+          ) : (
+            <span
+              className={`font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-xs border ${
+                isCiv6
+                  ? 'text-amber-500 border-amber-500/30 bg-amber-500/10'
+                  : 'text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)] bg-[var(--ks-graphite)]'
+              }`}
+            >
+              {isCiv6 ? 'Civ VI Exclusive' : 'Civ V Exclusive'}
+            </span>
+          )}
+        </div>
+
         {/* Title, Icon & Coordinates Ribbon */}
         <div className="px-4 pt-3.5 pb-3 border-b border-[var(--ks-rule)] bg-[var(--ks-raised-lacquer)] shrink-0">
           <div className="flex items-start justify-between gap-3">
@@ -137,7 +206,8 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                   referrerPolicy="no-referrer"
                   className="w-11 h-11 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] object-cover shrink-0 mt-0.5"
                   onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
+                    const target = e.target as HTMLElement;
+                    target.style.display = 'none';
                   }}
                 />
               )}
@@ -145,8 +215,10 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 <h2 className="font-headline text-2xl sm:text-3xl font-light tracking-wide text-[var(--ks-champagne)] leading-tight">
                   {wonder.name}
                 </h2>
-                <div className="flex items-center gap-1 text-xs text-[var(--ks-text-muted)] mt-1 font-body">
-                  <MapPin className="w-3.5 h-3.5 text-[var(--ks-text-faint)] shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs text-[var(--ks-text-muted)] mt-1 font-body">
+                  <span className="shrink-0 text-sm leading-none" title={wonder.location.modernCountry}>
+                    {getCountryFlag(wonder.location.modernCountry)}
+                  </span>
                   <span className="truncate">
                     {wonder.location.modernRegion}, {wonder.location.modernCountry}
                   </span>
@@ -243,8 +315,12 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       onError={(e) => {
-                        if (wonder.imageUrl && (e.target as HTMLImageElement).src !== wonder.imageUrl) {
-                          (e.target as HTMLImageElement).src = wonder.imageUrl;
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        if (wonder.imageUrl && !target.src.endsWith(wonder.imageUrl)) {
+                          target.src = wonder.imageUrl;
+                        } else {
+                          target.style.display = 'none';
                         }
                       }}
                     />

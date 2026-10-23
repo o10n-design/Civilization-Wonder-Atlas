@@ -67,18 +67,13 @@ export const TopHUD: React.FC<TopHUDProps> = ({
   theme = 'dark'
 }) => {
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
-  const [isStyleMenuOpen, setIsStyleMenuOpen] = useState(false);
   const filterMenuRef = useRef<HTMLDivElement>(null);
-  const styleMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as Node;
       if (filterMenuRef.current && !filterMenuRef.current.contains(target)) {
         setIsFilterMenuOpen(false);
-      }
-      if (styleMenuRef.current && !styleMenuRef.current.contains(target)) {
-        setIsStyleMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -148,7 +143,6 @@ export const TopHUD: React.FC<TopHUDProps> = ({
           <button
             onClick={() => {
               setIsFilterMenuOpen(!isFilterMenuOpen);
-              if (isStyleMenuOpen) setIsStyleMenuOpen(false);
             }}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-xs text-xs font-medium transition-colors whitespace-nowrap border ${
               isFilterMenuOpen
@@ -290,56 +284,6 @@ export const TopHUD: React.FC<TopHUDProps> = ({
                   </button>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-
-        <div className="h-4 w-px bg-[var(--ks-rule)] mx-0.5" />
-
-        {/* 2. Map Theme Dropdown */}
-        <div className="relative" ref={styleMenuRef}>
-          <button
-            onClick={() => {
-              setIsStyleMenuOpen(!isStyleMenuOpen);
-              if (isFilterMenuOpen) setIsFilterMenuOpen(false);
-            }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xs text-xs font-medium text-[var(--ks-text-warm)] hover:text-[var(--ks-champagne)] bg-[var(--ks-graphite)] hover:bg-[var(--ks-graphite-2)] border border-[var(--ks-rule)] transition-colors whitespace-nowrap"
-            title="Choose cartographic tile style"
-          >
-            <Layers className="w-3.5 h-3.5 text-[var(--ks-kinpaku)]" />
-            <span className="tracking-wide">{mapStyleLabels[mapStyle]?.name || 'Cartography'}</span>
-            <ChevronDown
-              className={`w-3 h-3 text-[var(--ks-text-muted)] transition-transform duration-200 ${
-                isStyleMenuOpen ? 'rotate-180' : ''
-              }`}
-            />
-          </button>
-
-          {isStyleMenuOpen && (
-            <div className="absolute left-0 mt-1.5 w-60 rounded-xs bg-[var(--ks-raised-lacquer)] border border-[var(--ks-rule-strong)] shadow-2xl p-1 z-50 animate-in fade-in zoom-in-95 duration-100">
-              <div className="px-2.5 py-1 text-[9px] font-mono-eyebrow text-[var(--ks-text-muted)] border-b border-[var(--ks-rule)]">
-                Cartographic Layer
-              </div>
-              {(Object.keys(mapStyleLabels) as MapTileStyle[]).map((style) => (
-                <button
-                  key={style}
-                  onClick={() => {
-                    onSelectMapStyle(style);
-                    setIsStyleMenuOpen(false);
-                  }}
-                  className={`w-full text-left px-2.5 py-2 rounded-xs text-xs transition-colors flex items-center justify-between ${
-                    mapStyle === style
-                      ? 'bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] font-medium border-l-2 border-[var(--ks-kinpaku)]'
-                      : 'text-[var(--ks-text-warm)] hover:bg-[var(--ks-graphite)] hover:text-[var(--ks-champagne)]'
-                  }`}
-                >
-                  <div>
-                    <div className="font-medium tracking-wide">{mapStyleLabels[style].name}</div>
-                    <div className="text-[10px] text-[var(--ks-text-muted)]">{mapStyleLabels[style].desc}</div>
-                  </div>
-                  {mapStyle === style && <Check className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0 ml-2" />}
-                </button>
-              ))}
             </div>
           )}
         </div>

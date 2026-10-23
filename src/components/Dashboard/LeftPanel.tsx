@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Search, ChevronLeft, X, SlidersHorizontal, MapPin } from 'lucide-react';
+import { Search, ChevronLeft, X, SlidersHorizontal } from 'lucide-react';
 import { CivWonder, CivEra, GameFilter } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
+import { getCountryFlag } from '../../utils/countryFlags';
 
 interface LeftPanelProps {
   wonders: CivWonder[];
@@ -379,8 +380,10 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                         >
                           {wonder.name}
                         </h3>
-                        <div className="flex items-center gap-1 text-[11px] text-[var(--ks-text-muted)] mt-0.5 font-body">
-                          <MapPin className="w-3 h-3 text-[var(--ks-text-faint)] shrink-0" />
+                        <div className="flex items-center gap-1.5 text-[11px] text-[var(--ks-text-muted)] mt-0.5 font-body">
+                          <span className="shrink-0 text-xs leading-none" title={wonder.location.modernCountry}>
+                            {getCountryFlag(wonder.location.modernCountry)}
+                          </span>
                           <span className="truncate">{wonder.location.modernCountry}</span>
                         </div>
                         {(wonder.civicRequirement || wonder.techRequirement) && (
@@ -399,7 +402,9 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                             referrerPolicy="no-referrer"
                             className="w-8 h-8 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5"
                             onError={(e) => {
-                              (e.target as HTMLElement).style.display = 'none';
+                              const target = e.target as HTMLElement;
+                              target.onerror = null;
+                              target.style.display = 'none';
                             }}
                           />
                         </div>

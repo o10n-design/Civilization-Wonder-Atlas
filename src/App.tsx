@@ -14,7 +14,7 @@ import { RightPanel } from './components/Dashboard/RightPanel';
 import { CompletionArtModal } from './components/Dashboard/CompletionArtModal';
 import { LegalModal } from './components/Dashboard/LegalModal';
 import { civAudio } from './utils/audio';
-import { Sun, Moon, Layers, ChevronDown, Check, Scale } from 'lucide-react';
+import { Sun, Moon, Layers, ChevronDown, Check, Scale, X } from 'lucide-react';
 
 export default function App() {
   const allWonders = useMemo<CivWonder[]>(() => [...CIV5_WONDERS, ...CIV6_WONDERS], []);
@@ -27,9 +27,10 @@ export default function App() {
     return allWonders.filter((w) => (w.game || 'civ5') === gameFilter);
   }, [allWonders, gameFilter]);
 
-  const [selectedWonder, setSelectedWonder] = useState<CivWonder | null>(() => allWonders[0] || null);
+  const [selectedWonder, setSelectedWonder] = useState<CivWonder | null>(null);
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState<boolean>(true);
   const [isLeftOpen, setIsLeftOpen] = useState<boolean>(true);
-  const [isRightOpen, setIsRightOpen] = useState<boolean>(true);
+  const [isRightOpen, setIsRightOpen] = useState<boolean>(false);
   const [isZenMode, setIsZenMode] = useState<boolean>(false);
   const [isCompletionArtOpen, setIsCompletionArtOpen] = useState<boolean>(false);
   const [isLegalOpen, setIsLegalOpen] = useState<boolean>(false);
@@ -125,6 +126,7 @@ export default function App() {
 
   const handleSelectWonder = useCallback((wonder: CivWonder) => {
     setSelectedWonder(wonder);
+    setShowWelcomeBanner(false);
     setIsRightOpen(true);
     civAudio.playGameSelect();
 
@@ -229,7 +231,9 @@ export default function App() {
         e.preventDefault();
         handlePrevWonder();
       } else if (e.key === 'Escape') {
-        if (isCompletionArtOpen) {
+        if (showWelcomeBanner) {
+          setShowWelcomeBanner(false);
+        } else if (isCompletionArtOpen) {
           setIsCompletionArtOpen(false);
         } else {
           setIsRightOpen(false);
@@ -320,6 +324,49 @@ export default function App() {
           theme={theme}
         />
       </main>
+
+      {/* 2. Floating Center Welcome Banner (No background overlay, height <= 128px) */}
+      {showWelcomeBanner && !selectedWonder && !isZenMode && (
+        <aside
+          role="region"
+          aria-label="Welcome to Civilization Atlas"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto w-[calc(100vw-32px)] max-w-xl max-h-[128px] overflow-hidden rounded-xs bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md border border-[var(--ks-rule-strong)] shadow-[0_20px_50px_rgba(0,0,0,0.65)] px-3.5 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 sm:gap-4 transition-all"
+        >
+          {/* Logo & Name styled like the header */}
+          <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+            <img
+              src="/assets/aistudio/civ-atlas_e8ca6186.png"
+              alt="Civilization Atlas Logo"
+              className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow-md shrink-0 transition-transform hover:scale-105"
+            />
+            <div className="flex flex-col min-w-0">
+              <span className="font-wordmark text-[1.05rem] sm:text-[1.2rem] text-[var(--ks-champagne)] font-semibold tracking-[0.08em] leading-tight whitespace-nowrap">
+                {gameFilter === 'civ6'
+                  ? 'CIVILIZATION VI ATLAS'
+                  : gameFilter === 'civ5'
+                  ? 'CIVILIZATION V ATLAS'
+                  : 'CIVILIZATION ATLAS'}
+              </span>
+              <p className="font-body text-xs text-[var(--ks-text-muted)] mt-0.5 line-clamp-2 leading-snug">
+                Explore on your own — select any landmark on the globe or catalog to uncover historical lore and strategic yields.
+              </p>
+            </div>
+          </div>
+
+          {/* Dismiss button */}
+          <button
+            onClick={() => {
+              civAudio.playSwitchSound();
+              setShowWelcomeBanner(false);
+            }}
+            className="p-1.5 rounded-xs text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)] hover:bg-[var(--ks-graphite)] transition-colors cursor-pointer shrink-0 self-center"
+            title="Dismiss banner"
+            aria-label="Dismiss banner"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </aside>
+      )}
 
       {/* 3. Floating Left Panel: Civilopedia Wonder Catalog */}
       {!isZenMode && (

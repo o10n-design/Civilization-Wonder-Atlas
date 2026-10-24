@@ -81,6 +81,10 @@ export const TopHUD: React.FC<TopHUDProps> = ({
   }, []);
 
   const mapStyleLabels: Record<MapTileStyle, { name: string; desc: string }> = {
+    civ6fog: {
+      name: 'Civ VI Fog of War',
+      desc: 'Age of Discovery antique parchment & nautical linework'
+    },
     lacquer: {
       name: 'Neo Kinpaku',
       desc: theme === 'dark' ? 'Dark warm mineral lacquer' : 'Archival warm porcelain'

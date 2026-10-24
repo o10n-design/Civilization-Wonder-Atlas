@@ -4,6 +4,7 @@ import { CivWonder, MapTileStyle } from '../../types/wonder';
 import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
 import { Plus, Minus, Maximize2 } from 'lucide-react';
+import { Civ6FogOverlay } from './Civ6FogOverlay';
 
 interface WorldMapProps {
   wonders: CivWonder[];
@@ -14,12 +15,19 @@ interface WorldMapProps {
   showNaturalWonders: boolean;
   isLeftPanelOpen: boolean;
   isRightPanelOpen: boolean;
+  theme?: 'dark' | 'light';
 }
 
 const TILE_PROVIDERS: Record<
   MapTileStyle,
   { url: string; attribution: string; maxZoom: number; className: string }
 > = {
+  civ6fog: {
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Civ VI Fog of War Style',
+    maxZoom: 19,
+    className: 'civ-tile-civ6-fog'
+  },
   lacquer: {
     url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -60,7 +68,8 @@ export const WorldMap: React.FC<WorldMapProps> = ({
   showWorldWonders,
   showNaturalWonders,
   isLeftPanelOpen,
-  isRightPanelOpen
+  isRightPanelOpen,
+  theme = 'dark'
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -80,7 +89,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
       worldCopyJump: true
     });
 
-    const provider = TILE_PROVIDERS[mapStyle] || TILE_PROVIDERS.lacquer;
+    const provider = TILE_PROVIDERS[mapStyle] || TILE_PROVIDERS.civ6fog;
     const tileLayer = L.tileLayer(provider.url, {
       attribution: provider.attribution,
       maxZoom: provider.maxZoom,
@@ -116,7 +125,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
       map.removeLayer(tileLayerRef.current);
     }
 
-    const provider = TILE_PROVIDERS[mapStyle] || TILE_PROVIDERS.lacquer;
+    const provider = TILE_PROVIDERS[mapStyle] || TILE_PROVIDERS.civ6fog;
     const newTileLayer = L.tileLayer(provider.url, {
       attribution: provider.attribution,
       maxZoom: provider.maxZoom,
@@ -318,8 +327,11 @@ export const WorldMap: React.FC<WorldMapProps> = ({
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className={`relative w-full h-full overflow-hidden ${mapStyle === 'civ6fog' ? 'civ6fog-active' : ''}`}>
       <div ref={mapContainerRef} className="w-full h-full" />
+
+      {/* Civ VI Fog of War Inspired Cartography Overlay Layer */}
+      {mapStyle === 'civ6fog' && <Civ6FogOverlay theme={theme || 'dark'} />}
 
       {/* Floating Neo Kinpaku Zoom Controls */}
       <div

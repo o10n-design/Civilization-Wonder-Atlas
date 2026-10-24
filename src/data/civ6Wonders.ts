@@ -209,8 +209,8 @@ export const CIV6_WONDERS: CivWonder[] = [
     "era": "Industrial",
     "yearApprox": "1825 CE",
     "location": {
-        "lat": 55.7601,
-        "lng": 37.6186,
+        "lat": 55.78,
+        "lng": 37.605,
         "modernCountry": "Russia",
         "modernRegion": "Moscow"
     },
@@ -503,8 +503,8 @@ export const CIV6_WONDERS: CivWonder[] = [
     "era": "Ancient",
     "yearApprox": "600 BCE",
     "location": {
-        "lat": 32.5364,
-        "lng": 44.4208,
+        "lat": 32.485,
+        "lng": 44.38,
         "modernCountry": "Iraq",
         "modernRegion": "Babylon, Mesopotamia"
     },
@@ -769,8 +769,8 @@ export const CIV6_WONDERS: CivWonder[] = [
     "era": "Ancient",
     "yearApprox": "600 BCE",
     "location": {
-        "lat": 32.5422,
-        "lng": 44.421,
+        "lat": 32.585,
+        "lng": 44.46,
         "modernCountry": "Iraq",
         "modernRegion": "Al-Hillah, Babil"
     },
@@ -1324,8 +1324,8 @@ export const CIV6_WONDERS: CivWonder[] = [
     "era": "Renaissance",
     "yearApprox": "1561 CE",
     "location": {
-        "lat": 55.7525,
-        "lng": 37.6231,
+        "lat": 55.742,
+        "lng": 37.632,
         "modernCountry": "Russia",
         "modernRegion": "Moscow, Red Square"
     },

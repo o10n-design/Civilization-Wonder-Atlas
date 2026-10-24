@@ -947,8 +947,8 @@ const BASE_CIV5_WONDERS: CivWonder[] = [
     era: 'Classical',
     yearApprox: 'c. 600 BCE',
     location: {
-      lat: 32.5355,
-      lng: 44.4275,
+      lat: 32.585,
+      lng: 44.46,
       modernCountry: 'Iraq',
       modernRegion: 'Babylon, Hillah'
     },

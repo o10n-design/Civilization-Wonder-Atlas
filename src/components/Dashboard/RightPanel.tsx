@@ -369,31 +369,6 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 </div>
               </div>
 
-              {/* Spoken Quote Card with Audio Player */}
-              <div className="p-3.5 rounded-xs bg-[var(--ks-lacquer-deep)] border border-[var(--ks-rule)] space-y-2">
-                <p className="font-body italic text-xs sm:text-sm text-[var(--ks-text-warm)] leading-relaxed">
-                  “{wonder.quote}”
-                </p>
-                <div className="pt-2 border-t border-[var(--ks-rule)] flex items-center justify-between">
-                  <div className="text-[11px] text-[var(--ks-champagne)] font-medium truncate mr-2">
-                    — {wonder.quoteAuthor}
-                    {wonder.quoteWork && <span className="text-[var(--ks-text-muted)]">, {wonder.quoteWork}</span>}
-                  </div>
-                  <button
-                    onClick={handleToggleNarration}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xs text-[11px] transition-colors shrink-0 font-medium border ${
-                      isNarrating
-                        ? 'bg-[var(--ks-kinpaku)] text-[var(--ks-dark-ink)] border-[var(--ks-kinpaku)] shadow-xs'
-                        : 'bg-transparent hover:bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)]'
-                    }`}
-                    title={isNarrating ? 'Halt voice' : 'Listen to Civilopedia quote'}
-                  >
-                    {isNarrating ? <Square className="w-3 h-3 fill-current" /> : <Play className="w-3 h-3 fill-current" />}
-                    <span>{isNarrating ? 'Halt' : 'Narrate'}</span>
-                  </button>
-                </div>
-              </div>
-
               {/* Empire Yields */}
               <div className="space-y-1.5">
                 <h4 className="font-mono-eyebrow text-[9px] text-[var(--ks-text-muted)] flex items-center gap-1.5">
@@ -428,6 +403,31 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                       </div>
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* Spoken Quote Card with Audio Player */}
+              <div className="p-3.5 rounded-xs bg-[var(--ks-lacquer-deep)] border border-[var(--ks-rule)] space-y-2">
+                <p className="font-body italic text-xs sm:text-sm text-[var(--ks-text-warm)] leading-relaxed">
+                  “{wonder.quote}”
+                </p>
+                <div className="pt-2 border-t border-[var(--ks-rule)] flex items-center justify-between">
+                  <div className="text-[11px] text-[var(--ks-champagne)] font-medium truncate mr-2">
+                    — {wonder.quoteAuthor}
+                    {wonder.quoteWork && <span className="text-[var(--ks-text-muted)]">, {wonder.quoteWork}</span>}
+                  </div>
+                  <button
+                    onClick={handleToggleNarration}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xs text-[11px] transition-colors shrink-0 font-medium border ${
+                      isNarrating
+                        ? 'bg-[var(--ks-kinpaku)] text-[var(--ks-dark-ink)] border-[var(--ks-kinpaku)] shadow-xs'
+                        : 'bg-transparent hover:bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)]'
+                    }`}
+                    title={isNarrating ? 'Halt voice' : 'Listen to Civilopedia quote'}
+                  >
+                    {isNarrating ? <Square className="w-3 h-3 fill-current" /> : <Play className="w-3 h-3 fill-current" />}
+                    <span>{isNarrating ? 'Halt' : 'Narrate'}</span>
+                  </button>
                 </div>
               </div>
 

@@ -77,7 +77,7 @@ export interface CivWonder {
   hexColor?: string | null;
 }
 
-export type MapTileStyle = 'lacquer' | 'standard' | 'humanitarian' | 'topographic' | 'parchment';
+export type MapTileStyle = 'civ6fog' | 'lacquer' | 'standard' | 'humanitarian' | 'topographic' | 'parchment';
 
 export type AppTheme = 'dark' | 'light';
 

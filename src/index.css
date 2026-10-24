@@ -194,7 +194,34 @@
   border: none !important;
 }
 
-/* Cartographic Filters */
+/* Civ VI Fog of War - Authentic Weathered Parchment Texture Edition */
+.civ-tile-civ6-fog .leaflet-tile,
+.civ-tile-civ6-fog img,
+.civ6fog-active .leaflet-tile-pane .leaflet-tile,
+.civ6fog-active .leaflet-tile-pane img {
+  filter: sepia(0.72) saturate(1.2) hue-rotate(-16deg) brightness(0.62) contrast(1.3) !important;
+}
+
+[data-theme="light"] .civ-tile-civ6-fog .leaflet-tile,
+[data-theme="light"] .civ-tile-civ6-fog img,
+[data-theme="light"] .civ6fog-active .leaflet-tile-pane .leaflet-tile,
+[data-theme="light"] .civ6fog-active .leaflet-tile-pane img,
+.light .civ-tile-civ6-fog .leaflet-tile,
+.light .civ-tile-civ6-fog img,
+.light .civ6fog-active .leaflet-tile-pane .leaflet-tile,
+.light .civ6fog-active .leaflet-tile-pane img {
+  filter: sepia(0.62) saturate(1.12) hue-rotate(-12deg) brightness(0.88) contrast(1.2) !important;
+}
+
+.civ6fog-active .leaflet-container {
+  background-color: #241a12 !important;
+}
+
+[data-theme="light"] .civ6fog-active .leaflet-container,
+.light .civ6fog-active .leaflet-container {
+  background-color: #d6c6a8 !important;
+}
+
 .civ-tile-lacquer img.leaflet-tile {
   filter: brightness(0.6) invert(1) contrast(1.25) saturate(0.18) sepia(0.15);
 }

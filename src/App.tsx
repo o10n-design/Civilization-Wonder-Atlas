@@ -33,7 +33,7 @@ export default function App() {
   const [isZenMode, setIsZenMode] = useState<boolean>(false);
   const [isCompletionArtOpen, setIsCompletionArtOpen] = useState<boolean>(false);
   const [isLegalOpen, setIsLegalOpen] = useState<boolean>(false);
-  const [mapStyle, setMapStyle] = useState<MapTileStyle>('lacquer');
+  const [mapStyle, setMapStyle] = useState<MapTileStyle>('civ6fog');
   const [isFooterStyleOpen, setIsFooterStyleOpen] = useState<boolean>(false);
   const footerStyleRef = useRef<HTMLDivElement>(null);
   const [showWorldWonders, setShowWorldWonders] = useState<boolean>(true);
@@ -76,10 +76,10 @@ export default function App() {
   const handleToggleTheme = useCallback(() => {
     setTheme((prev) => {
       const nextTheme: AppTheme = prev === 'dark' ? 'light' : 'dark';
-      // Harmonize default cartography with theme
+      // Harmonize default cartography with theme if user was on lacquer/humanitarian
       if (nextTheme === 'light' && mapStyle === 'lacquer') {
         setMapStyle('humanitarian');
-      } else if (nextTheme === 'dark' && (mapStyle === 'humanitarian' || mapStyle === 'standard')) {
+      } else if (nextTheme === 'dark' && mapStyle === 'humanitarian') {
         setMapStyle('lacquer');
       }
       return nextTheme;
@@ -100,14 +100,18 @@ export default function App() {
 
   const mapStyleLabels: Record<MapTileStyle, { name: string; desc: string }> = useMemo(
     () => ({
+      civ6fog: {
+        name: 'Civ VI Fog of War',
+        desc: 'Age of Discovery antique parchment & nautical linework'
+      },
       lacquer: {
         name: 'Neo Kinpaku',
         desc: theme === 'dark' ? 'Dark mineral lacquer' : 'Archival porcelain'
       },
-      standard: { name: 'OSM Standard', desc: 'Community tiles' },
-      humanitarian: { name: 'Humanitarian', desc: 'Physical geography' },
-      topographic: { name: 'OpenTopoMap', desc: 'Contour lines & relief' },
-      parchment: { name: 'Warm Archival', desc: 'Antique paper' }
+      parchment: { name: 'Warm Archival', desc: 'Antique paper texture' },
+      humanitarian: { name: 'Humanitarian', desc: 'Detailed physical geography' },
+      topographic: { name: 'OpenTopoMap', desc: 'Contour lines & relief elevations' },
+      standard: { name: 'OSM Standard', desc: 'Community standard tiles' }
     }),
     [theme]
   );
@@ -313,6 +317,7 @@ export default function App() {
           showNaturalWonders={showNaturalWonders}
           isLeftPanelOpen={isLeftOpen && !isZenMode}
           isRightPanelOpen={isRightOpen && !isZenMode && !!selectedWonder}
+          theme={theme}
         />
       </main>
 
@@ -362,7 +367,7 @@ export default function App() {
       />
 
       {/* 7. Neo Kinpaku Minimal Footer Bar with Map Layer & Interactive Theme Switcher */}
-      <footer className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-2 bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md px-3 py-1.5 rounded-xs border border-[var(--ks-rule)] text-[11px] text-[var(--ks-text-muted)] shadow-2xl transition-colors max-w-[calc(100vw-24px)] overflow-x-auto clean-scrollbar">
+      <footer className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 pointer-events-auto flex items-center gap-2 bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md px-3 py-1.5 rounded-xs border border-[var(--ks-rule)] text-[11px] text-[var(--ks-text-muted)] shadow-2xl transition-colors max-w-[calc(100vw-24px)] overflow-visible">
         {/* Interactive Theme Switcher Button (Text: Light / Dark) */}
         <button
           onClick={handleToggleTheme}
@@ -402,7 +407,7 @@ export default function App() {
           </button>
 
           {isFooterStyleOpen && (
-            <div className="absolute bottom-full mb-2 left-0 w-56 rounded-xs bg-[var(--ks-raised-lacquer)] border border-[var(--ks-rule-strong)] shadow-2xl p-1 z-50 animate-in fade-in zoom-in-95 duration-100">
+            <div className="absolute bottom-full mb-2.5 left-0 w-60 rounded-xs bg-[var(--ks-raised-lacquer)] border border-[var(--ks-rule-strong)] shadow-[0_16px_40px_rgba(0,0,0,0.6)] p-1 z-50 animate-in fade-in zoom-in-95 duration-100">
               <div className="px-2.5 py-1 text-[9px] font-mono-eyebrow text-[var(--ks-text-muted)] border-b border-[var(--ks-rule)]">
                 Cartographic Layer
               </div>

@@ -1,6 +1,6 @@
 {
   "name": "Civ V Wonders & Natural Wonders World Atlas",
-  "description": "Interactive world map dashboard exploring the legendary World Wonders and Natural Wonders from Sid Meier's Civilization V, complete with Civilopedia entries, yields, historical coordinates, and authentic quotes.",
+  "description": "Interactive world map dashboard exploring the legendary World Wonders and Natural Wonders from Sid Meier's Civilization V & VI, complete with Civilopedia entries, yields, historical coordinates, and authentic quotes.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

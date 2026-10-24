@@ -10,25 +10,12 @@ function normalizeWonderName(name: string): string {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/^the\s+/, '')
     .replace(/\bmt\.?\b/, 'mount')
+    .replace(/\bmount\b/, '')
     .replace(/\bpalace\b/, 'city') // Forbidden Palace <-> Forbidden City
     .replace(/\bof rhodes\b/, '')  // Colossus of Rhodes <-> Colossus
+    .replace(/\bmuseum\b/, '')     // Hermitage Museum <-> Hermitage
+    .replace(/\bgeyser\b/, '')     // Old Faithful Geyser <-> Old Faithful
     .replace(/[^a-z0-9]/g, '');
-}
-
-/**
- * Calculates geographic distance in kilometers (approximate Haversine)
- */
-function getGeoDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return 6371 * c;
 }
 
 export interface WonderCounterparts {
@@ -54,23 +41,14 @@ export function getWonderCounterparts(
     if (candidate.id === currentWonder.id) continue;
     const candidateGame = candidate.game || 'civ5';
 
-    // Same name check or geographic proximity (within 35 km) with same wonder type
+    // Must be of the same category (world wonder vs natural wonder)
+    if (candidate.type !== currentWonder.type) continue;
+
+    // Strict name matching based on normalized naming or alias
     const candidateNorm = normalizeWonderName(candidate.name);
-    const isNameMatch =
-      candidateNorm === currentNorm ||
-      candidateNorm.includes(currentNorm) ||
-      currentNorm.includes(candidateNorm);
+    const isNameMatch = candidateNorm === currentNorm;
 
-    const isDistMatch =
-      candidate.type === currentWonder.type &&
-      getGeoDistanceKm(
-        candidate.location.lat,
-        candidate.location.lng,
-        currentWonder.location.lat,
-        currentWonder.location.lng
-      ) < 35;
-
-    if (isNameMatch || isDistMatch) {
+    if (isNameMatch) {
       if (candidateGame === 'civ5' && !civ5Wonder) {
         civ5Wonder = candidate;
       } else if (candidateGame === 'civ6' && !civ6Wonder) {

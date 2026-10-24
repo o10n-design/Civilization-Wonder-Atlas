@@ -306,7 +306,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
 
       markersGroup.addLayer(marker);
     });
-  }, [wonders, selectedWonder, onSelectWonder, showWorldWonders, showNaturalWonders]);
+  }, [wonders, selectedWonder, onSelectWonder, showWorldWonders, showNaturalWonders, theme]);
 
   // Fly to selected wonder
   useEffect(() => {

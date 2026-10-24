@@ -24,7 +24,7 @@ export const CIV6_ICONS: Record<string, string> = {
   power: 'https://static.wikia.nocookie.net/civilization/images/5/59/Power_%28Civ6%29.png',
   governor: 'https://static.wikia.nocookie.net/civilization/images/8/8e/Governor_%28Civ6%29.png',
   governor_title: 'https://static.wikia.nocookie.net/civilization/images/8/8e/Governor_%28Civ6%29.png',
-  appeal: 'https://static.wikia.nocookie.net/civilization/images/a/ab/Appeal_lens_%28Civ6%29.png'
+  appeal: '/assets/aistudio/appeal_28979be3.svg'
 };
 
 export const CIV5_ICONS: Record<string, string> = {

@@ -38,8 +38,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
     'Industrial',
     'Modern',
     'Atomic',
-    'Information',
-    'Timeless'
+    'Information'
   ];
 
   // Filtered wonders
@@ -148,6 +147,11 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
           <div className="px-4 py-3 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] shrink-0">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
+                <img
+                  src="/assets/aistudio/civ-atlas_e8ca6186.png"
+                  alt=""
+                  className="w-5 h-5 object-contain shrink-0"
+                />
                 <span className="font-display text-lg text-[var(--ks-champagne)] font-light tracking-wide uppercase">
                   Civilopedia Catalog
                 </span>
@@ -316,6 +320,7 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                     <option value="food">Food</option>
                     <option value="tourism">Tourism</option>
                     <option value="diplomacy">Diplomatic Favor (Civ VI)</option>
+                    <option value="appeal">Appeal (Civ VI)</option>
                     <option value="happiness">Happiness (Civ V)</option>
                   </select>
                 </div>
@@ -352,30 +357,37 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 flex-wrap">
                           <span
-                            className={`font-mono text-[9px] uppercase tracking-[0.16em] font-semibold ${
-                              isWorld ? 'text-[var(--ks-kinpaku)]' : 'text-[var(--ks-patina)]'
+                            className={`font-mono text-[8.5px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded-xs border ${
+                              isWorld
+                                ? 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/40'
+                                : 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40'
                             }`}
                           >
                             {isWorld ? 'WORLD' : 'NATURAL'}
                           </span>
-                          <span className="text-[var(--ks-rule)]">·</span>
                           <span
-                            className={`font-mono text-[8px] font-bold px-1.5 py-0.2 rounded-xs border uppercase tracking-wider ${
+                            className={`font-mono text-[8.5px] font-bold px-1.5 py-0.5 rounded-xs border uppercase tracking-wider ${
                               isCiv6
-                                ? 'text-amber-500 border-amber-500/30 bg-amber-500/10'
-                                : 'text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)] bg-[var(--ks-lacquer-deep)]'
+                                ? 'bg-orange-100 text-orange-950 border-orange-300 dark:bg-orange-950/70 dark:text-orange-300 dark:border-orange-500/40'
+                                : 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-500/40'
                             }`}
                           >
                             {isCiv6 ? 'Civ VI' : 'Civ V'}
                           </span>
-                          <span className="text-[var(--ks-rule)]">·</span>
-                          <span className="font-mono text-[10px] text-[var(--ks-text-muted)]">{wonder.era}</span>
+                          {wonder.era && wonder.era !== 'Timeless' && (
+                            <>
+                              <span className="text-[var(--ks-rule)]">·</span>
+                              <span className="font-mono text-[9.5px] text-[var(--ks-text-muted)] font-medium truncate">
+                                {wonder.era}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <h3
-                          className={`font-display text-base tracking-wide truncate mt-0.5 ${
+                          className={`font-display text-[21px] leading-snug truncate mt-0.5 ${
                             isSelected
-                              ? 'text-[var(--ks-champagne)] font-normal'
-                              : 'text-[var(--ks-text-warm)] font-light group-hover:text-[var(--ks-champagne)]'
+                              ? 'text-[var(--ks-champagne)] font-semibold'
+                              : 'text-[var(--ks-text-warm)] font-semibold group-hover:text-[var(--ks-champagne)]'
                           }`}
                         >
                           {wonder.name}

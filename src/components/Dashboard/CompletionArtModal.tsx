@@ -83,10 +83,10 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span
-                  className={`font-mono text-[9px] uppercase tracking-[0.18em] font-semibold px-2 py-0.5 rounded-xs border ${
+                  className={`font-mono text-[9px] uppercase tracking-[0.16em] font-bold px-2 py-0.5 rounded-xs border ${
                     isWorld
-                      ? 'bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)]'
-                      : 'bg-[var(--ks-graphite)] text-[var(--ks-patina)] border-[var(--ks-rule-patina)]'
+                      ? 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/40'
+                      : 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40'
                   }`}
                 >
                   {wonder.game === 'civ6'
@@ -97,7 +97,11 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
                     ? 'Civ V Wonder Completion Art'
                     : 'Civ V Natural Wonder Discovery'}
                 </span>
-                <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium">· {wonder.era} Era</span>
+                {wonder.era && wonder.era !== 'Timeless' && (
+                  <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium">
+                    · {wonder.era} Era
+                  </span>
+                )}
               </div>
             </div>
           </div>

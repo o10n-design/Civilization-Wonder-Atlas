@@ -116,14 +116,14 @@ export const TopHUD: React.FC<TopHUDProps> = ({
   return (
     <header className="fixed top-0 left-0 right-0 z-40 h-14 bg-[var(--ks-lacquer-deep)] border-b border-[var(--ks-rule)] px-3 sm:px-5 flex items-center justify-between gap-3 shadow-md transition-colors">
       {/* Zone 1: Impeccable Brand Lockup */}
-      <div className="flex items-center gap-3 shrink-0">
-        <div className="relative w-8 h-8 rounded-xs bg-[var(--ks-kinpaku)] flex items-center justify-center overflow-hidden shadow-xs shrink-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--ks-kinpaku-glint)] via-[var(--ks-kinpaku)] to-[var(--ks-kinpaku-rich)]" />
-          {/* Diagonal Slash for Carved-Tile Glyph */}
-          <div className="absolute w-[140%] h-[2px] bg-[var(--ks-lacquer-deep)] -rotate-45" />
-        </div>
+      <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <img
+          src="/assets/aistudio/civ-atlas_e8ca6186.png"
+          alt="Civilization Atlas Logo"
+          className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-md shrink-0 transition-transform hover:scale-105"
+        />
         <div className="flex flex-col">
-          <span className="font-wordmark text-[1.05rem] sm:text-[1.125rem] text-[var(--ks-champagne)] font-normal tracking-[0.14em] leading-tight whitespace-nowrap">
+          <span className="font-wordmark text-[1.125rem] sm:text-[1.25rem] text-[var(--ks-champagne)] font-semibold tracking-[0.08em] leading-tight whitespace-nowrap">
             {gameFilter === 'civ6'
               ? 'CIVILIZATION VI ATLAS'
               : gameFilter === 'civ5'

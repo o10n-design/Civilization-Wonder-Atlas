@@ -19,7 +19,7 @@ export const YieldBadge: React.FC<YieldBadgeProps> = ({ yields, game = 'civ5', c
     { key: 'production', label: 'Production', value: yields.production, color: 'text-orange-600 dark:text-orange-300 border-orange-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '⚒️' },
     { key: 'food', label: 'Food', value: yields.food, color: 'text-emerald-600 dark:text-emerald-300 border-emerald-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '🌾' },
     { key: 'housing', label: 'Housing', value: yields.housing, color: 'text-cyan-600 dark:text-cyan-300 border-cyan-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '🏘️' },
-    { key: 'appeal', label: 'Appeal', value: yields.appeal, color: 'text-teal-600 dark:text-teal-300 border-teal-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '🌿' },
+    { key: 'appeal', label: 'Appeal', value: yields.appeal, color: 'text-teal-600 dark:text-teal-300 border-teal-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '🤍' },
     { key: 'diplomacy', label: 'Diplomatic Favor', value: yields.diplomacy, color: 'text-blue-600 dark:text-blue-300 border-blue-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '🕊️' },
     { key: 'tourism', label: 'Tourism', value: yields.tourism, color: 'text-rose-600 dark:text-rose-300 border-rose-500/30 bg-[var(--ks-lacquer-deep)]', fallbackIcon: '🧳' }
   ].filter((item) => item.value !== undefined && item.value > 0);
@@ -65,7 +65,7 @@ export const YieldBadge: React.FC<YieldBadgeProps> = ({ yields, game = 'civ5', c
                   src={iconUrl}
                   alt=""
                   referrerPolicy="no-referrer"
-                  className="w-3.5 h-3.5 object-contain shrink-0"
+                  className="w-3.5 h-3.5 object-contain shrink-0 rounded-full"
                   onError={(e) => {
                     (e.target as HTMLElement).style.display = 'none';
                   }}
@@ -117,7 +117,7 @@ export const YieldBadge: React.FC<YieldBadgeProps> = ({ yields, game = 'civ5', c
                   src={iconUrl}
                   alt=""
                   referrerPolicy="no-referrer"
-                  className="w-4 h-4 object-contain shrink-0"
+                  className="w-4 h-4 object-contain shrink-0 rounded-full"
                   onError={(e) => {
                     (e.target as HTMLElement).style.display = 'none';
                   }}

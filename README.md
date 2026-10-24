@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/assets/aistudio/civ-atlas_e8ca6186.png" alt="Civilization Wonder Atlas Logo" width="160" height="160" />
+</p>
+
 # 🏛️ Civilization Wonder Atlas
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-civ--atlas.vercel.app-gold?style=for-the-badge&logo=vercel)](https://civ-atlas.vercel.app/)

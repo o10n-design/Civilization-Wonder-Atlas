@@ -227,6 +227,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
         { key: 'happiness', val: wonder.yields?.happiness },
         { key: 'amenity', val: wonder.yields?.amenity },
         { key: 'housing', val: wonder.yields?.housing },
+        { key: 'appeal', val: wonder.yields?.appeal },
         { key: 'tourism', val: wonder.yields?.tourism }
       ].filter((y) => y.val && y.val > 0);
 
@@ -236,7 +237,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
             const icon = getYieldIconUrl(y.key, isCiv6 ? 'civ6' : 'civ5');
             return `
               <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-xs bg-[var(--ks-lacquer-deep)] border border-[var(--ks-rule)] text-[9px] font-mono tabular-nums text-[var(--ks-champagne)]">
-                ${icon ? `<img src="${icon}" referrerpolicy="no-referrer" class="w-3 h-3 object-contain shrink-0" alt="" />` : ''}
+                ${icon ? `<img src="${icon}" referrerpolicy="no-referrer" class="w-3 h-3 object-contain shrink-0 rounded-full" alt="" />` : ''}
                 <span>+${y.val}</span>
               </span>
             `;
@@ -258,7 +259,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
                 : ''
             }
             <div class="min-w-0">
-              <div class="font-display text-[22px] font-light text-[var(--ks-champagne)] leading-tight truncate">
+              <div class="font-display text-[21px] font-semibold text-[var(--ks-champagne)] leading-tight truncate">
                 ${wonder.name}
               </div>
               <div class="font-mono text-[8.5px] uppercase tracking-[0.16em] font-semibold mt-0.5 ${

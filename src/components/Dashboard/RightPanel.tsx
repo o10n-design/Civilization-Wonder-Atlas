@@ -91,24 +91,28 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         <div className="px-4 py-3 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
             <span
-              className={`font-mono text-[9px] uppercase tracking-[0.16em] font-semibold px-2 py-0.5 rounded-xs border shrink-0 ${
+              className={`font-mono text-[9px] uppercase tracking-[0.14em] font-bold px-2 py-0.5 rounded-xs border shrink-0 ${
                 isWorld
-                  ? 'bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)]'
-                  : 'bg-[var(--ks-graphite)] text-[var(--ks-patina)] border-[var(--ks-rule-patina)]'
+                  ? 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/40'
+                  : 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40'
               }`}
             >
               {isWorld ? 'World Wonder' : 'Natural Wonder'}
             </span>
             <span
-              className={`font-mono text-[8px] font-bold px-1.5 py-0.5 rounded-xs border uppercase tracking-wider shrink-0 ${
+              className={`font-mono text-[8.5px] font-bold px-2 py-0.5 rounded-xs border uppercase tracking-wider shrink-0 ${
                 isCiv6
-                  ? 'text-amber-500 border-amber-500/30 bg-amber-500/10'
-                  : 'text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)] bg-[var(--ks-graphite)]'
+                  ? 'bg-orange-100 text-orange-950 border-orange-300 dark:bg-orange-950/70 dark:text-orange-300 dark:border-orange-500/40'
+                  : 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-500/40'
               }`}
             >
               {isCiv6 ? 'Civilization VI' : 'Civilization V'}
             </span>
-            <span className="font-mono text-[10px] text-[var(--ks-text-muted)] truncate">· {wonder.era}</span>
+            {wonder.era && wonder.era !== 'Timeless' && (
+              <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium truncate">
+                · {wonder.era}
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-1 shrink-0">
@@ -140,7 +144,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         <div className="px-4 py-2 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)]/90 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-1.5 min-w-0">
             <Sparkles className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />
-            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] truncate">
+            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] font-medium truncate">
               {counterparts.hasBoth ? 'Available in both games' : 'Game Edition'}
             </span>
           </div>
@@ -155,9 +159,9 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                     onSelectWonder(counterparts.civ5Wonder);
                   }
                 }}
-                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
+                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
                   !isCiv6
-                    ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-kinpaku)] shadow-xs border border-[var(--ks-rule-strong)]'
+                    ? 'bg-blue-600 text-white dark:bg-blue-600 dark:text-blue-100 shadow-xs border border-blue-500'
                     : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
                 }`}
                 title="Switch Codex view to Civilization V"
@@ -172,9 +176,9 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                     onSelectWonder(counterparts.civ6Wonder);
                   }
                 }}
-                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-semibold tracking-wider transition-all cursor-pointer ${
+                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
                   isCiv6
-                    ? 'bg-amber-500/20 text-amber-400 shadow-xs border border-amber-500/40'
+                    ? 'bg-orange-600 text-white dark:bg-orange-600 dark:text-orange-100 shadow-xs border border-orange-500'
                     : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
                 }`}
                 title="Switch Codex view to Civilization VI"
@@ -184,10 +188,10 @@ export const RightPanel: React.FC<RightPanelProps> = ({
             </div>
           ) : (
             <span
-              className={`font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-xs border ${
+              className={`font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-xs border ${
                 isCiv6
-                  ? 'text-amber-500 border-amber-500/30 bg-amber-500/10'
-                  : 'text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)] bg-[var(--ks-graphite)]'
+                  ? 'bg-orange-100 text-orange-950 border-orange-300 dark:bg-orange-950/70 dark:text-orange-300 dark:border-orange-500/40'
+                  : 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-500/40'
               }`}
             >
               {isCiv6 ? 'Civ VI Exclusive' : 'Civ V Exclusive'}
@@ -212,7 +216,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 />
               )}
               <div className="min-w-0">
-                <h2 className="font-headline text-2xl sm:text-3xl font-light tracking-wide text-[var(--ks-champagne)] leading-tight">
+                <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--ks-champagne)] leading-tight">
                   {wonder.name}
                 </h2>
                 <div className="flex items-center gap-1.5 text-xs text-[var(--ks-text-muted)] mt-1 font-body">
@@ -225,15 +229,6 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 </div>
               </div>
             </div>
-
-            <button
-              onClick={onRecenter}
-              className="px-2.5 py-1.5 rounded-xs bg-transparent hover:bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] text-[11px] font-mono tracking-wider uppercase transition-colors shrink-0 flex items-center gap-1 border border-[var(--ks-rule-strong)]"
-              title="Fly camera to wonder location"
-            >
-              <Compass className="w-3.5 h-3.5 text-[var(--ks-kinpaku)]" />
-              <span>Fly To</span>
-            </button>
           </div>
 
           {/* Clean Segmented Tab Switcher */}

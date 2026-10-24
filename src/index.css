@@ -49,9 +49,10 @@
     --ks-scroll-thumb: oklch(19% 0.008 95);
 
     /* Fonts */
-    --ks-font-display: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
-    --ks-font-wordmark: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
-    --ks-font-body: 'Albert Sans', Avenir Next, Helvetica Neue, Arial, system-ui, sans-serif;
+    --ks-font-display: 'Crimson Text', Georgia, 'Times New Roman', serif;
+    --ks-font-headline: 'Crimson Text', Georgia, 'Times New Roman', serif;
+    --ks-font-wordmark: 'Crimson Text', Georgia, serif;
+    --ks-font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --ks-font-mono: 'Roboto Mono', SFMono-Regular, Consolas, monospace;
   }
 
@@ -103,9 +104,10 @@
     --ks-scroll-thumb: #cbd5e1;
 
     /* Fonts remain identical */
-    --ks-font-display: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
-    --ks-font-wordmark: 'Alumni Sans', 'Albert Sans', Arial, sans-serif;
-    --ks-font-body: 'Albert Sans', Avenir Next, Helvetica Neue, Arial, system-ui, sans-serif;
+    --ks-font-display: 'Crimson Text', Georgia, 'Times New Roman', serif;
+    --ks-font-headline: 'Crimson Text', Georgia, 'Times New Roman', serif;
+    --ks-font-wordmark: 'Crimson Text', Georgia, serif;
+    --ks-font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --ks-font-mono: 'Roboto Mono', SFMono-Regular, Consolas, monospace;
   }
 
@@ -124,10 +126,13 @@
   font-family: var(--ks-font-display);
 }
 
+.font-headline {
+  font-family: var(--ks-font-headline);
+}
+
 .font-wordmark {
   font-family: var(--ks-font-wordmark);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .font-body {

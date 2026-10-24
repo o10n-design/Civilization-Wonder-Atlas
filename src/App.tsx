@@ -14,7 +14,7 @@ import { RightPanel } from './components/Dashboard/RightPanel';
 import { CompletionArtModal } from './components/Dashboard/CompletionArtModal';
 import { LegalModal } from './components/Dashboard/LegalModal';
 import { civAudio } from './utils/audio';
-import { Sun, Moon, Layers, ChevronDown, Check, Scale, X } from 'lucide-react';
+import { Sun, Moon, Layers, ChevronDown, Check, Scale, X, Eye, EyeOff } from 'lucide-react';
 
 export default function App() {
   const allWonders = useMemo<CivWonder[]>(() => [...CIV5_WONDERS, ...CIV6_WONDERS], []);
@@ -129,6 +129,13 @@ export default function App() {
     setShowWelcomeBanner(false);
     setIsRightOpen(true);
     civAudio.playGameSelect();
+
+    // If selected landmark's marker category is currently toggled off, re-enable it so its map marker is visible
+    if (wonder.type === 'world_wonder') {
+      setShowWorldWonders(true);
+    } else if (wonder.type === 'natural_wonder') {
+      setShowNaturalWonders(true);
+    }
 
     // On moderate viewports, collapse left catalog so the map & right codex have plenty of breathing room
     if (typeof window !== 'undefined' && window.innerWidth < 1280) {
@@ -251,6 +258,12 @@ export default function App() {
           if (prev === 'civ6') return 'civ5';
           return 'all';
         });
+      } else if (e.key === '1') {
+        civAudio.playSwitchSound();
+        setShowWorldWonders((prev) => !prev);
+      } else if (e.key === '2') {
+        civAudio.playSwitchSound();
+        setShowNaturalWonders((prev) => !prev);
       } else if (e.key === ' ') {
         e.preventDefault();
         handleRandomWonder();
@@ -378,6 +391,7 @@ export default function App() {
           onToggleOpen={() => setIsLeftOpen(!isLeftOpen)}
           gameFilter={gameFilter}
           onSelectGameFilter={handleSelectGameFilter}
+          theme={theme}
         />
       )}
 
@@ -395,6 +409,7 @@ export default function App() {
             civAudio.playWonderFanfare();
             setIsCompletionArtOpen(true);
           }}
+          theme={theme}
         />
       )}
 
@@ -405,6 +420,7 @@ export default function App() {
         onClose={() => setIsCompletionArtOpen(false)}
         onNext={handleNextWonder}
         onPrev={handlePrevWonder}
+        theme={theme}
       />
 
       {/* 6. Legal Attribution & Disclaimers Modal */}
@@ -413,8 +429,8 @@ export default function App() {
         onClose={() => setIsLegalOpen(false)}
       />
 
-      {/* 7. Neo Kinpaku Minimal Footer Bar with Map Layer & Interactive Theme Switcher */}
-      <footer className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 pointer-events-auto flex items-center gap-2 bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md px-3 py-1.5 rounded-xs border border-[var(--ks-rule)] text-[11px] text-[var(--ks-text-muted)] shadow-2xl transition-colors max-w-[calc(100vw-24px)] overflow-visible">
+      {/* 7. Neo Kinpaku Minimal Footer Bar with Map Layer, Interactive Marker Toggles & Theme Switcher */}
+      <footer className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 pointer-events-auto flex items-center gap-1.5 sm:gap-2 bg-[var(--ks-raised-lacquer)]/95 backdrop-blur-md px-2.5 sm:px-3 py-1.5 rounded-xs border border-[var(--ks-rule)] text-[11px] text-[var(--ks-text-muted)] shadow-2xl transition-colors max-w-[calc(100vw-24px)] overflow-x-auto sm:overflow-visible no-scrollbar">
         {/* Interactive Theme Switcher Button (Text: Light / Dark) */}
         <button
           onClick={handleToggleTheme}
@@ -484,15 +500,91 @@ export default function App() {
 
         <span className="text-[var(--ks-rule)]">|</span>
 
-        {/* Legend Indicators */}
-        <div className="flex items-center gap-1.5 shrink-0">
-          <span className="w-2 h-2 rounded-xs bg-[var(--ks-kinpaku)] inline-block shadow-xs" />
-          <span className="text-[var(--ks-champagne)] font-medium">World</span>
-        </div>
-        <span className="text-[var(--ks-rule)]">|</span>
-        <div className="flex items-center gap-1.5 shrink-0">
-          <span className="w-2 h-2 rounded-xs bg-[var(--ks-patina)] inline-block shadow-xs" />
-          <span className="text-[var(--ks-champagne)] font-medium">Natural</span>
+        {/* Interactive Legend Items: Toggle World & Natural Wonder Markers */}
+        <div className="flex items-center gap-1.5 shrink-0" role="group" aria-label="Toggle marker layers">
+          {/* World Wonders Toggle */}
+          <button
+            type="button"
+            role="switch"
+            aria-checked={showWorldWonders}
+            onClick={() => {
+              civAudio.playSwitchSound();
+              setShowWorldWonders((prev) => !prev);
+            }}
+            className={`flex items-center gap-1.5 px-2 py-0.5 rounded-xs transition-all cursor-pointer font-medium border select-none ${
+              showWorldWonders
+                ? 'bg-[var(--ks-graphite)] hover:bg-[var(--ks-graphite-2)] text-[var(--ks-champagne)] border-[var(--ks-kinpaku)]/40 shadow-xs'
+                : 'bg-transparent hover:bg-[var(--ks-graphite)]/50 text-[var(--ks-text-muted)] border-dashed border-[var(--ks-rule)] opacity-60 hover:opacity-100'
+            }`}
+            title={
+              showWorldWonders
+                ? 'World Wonders visible on map · Click to hide markers (1)'
+                : 'World Wonders hidden from map · Click to show markers (1)'
+            }
+            aria-label={showWorldWonders ? 'Hide World Wonder markers' : 'Show World Wonder markers'}
+          >
+            <span
+              className={`w-2.5 h-2.5 rounded-xs transition-all shrink-0 ${
+                showWorldWonders
+                  ? 'bg-[var(--ks-kinpaku)] shadow-[0_0_8px_rgba(245,190,44,0.45)] scale-100'
+                  : 'bg-transparent border border-[var(--ks-rule-strong)] scale-90'
+              }`}
+            />
+            <span className={showWorldWonders ? 'text-[var(--ks-champagne)]' : 'line-through text-[var(--ks-text-muted)]'}>
+              World
+            </span>
+            <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-normal">
+              ({worldWondersCount})
+            </span>
+            {showWorldWonders ? (
+              <Eye className="w-3 h-3 text-[var(--ks-kinpaku)]/80 ml-0.5 shrink-0" />
+            ) : (
+              <EyeOff className="w-3 h-3 text-[var(--ks-text-faint)] ml-0.5 shrink-0" />
+            )}
+          </button>
+
+          <span className="text-[var(--ks-rule)]">|</span>
+
+          {/* Natural Wonders Toggle */}
+          <button
+            type="button"
+            role="switch"
+            aria-checked={showNaturalWonders}
+            onClick={() => {
+              civAudio.playSwitchSound();
+              setShowNaturalWonders((prev) => !prev);
+            }}
+            className={`flex items-center gap-1.5 px-2 py-0.5 rounded-xs transition-all cursor-pointer font-medium border select-none ${
+              showNaturalWonders
+                ? 'bg-[var(--ks-graphite)] hover:bg-[var(--ks-graphite-2)] text-[var(--ks-champagne)] border-[var(--ks-patina)]/40 shadow-xs'
+                : 'bg-transparent hover:bg-[var(--ks-graphite)]/50 text-[var(--ks-text-muted)] border-dashed border-[var(--ks-rule)] opacity-60 hover:opacity-100'
+            }`}
+            title={
+              showNaturalWonders
+                ? 'Natural Wonders visible on map · Click to hide markers (2)'
+                : 'Natural Wonders hidden from map · Click to show markers (2)'
+            }
+            aria-label={showNaturalWonders ? 'Hide Natural Wonder markers' : 'Show Natural Wonder markers'}
+          >
+            <span
+              className={`w-2.5 h-2.5 rounded-xs transition-all shrink-0 ${
+                showNaturalWonders
+                  ? 'bg-[var(--ks-patina)] shadow-[0_0_8px_rgba(70,210,188,0.45)] scale-100'
+                  : 'bg-transparent border border-[var(--ks-rule-patina)] scale-90'
+              }`}
+            />
+            <span className={showNaturalWonders ? 'text-[var(--ks-champagne)]' : 'line-through text-[var(--ks-text-muted)]'}>
+              Natural
+            </span>
+            <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-normal">
+              ({naturalWondersCount})
+            </span>
+            {showNaturalWonders ? (
+              <Eye className="w-3 h-3 text-[var(--ks-patina)]/80 ml-0.5 shrink-0" />
+            ) : (
+              <EyeOff className="w-3 h-3 text-[var(--ks-text-faint)] ml-0.5 shrink-0" />
+            )}
+          </button>
         </div>
 
         <span className="text-[var(--ks-rule)]">|</span>
@@ -512,6 +604,12 @@ export default function App() {
 
         {/* Quick Keyboard Reference */}
         <div className="text-[var(--ks-text-muted)] font-mono text-[10px] hidden lg:flex items-center gap-2 shrink-0">
+          <span className="hidden xl:inline">
+            <kbd className="px-1 py-0.5 rounded-xs bg-[var(--ks-graphite)] text-[var(--ks-champagne)] border border-[var(--ks-rule)]">
+              1/2
+            </kbd>{' '}
+            Toggles
+          </span>
           <span>
             <kbd className="px-1 py-0.5 rounded-xs bg-[var(--ks-graphite)] text-[var(--ks-champagne)] border border-[var(--ks-rule)]">
               G

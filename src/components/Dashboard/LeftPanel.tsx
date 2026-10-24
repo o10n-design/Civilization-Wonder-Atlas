@@ -3,6 +3,7 @@ import { Search, ChevronLeft, X, SlidersHorizontal } from 'lucide-react';
 import { CivWonder, CivEra, GameFilter } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
 import { getCountryFlag } from '../../utils/countryFlags';
+import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
 
 interface LeftPanelProps {
   wonders: CivWonder[];
@@ -12,6 +13,7 @@ interface LeftPanelProps {
   onToggleOpen: () => void;
   gameFilter: GameFilter;
   onSelectGameFilter: (filter: GameFilter) => void;
+  theme?: 'dark' | 'light';
 }
 
 export const LeftPanel: React.FC<LeftPanelProps> = ({
@@ -21,7 +23,8 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
   isOpen,
   onToggleOpen,
   gameFilter,
-  onSelectGameFilter
+  onSelectGameFilter,
+  theme = 'dark'
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'world_wonder' | 'natural_wonder'>('all');
@@ -340,6 +343,8 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                 const isSelected = selectedWonder?.id === wonder.id;
                 const isWorld = wonder.type === 'world_wonder';
                 const isCiv6 = wonder.game === 'civ6';
+                const categoryIconUrl = getWonderTypeLogo(wonder.type, 'auto', theme);
+                const gameIconUrl = getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme);
 
                 return (
                   <div
@@ -353,51 +358,61 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                         : 'bg-[var(--ks-lacquer)] border-[var(--ks-rule)] hover:border-[var(--ks-rule-strong)] hover:bg-[var(--ks-graphite)]'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-2.5">
+                    <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
+                        {/* Wonder Name with Plain Icons at the end */}
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <span
-                            className={`font-mono text-[8.5px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded-xs border ${
-                              isWorld
-                                ? 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/40'
-                                : 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40'
+                          <h3
+                            className={`font-display text-[21px] leading-snug font-semibold inline ${
+                              isSelected
+                                ? 'text-[var(--ks-champagne)]'
+                                : 'text-[var(--ks-text-warm)] group-hover:text-[var(--ks-champagne)]'
                             }`}
                           >
-                            {isWorld ? 'WORLD' : 'NATURAL'}
+                            {wonder.name}
+                          </h3>
+                          <div className="wonder-title-icons inline-flex items-center gap-1 shrink-0">
+                            {categoryIconUrl && (
+                              <img
+                                src={categoryIconUrl}
+                                alt={isWorld ? 'World Wonder' : 'Natural Wonder'}
+                                title={isWorld ? 'World Wonder' : 'Natural Wonder'}
+                                className="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0"
+                                onError={(e) => {
+                                  (e.target as HTMLElement).style.display = 'none';
+                                }}
+                              />
+                            )}
+                            {gameIconUrl && (
+                              <img
+                                src={gameIconUrl}
+                                alt={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                                title={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                                className="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0"
+                                onError={(e) => {
+                                  (e.target as HTMLElement).style.display = 'none';
+                                }}
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Country Flag, Location & Era */}
+                        <div className="flex items-center gap-1.5 text-[11px] text-[var(--ks-text-muted)] mt-1 font-body">
+                          <span className="shrink-0 text-xs leading-none" title={wonder.location.modernCountry}>
+                            {getCountryFlag(wonder.location.modernCountry)}
                           </span>
-                          <span
-                            className={`font-mono text-[8.5px] font-bold px-1.5 py-0.5 rounded-xs border uppercase tracking-wider ${
-                              isCiv6
-                                ? 'bg-orange-100 text-orange-950 border-orange-300 dark:bg-orange-950/70 dark:text-orange-300 dark:border-orange-500/40'
-                                : 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-500/40'
-                            }`}
-                          >
-                            {isCiv6 ? 'Civ VI' : 'Civ V'}
-                          </span>
+                          <span className="truncate">{wonder.location.modernCountry}</span>
                           {wonder.era && wonder.era !== 'Timeless' && (
                             <>
                               <span className="text-[var(--ks-rule)]">·</span>
-                              <span className="font-mono text-[9.5px] text-[var(--ks-text-muted)] font-medium truncate">
+                              <span className="font-mono text-[9.5px] text-[var(--ks-text-faint)] truncate">
                                 {wonder.era}
                               </span>
                             </>
                           )}
                         </div>
-                        <h3
-                          className={`font-display text-[21px] leading-snug truncate mt-0.5 ${
-                            isSelected
-                              ? 'text-[var(--ks-champagne)] font-semibold'
-                              : 'text-[var(--ks-text-warm)] font-semibold group-hover:text-[var(--ks-champagne)]'
-                          }`}
-                        >
-                          {wonder.name}
-                        </h3>
-                        <div className="flex items-center gap-1.5 text-[11px] text-[var(--ks-text-muted)] mt-0.5 font-body">
-                          <span className="shrink-0 text-xs leading-none" title={wonder.location.modernCountry}>
-                            {getCountryFlag(wonder.location.modernCountry)}
-                          </span>
-                          <span className="truncate">{wonder.location.modernCountry}</span>
-                        </div>
+
                         {(wonder.civicRequirement || wonder.techRequirement) && (
                           <div className="mt-1 font-mono text-[9px] text-[var(--ks-text-faint)] truncate">
                             {wonder.civicRequirement ? `Civic: ${wonder.civicRequirement}` : `Tech: ${wonder.techRequirement}`}
@@ -405,14 +420,14 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                         )}
                       </div>
 
-                      {/* Wonder Icon Thumbnail */}
+                      {/* Wonder Icon Thumbnail - Increased Dimension (48px / w-12 h-12) */}
                       {wonder.iconUrl ? (
-                        <div className="relative w-8 h-8 shrink-0">
+                        <div className="relative w-12 h-12 shrink-0 self-center">
                           <img
                             src={wonder.iconUrl}
                             alt={wonder.name}
                             referrerPolicy="no-referrer"
-                            className="w-8 h-8 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5"
+                            className="w-12 h-12 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5 shadow-sm transition-transform hover:scale-105"
                             onError={(e) => {
                               const target = e.target as HTMLElement;
                               target.onerror = null;
@@ -422,13 +437,13 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                         </div>
                       ) : (
                         <div
-                          className={`w-7 h-7 rounded-xs flex items-center justify-center shrink-0 border ${
+                          className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 self-center border ${
                             isWorld
                               ? 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-strong)] text-[var(--ks-kinpaku)]'
                               : 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-patina)] text-[var(--ks-patina)]'
                           }`}
                         >
-                          <span className="text-[10px] font-mono font-bold">{isWorld ? 'W' : 'N'}</span>
+                          <span className="text-[11px] font-mono font-bold">{isWorld ? 'WW' : 'NW'}</span>
                         </div>
                       )}
                     </div>

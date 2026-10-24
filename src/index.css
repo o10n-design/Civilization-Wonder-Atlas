@@ -150,6 +150,39 @@
   letter-spacing: 0.22em;
 }
 
+/* Wonder title badge icons (civ series & wonder type) displayed at the end of wonder names */
+.wonder-title-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.wonder-title-icon {
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  user-select: none;
+  pointer-events: auto;
+}
+
+/* Ensure no background fill on SVGs or img elements across themes */
+img.wonder-title-icon,
+.wonder-title-icon img {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+
 /* Impeccable Neo Kinpaku Brand Mark */
 .ks-mark {
   position: relative;

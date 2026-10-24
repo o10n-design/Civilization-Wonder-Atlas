@@ -4,6 +4,7 @@ import { CivWonder } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
 import { civAudio } from '../../utils/audio';
 import { getCountryFlag } from '../../utils/countryFlags';
+import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
 
 interface CompletionArtModalProps {
   wonder: CivWonder | null;
@@ -11,6 +12,7 @@ interface CompletionArtModalProps {
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
+  theme?: 'dark' | 'light';
 }
 
 export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
@@ -18,7 +20,8 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
   isOpen,
   onClose,
   onNext,
-  onPrev
+  onPrev,
+  theme = 'dark'
 }) => {
   const [isNarrating, setIsNarrating] = useState(false);
 
@@ -173,9 +176,31 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
           {/* Wonder Title & Voice Quote Section */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
             <div>
-              <h2 className="font-headline text-3xl sm:text-4xl font-light text-[var(--ks-champagne)] tracking-wide">
-                {wonder.name}
-              </h2>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h2 className="font-headline text-3xl sm:text-4xl font-light text-[var(--ks-champagne)] tracking-wide inline">
+                  {wonder.name}
+                </h2>
+                <div className="wonder-title-icons inline-flex items-center gap-1.5 shrink-0">
+                  <img
+                    src={getWonderTypeLogo(wonder.type, 'auto', theme)}
+                    alt={wonder.type === 'world_wonder' ? 'World Wonder' : 'Natural Wonder'}
+                    title={wonder.type === 'world_wonder' ? 'World Wonder' : 'Natural Wonder'}
+                    className="wonder-title-icon w-6 h-6 object-contain shrink-0"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                  <img
+                    src={getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme)}
+                    alt={wonder.game === 'civ6' ? 'Civilization VI' : 'Civilization V'}
+                    title={wonder.game === 'civ6' ? 'Civilization VI' : 'Civilization V'}
+                    className="wonder-title-icon w-6 h-6 object-contain shrink-0"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                </div>
+              </div>
               <p className="font-body text-xs text-[var(--ks-text-muted)] mt-0.5 flex items-center gap-1.5">
                 <span className="text-xs leading-none" title={wonder.location.modernCountry}>
                   {getCountryFlag(wonder.location.modernCountry)}

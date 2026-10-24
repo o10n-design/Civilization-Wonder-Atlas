@@ -3,6 +3,7 @@ import L from 'leaflet';
 import { CivWonder, MapTileStyle } from '../../types/wonder';
 import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
+import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
 import { Plus, Minus, Maximize2 } from 'lucide-react';
 import { Civ6FogOverlay } from './Civ6FogOverlay';
 
@@ -249,9 +250,11 @@ export const WorldMap: React.FC<WorldMapProps> = ({
         ? (wonder.era && wonder.era !== 'Timeless' ? `${wonder.era} · World Wonder` : 'World Wonder')
         : 'Natural Wonder';
       const flag = getCountryFlag(wonder.location.modernCountry);
+      const categoryIconUrl = getWonderTypeLogo(wonder.type, 'auto', theme);
+      const gameIconUrl = getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme);
 
       const popupHtml = `
-        <div class="p-3 font-body text-[var(--ks-text-warm)] max-w-[250px] bg-[var(--ks-raised-lacquer)]">
+        <div class="p-3 font-body text-[var(--ks-text-warm)] max-w-[270px] bg-[var(--ks-raised-lacquer)]">
           <div class="flex items-center gap-2.5 mb-2">
             ${
               wonder.iconUrl
@@ -259,8 +262,12 @@ export const WorldMap: React.FC<WorldMapProps> = ({
                 : ''
             }
             <div class="min-w-0">
-              <div class="font-display text-[21px] font-semibold text-[var(--ks-champagne)] leading-tight truncate">
-                ${wonder.name}
+              <div class="font-display text-[20px] font-semibold text-[var(--ks-champagne)] leading-tight flex items-center gap-1.5 flex-wrap">
+                <span>${wonder.name}</span>
+                <span class="wonder-title-icons inline-flex items-center gap-1 shrink-0">
+                  ${categoryIconUrl ? `<img src="${categoryIconUrl}" alt="${categoryLabel}" title="${categoryLabel}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
+                  ${gameIconUrl ? `<img src="${gameIconUrl}" alt="${isCiv6 ? 'Civ VI' : 'Civ V'}" title="${isCiv6 ? 'Civ VI' : 'Civ V'}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
+                </span>
               </div>
               <div class="font-mono text-[8.5px] uppercase tracking-[0.16em] font-semibold mt-0.5 ${
                 isWorld ? 'text-[var(--ks-kinpaku)]' : 'text-[var(--ks-patina)]'

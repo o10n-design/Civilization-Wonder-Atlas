@@ -21,6 +21,7 @@ import { civAudio } from '../../utils/audio';
 import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
 import { getWonderCounterparts } from '../../utils/wonderCounterparts';
+import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
 
 interface RightPanelProps {
   wonder: CivWonder | null;
@@ -31,6 +32,7 @@ interface RightPanelProps {
   onPrev: () => void;
   onRecenter: () => void;
   onOpenCompletionArt?: () => void;
+  theme?: 'dark' | 'light';
 }
 
 export const RightPanel: React.FC<RightPanelProps> = ({
@@ -41,7 +43,8 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   onNext,
   onPrev,
   onRecenter,
-  onOpenCompletionArt
+  onOpenCompletionArt,
+  theme = 'dark'
 }) => {
   const [activeTab, setActiveTab] = useState<'gameplay' | 'history'>('gameplay');
   const [isNarrating, setIsNarrating] = useState(false);
@@ -89,29 +92,35 @@ export const RightPanel: React.FC<RightPanelProps> = ({
       <div className="w-full h-full bg-[var(--ks-raised-lacquer)] rounded-xs flex flex-col overflow-hidden shadow-2xl border border-[var(--ks-rule)]">
         {/* Panel Header */}
         <div className="px-4 py-3 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
-            <span
-              className={`font-mono text-[9px] uppercase tracking-[0.14em] font-bold px-2 py-0.5 rounded-xs border shrink-0 ${
-                isWorld
-                  ? 'bg-amber-100 text-amber-950 border-amber-300 dark:bg-amber-950/70 dark:text-amber-300 dark:border-amber-500/40'
-                  : 'bg-emerald-100 text-emerald-950 border-emerald-300 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-500/40'
-              }`}
-            >
-              {isWorld ? 'World Wonder' : 'Natural Wonder'}
-            </span>
-            <span
-              className={`font-mono text-[8.5px] font-bold px-2 py-0.5 rounded-xs border uppercase tracking-wider shrink-0 ${
-                isCiv6
-                  ? 'bg-orange-100 text-orange-950 border-orange-300 dark:bg-orange-950/70 dark:text-orange-300 dark:border-orange-500/40'
-                  : 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-500/40'
-              }`}
-            >
-              {isCiv6 ? 'Civilization VI' : 'Civilization V'}
-            </span>
-            {wonder.era && wonder.era !== 'Timeless' && (
-              <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium truncate">
-                · {wonder.era}
+          <div className="flex items-center gap-2 min-w-0 flex-wrap">
+            <div className="inline-flex items-center gap-1.5">
+              <img
+                src={getWonderTypeLogo(wonder.type, 'auto', theme)}
+                alt={isWorld ? 'World Wonder' : 'Natural Wonder'}
+                className="w-4.5 h-4.5 object-contain shrink-0"
+              />
+              <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] font-bold text-[var(--ks-champagne)]">
+                {isWorld ? 'World Wonder' : 'Natural Wonder'}
               </span>
+            </div>
+            <span className="text-[var(--ks-rule)]">·</span>
+            <div className="inline-flex items-center gap-1.5">
+              <img
+                src={getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme)}
+                alt={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                className="w-4.5 h-4.5 object-contain shrink-0"
+              />
+              <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.14em] text-[var(--ks-champagne)]">
+                {isCiv6 ? 'Civ VI' : 'Civ V'}
+              </span>
+            </div>
+            {wonder.era && wonder.era !== 'Timeless' && (
+              <>
+                <span className="text-[var(--ks-rule)]">·</span>
+                <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium truncate">
+                  {wonder.era}
+                </span>
+              </>
             )}
           </div>
 
@@ -208,7 +217,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                   src={wonder.iconUrl}
                   alt={wonder.name}
                   referrerPolicy="no-referrer"
-                  className="w-11 h-11 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] object-cover shrink-0 mt-0.5"
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-[var(--ks-rule)] p-1 bg-[var(--ks-lacquer-deep)] object-cover shrink-0 mt-0.5 shadow-md"
                   onError={(e) => {
                     const target = e.target as HTMLElement;
                     target.style.display = 'none';
@@ -216,9 +225,31 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 />
               )}
               <div className="min-w-0">
-                <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--ks-champagne)] leading-tight">
-                  {wonder.name}
-                </h2>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--ks-champagne)] leading-tight inline">
+                    {wonder.name}
+                  </h2>
+                  <div className="wonder-title-icons inline-flex items-center gap-1.5 shrink-0">
+                    <img
+                      src={getWonderTypeLogo(wonder.type, 'auto', theme)}
+                      alt={isWorld ? 'World Wonder' : 'Natural Wonder'}
+                      title={isWorld ? 'World Wonder' : 'Natural Wonder'}
+                      className="wonder-title-icon w-5 h-5 sm:w-5.5 sm:h-5.5 object-contain shrink-0"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                    <img
+                      src={getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme)}
+                      alt={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                      title={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                      className="wonder-title-icon w-5 h-5 sm:w-5.5 sm:h-5.5 object-contain shrink-0"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                </div>
                 <div className="flex items-center gap-1.5 text-xs text-[var(--ks-text-muted)] mt-1 font-body">
                   <span className="shrink-0 text-sm leading-none" title={wonder.location.modernCountry}>
                     {getCountryFlag(wonder.location.modernCountry)}

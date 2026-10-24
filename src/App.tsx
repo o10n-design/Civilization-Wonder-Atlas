@@ -378,6 +378,7 @@ export default function App() {
           onToggleOpen={() => setIsLeftOpen(!isLeftOpen)}
           gameFilter={gameFilter}
           onSelectGameFilter={handleSelectGameFilter}
+          theme={theme}
         />
       )}
 
@@ -395,6 +396,7 @@ export default function App() {
             civAudio.playWonderFanfare();
             setIsCompletionArtOpen(true);
           }}
+          theme={theme}
         />
       )}
 
@@ -405,6 +407,7 @@ export default function App() {
         onClose={() => setIsCompletionArtOpen(false)}
         onNext={handleNextWonder}
         onPrev={handlePrevWonder}
+        theme={theme}
       />
 
       {/* 6. Legal Attribution & Disclaimers Modal */}

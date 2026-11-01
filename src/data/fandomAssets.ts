@@ -158,7 +158,7 @@ export const FANDOM_ASSETS: Record<string, FandomAsset> = {
   },
   "grand-mesa": {
     "iconUrl": "/src/assets/images/icons/grand-mesa.png",
-    "visualUrl": "/src/assets/images/uluru_natural_wonder_1792264354262.jpg"
+    "visualUrl": "/src/assets/images/grand_mesa_wonder_1793557659742.jpg"
   },
   "fountain-of-youth": {
     "iconUrl": "/src/assets/images/icons/fountain-of-youth.png",

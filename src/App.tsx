@@ -181,9 +181,6 @@ export default function App() {
   const handleToggleMute = useCallback(() => {
     civAudio.isMuted = !isMuted;
     setIsMuted(!isMuted);
-    if (!isMuted) {
-      civAudio.stopNarration();
-    }
   }, [isMuted]);
 
   const handleToggleZenMode = useCallback(() => {
@@ -238,6 +235,7 @@ export default function App() {
         if (isCompletionArtOpen) {
           setIsCompletionArtOpen(false);
         } else {
+          setSelectedWonder(null);
           setIsRightOpen(false);
         }
       } else if (e.key.toLowerCase() === 'm') {
@@ -324,6 +322,7 @@ export default function App() {
           wonders={wonders}
           selectedWonder={selectedWonder}
           onSelectWonder={handleSelectWonder}
+          onDeselect={() => setSelectedWonder(null)}
           mapStyle={mapStyle}
           showWorldWonders={showWorldWonders}
           showNaturalWonders={showNaturalWonders}
@@ -353,7 +352,10 @@ export default function App() {
           wonder={selectedWonder}
           allWonders={allWonders}
           onSelectWonder={handleSelectWonder}
-          onClose={() => setIsRightOpen(false)}
+          onClose={() => {
+            setIsRightOpen(false);
+            setSelectedWonder(null);
+          }}
           onNext={handleNextWonder}
           onPrev={handlePrevWonder}
           onRecenter={() => setCameraTrigger((prev) => prev + 1)}

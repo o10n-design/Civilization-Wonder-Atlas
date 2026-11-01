@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   X,
-  Play,
-  Square,
   ChevronLeft,
   ChevronRight,
   Sparkles,
@@ -47,14 +45,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   theme = 'dark'
 }) => {
   const [activeTab, setActiveTab] = useState<'gameplay' | 'history'>('gameplay');
-  const [isNarrating, setIsNarrating] = useState(false);
   const [copiedCoords, setCopiedCoords] = useState(false);
-
-  // Stop narration when wonder changes
-  useEffect(() => {
-    setIsNarrating(false);
-    civAudio.stopNarration();
-  }, [wonder?.id]);
 
   const counterparts = useMemo(() => {
     if (!wonder) return { civ5Wonder: null, civ6Wonder: null, hasBoth: false };
@@ -66,19 +57,6 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   const isWorld = wonder.type === 'world_wonder';
   const isCiv6 = wonder.game === 'civ6';
   const artworkSrc = wonder.visualUrl || wonder.imageUrl;
-
-  const handleToggleNarration = () => {
-    if (isNarrating) {
-      civAudio.stopNarration();
-      setIsNarrating(false);
-    } else {
-      setIsNarrating(true);
-      const textToRead = `${wonder.quote} ... as quoted from ${wonder.quoteAuthor}.`;
-      civAudio.narrateQuote(textToRead, () => {
-        setIsNarrating(false);
-      });
-    }
-  };
 
   const handleCopyCoords = () => {
     const coords = `${wonder.location.lat.toFixed(4)}, ${wonder.location.lng.toFixed(4)}`;
@@ -400,28 +378,16 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 </div>
               </div>
 
-              {/* Spoken Quote Card with Audio Player */}
+              {/* Quote Card */}
               <div className="p-3.5 rounded-xs bg-[var(--ks-lacquer-deep)] border border-[var(--ks-rule)] space-y-2">
                 <p className="font-body italic text-xs sm:text-sm text-[var(--ks-text-warm)] leading-relaxed">
                   “{wonder.quote}”
                 </p>
                 <div className="pt-2 border-t border-[var(--ks-rule)] flex items-center justify-between">
-                  <div className="text-[11px] text-[var(--ks-champagne)] font-medium truncate mr-2">
+                  <div className="text-[11px] text-[var(--ks-champagne)] font-medium truncate">
                     — {wonder.quoteAuthor}
                     {wonder.quoteWork && <span className="text-[var(--ks-text-muted)]">, {wonder.quoteWork}</span>}
                   </div>
-                  <button
-                    onClick={handleToggleNarration}
-                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xs text-[11px] transition-colors shrink-0 font-medium border ${
-                      isNarrating
-                        ? 'bg-[var(--ks-kinpaku)] text-[var(--ks-dark-ink)] border-[var(--ks-kinpaku)] shadow-xs'
-                        : 'bg-transparent hover:bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)]'
-                    }`}
-                    title={isNarrating ? 'Halt voice' : 'Listen to Civilopedia quote'}
-                  >
-                    {isNarrating ? <Square className="w-3 h-3 fill-current" /> : <Play className="w-3 h-3 fill-current" />}
-                    <span>{isNarrating ? 'Halt' : 'Narrate'}</span>
-                  </button>
                 </div>
               </div>
 

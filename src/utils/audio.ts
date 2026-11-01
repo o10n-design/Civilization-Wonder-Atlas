@@ -1,11 +1,10 @@
 /**
- * Sound synthesis and voice narration for Civ V quotes and discovery fanfare.
- * Uses Web Audio API for authentic game chimes and Web Speech Synthesis for the narrator.
+ * Sound synthesis for game interface effects and map interactions.
+ * Uses Web Audio API for authentic game chimes.
  */
 
 class CivAudioManager {
   private audioCtx: AudioContext | null = null;
-  private currentUtterance: SpeechSynthesisUtterance | null = null;
   public isMuted: boolean = false;
 
   private getAudioContext(): AudioContext | null {
@@ -160,50 +159,6 @@ class CivAudioManager {
    */
   public playMapSelect(): void {
     this.playGameSelect(0.92);
-  }
-
-  /**
-   * Narrates quote using Web Speech Synthesis with dignified pacing
-   */
-  public narrateQuote(text: string, onEnd?: () => void): boolean {
-    if (typeof window === 'undefined' || !window.speechSynthesis) return false;
-
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.88; // Deliberate, grand pacing like W. Morgan Sheppard
-    utterance.pitch = 0.85; // Deep dignified timbre
-
-    // Try to find a rich English voice
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice =
-      voices.find((v) => v.lang.startsWith('en') && (v.name.includes('Male') || v.name.includes('David') || v.name.includes('George') || v.name.includes('UK') || v.name.includes('Natural'))) ||
-      voices.find((v) => v.lang.startsWith('en'));
-
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-    }
-
-    if (onEnd) {
-      utterance.onend = onEnd;
-      utterance.onerror = onEnd;
-    }
-
-    this.currentUtterance = utterance;
-    window.speechSynthesis.speak(utterance);
-    return true;
-  }
-
-  public stopNarration(): void {
-    if (typeof window !== 'undefined' && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      this.currentUtterance = null;
-    }
-  }
-
-  public isNarrating(): boolean {
-    if (typeof window === 'undefined' || !window.speechSynthesis) return false;
-    return window.speechSynthesis.speaking;
   }
 }
 

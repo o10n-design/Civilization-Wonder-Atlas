@@ -335,9 +335,9 @@ export const WorldMap: React.FC<WorldMapProps> = ({
 
     mapInstanceRef.current.flyTo(
       [selectedWonder.location.lat, selectedWonder.location.lng],
-      6,
+      10,
       {
-        duration: 1.4,
+        duration: 1.5,
         easeLinearity: 0.25
       }
     );

@@ -181,9 +181,6 @@ export default function App() {
   const handleToggleMute = useCallback(() => {
     civAudio.isMuted = !isMuted;
     setIsMuted(!isMuted);
-    if (!isMuted) {
-      civAudio.stopNarration();
-    }
   }, [isMuted]);
 
   const handleToggleZenMode = useCallback(() => {

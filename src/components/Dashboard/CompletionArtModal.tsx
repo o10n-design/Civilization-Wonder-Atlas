@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { X, Play, Square, ChevronLeft, ChevronRight, Sparkles, Compass } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { X, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { CivWonder } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
-import { civAudio } from '../../utils/audio';
 import { getCountryFlag } from '../../utils/countryFlags';
 
 interface CompletionArtModalProps {
@@ -22,13 +21,6 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
   onPrev,
   theme = 'dark'
 }) => {
-  const [isNarrating, setIsNarrating] = useState(false);
-
-  useEffect(() => {
-    setIsNarrating(false);
-    civAudio.stopNarration();
-  }, [wonder?.id]);
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -48,19 +40,6 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
 
   const isWorld = wonder.type === 'world_wonder';
   const artworkSrc = wonder.visualUrl || wonder.imageUrl;
-
-  const handleToggleNarration = () => {
-    if (isNarrating) {
-      civAudio.stopNarration();
-      setIsNarrating(false);
-    } else {
-      setIsNarrating(true);
-      const textToRead = `${wonder.quote} ... as written by ${wonder.quoteAuthor}.`;
-      civAudio.narrateQuote(textToRead, () => {
-        setIsNarrating(false);
-      });
-    }
-  };
 
   return (
     <div
@@ -172,33 +151,19 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
             </div>
           </div>
 
-          {/* Wonder Title & Voice Quote Section */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-            <div>
-              <div className="flex items-center gap-2.5">
-                <h2 className="font-headline text-3xl sm:text-4xl font-light text-[var(--ks-champagne)] tracking-wide">
-                  {wonder.name}
-                </h2>
-              </div>
-              <p className="font-body text-xs text-[var(--ks-text-muted)] mt-0.5 flex items-center gap-1.5">
-                <span className="text-xs leading-none" title={wonder.location.modernCountry}>
-                  {getCountryFlag(wonder.location.modernCountry)}
-                </span>
-                <span>{wonder.location.modernCountry} · {wonder.location.lat.toFixed(4)}°, {wonder.location.lng.toFixed(4)}°</span>
-              </p>
+          {/* Wonder Title & Location Section */}
+          <div className="pt-1">
+            <div className="flex items-center gap-2.5">
+              <h2 className="font-headline text-3xl sm:text-4xl font-light text-[var(--ks-champagne)] tracking-wide">
+                {wonder.name}
+              </h2>
             </div>
-
-            <button
-              onClick={handleToggleNarration}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xs text-xs font-medium uppercase tracking-wider transition-all border shrink-0 ${
-                isNarrating
-                  ? 'bg-[var(--ks-kinpaku-rich)] text-[var(--ks-dark-ink)] border-[var(--ks-kinpaku-rich)] animate-pulse'
-                  : 'bg-[var(--ks-kinpaku)] text-[var(--ks-dark-ink)] border-[var(--ks-kinpaku)] hover:bg-[var(--ks-kinpaku-pale)]'
-              }`}
-            >
-              {isNarrating ? <Square className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current" />}
-              <span>{isNarrating ? 'Stop Voice' : 'Civ V Voice Narration'}</span>
-            </button>
+            <p className="font-body text-xs text-[var(--ks-text-muted)] mt-0.5 flex items-center gap-1.5">
+              <span className="text-xs leading-none" title={wonder.location.modernCountry}>
+                {getCountryFlag(wonder.location.modernCountry)}
+              </span>
+              <span>{wonder.location.modernCountry} · {wonder.location.lat.toFixed(4)}°, {wonder.location.lng.toFixed(4)}°</span>
+            </p>
           </div>
 
           {/* Authentic In-Game Quote */}

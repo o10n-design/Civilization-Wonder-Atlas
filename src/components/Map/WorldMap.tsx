@@ -254,16 +254,16 @@ export const WorldMap: React.FC<WorldMapProps> = ({
       const gameIconUrl = getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme);
 
       const popupHtml = `
-        <div class="p-3 font-body text-[var(--ks-text-warm)] max-w-[270px] bg-[var(--ks-raised-lacquer)]">
+        <div class="p-3 font-body text-[var(--ks-text-warm)] w-max max-w-[420px] bg-[var(--ks-raised-lacquer)]">
           <div class="flex items-center gap-2.5 mb-2">
             ${
               wonder.iconUrl
                 ? `<img src="${wonder.iconUrl}" referrerpolicy="no-referrer" class="w-9 h-9 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] shrink-0 object-cover" alt="" />`
                 : ''
             }
-            <div class="min-w-0">
-              <div class="font-display text-[20px] font-semibold text-[var(--ks-champagne)] leading-tight flex items-center gap-1.5 flex-wrap">
-                <span>${wonder.name}</span>
+            <div class="min-w-0 flex-1">
+              <div class="font-display text-[20px] font-semibold text-[var(--ks-champagne)] leading-tight flex items-center gap-1.5 whitespace-nowrap">
+                <span class="whitespace-nowrap">${wonder.name}</span>
                 <span class="wonder-title-icons inline-flex items-center gap-1 shrink-0">
                   ${categoryIconUrl ? `<img src="${categoryIconUrl}" alt="${categoryLabel}" title="${categoryLabel}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
                   ${gameIconUrl ? `<img src="${gameIconUrl}" alt="${isCiv6 ? 'Civ VI' : 'Civ V'}" title="${isCiv6 ? 'Civ VI' : 'Civ V'}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
@@ -287,7 +287,9 @@ export const WorldMap: React.FC<WorldMapProps> = ({
       marker.bindPopup(popupHtml, {
         className: 'clean-custom-popup',
         closeButton: false,
-        offset: [0, -10]
+        offset: [0, -10],
+        maxWidth: 420,
+        minWidth: 260
       });
 
       marker.on('click', () => {

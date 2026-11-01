@@ -314,6 +314,8 @@ img.wonder-title-icon,
 .clean-custom-popup .leaflet-popup-content {
   margin: 0;
   line-height: 1.5;
+  width: max-content;
+  max-width: 420px;
 }
 
 .clean-custom-popup .leaflet-popup-tip {

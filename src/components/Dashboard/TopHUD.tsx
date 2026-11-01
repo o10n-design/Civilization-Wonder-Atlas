@@ -1,10 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Compass,
-  Volume2,
-  VolumeX,
-  Layers,
-  ListFilter,
   SlidersHorizontal,
   Check,
   ChevronDown,
@@ -29,12 +24,12 @@ interface TopHUDProps {
   onToggleNaturalWonders: () => void;
   isTourActive?: boolean;
   onToggleTour?: () => void;
-  isMuted: boolean;
-  onToggleMute: () => void;
-  onResetView: () => void;
-  onOpenRandom: () => void;
-  isLeftOpen: boolean;
-  onToggleLeft: () => void;
+  isMuted?: boolean;
+  onToggleMute?: () => void;
+  onResetView?: () => void;
+  onOpenRandom?: () => void;
+  isLeftOpen?: boolean;
+  onToggleLeft?: () => void;
   isRightOpen?: boolean;
   onToggleRight?: () => void;
   hasSelectedWonder?: boolean;
@@ -57,11 +52,6 @@ export const TopHUD: React.FC<TopHUDProps> = ({
   onToggleWorldWonders,
   showNaturalWonders,
   onToggleNaturalWonders,
-  isMuted,
-  onToggleMute,
-  onOpenRandom,
-  isLeftOpen,
-  onToggleLeft,
   isZenMode,
   onToggleZenMode,
   theme = 'dark'
@@ -295,55 +285,18 @@ export const TopHUD: React.FC<TopHUDProps> = ({
 
       {/* Zone 3: Streamlined Actions (Cleaned Up & De-cluttered) */}
       <div className="flex items-center gap-2 shrink-0">
-        {/* Toggle Catalog */}
-        <button
-          onClick={onToggleLeft}
-          className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xs text-xs font-medium transition-colors border ${
-            isLeftOpen
-              ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)]'
-              : 'text-[var(--ks-text-warm)] hover:text-[var(--ks-champagne)] border-[var(--ks-rule)] hover:bg-[var(--ks-graphite)] bg-transparent'
-          }`}
-          title={isLeftOpen ? 'Collapse Catalog' : 'Open Catalog'}
-        >
-          <ListFilter className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Catalog</span>
-        </button>
-
-        {/* Random Wonder Discovery Button (Replaced Grand Tour) */}
-        <button
-          onClick={onOpenRandom}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap bg-[var(--ks-kinpaku)] text-[var(--ks-dark-ink)] border border-[var(--ks-kinpaku)] hover:bg-[var(--ks-kinpaku-pale)] shadow-xs cursor-pointer"
-          title="Explore a random world or natural wonder (Space or Click)"
-        >
-          <Compass className="w-3.5 h-3.5" />
-          <span>Random</span>
-        </button>
-
-        {/* Full Map Zen Mode */}
+        {/* Toggle Panels (Hide Panels / Show Panels) */}
         <button
           onClick={onToggleZenMode}
-          className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xs text-xs font-medium transition-colors border ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-medium transition-colors border cursor-pointer ${
             isZenMode
               ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-patina)] border-[var(--ks-rule-patina)]'
               : 'text-[var(--ks-text-warm)] hover:text-[var(--ks-champagne)] border-[var(--ks-rule)] hover:bg-[var(--ks-graphite)] bg-transparent'
           }`}
-          title={isZenMode ? 'Restore side panels (Z)' : 'Full map view (hide panels) (Z)'}
+          title={isZenMode ? 'Show side panels (Z)' : 'Hide side panels (Z)'}
         >
           {isZenMode ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
-          <span>{isZenMode ? 'Panels' : 'Full Map'}</span>
-        </button>
-
-        {/* Mute Audio / Narration */}
-        <button
-          onClick={onToggleMute}
-          className={`p-1.5 rounded-xs border transition-colors ${
-            isMuted
-              ? 'text-[var(--ks-text-mute-deep)] border-[var(--ks-rule)] hover:text-[var(--ks-text-muted)] bg-transparent'
-              : 'text-[var(--ks-kinpaku)] border-[var(--ks-rule-strong)] bg-[var(--ks-graphite)]'
-          }`}
-          title={isMuted ? 'Unmute narration & sound effects (M)' : 'Mute audio (M)'}
-        >
-          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          <span>{isZenMode ? 'Show Panels' : 'Hide Panels'}</span>
         </button>
       </div>
     </header>

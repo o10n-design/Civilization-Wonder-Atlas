@@ -13,7 +13,8 @@ import {
   Scroll,
   Maximize2,
   Hammer,
-  GraduationCap
+  GraduationCap,
+  Search
 } from 'lucide-react';
 import { CivWonder } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
@@ -30,7 +31,7 @@ interface RightPanelProps {
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
-  onRecenter: () => void;
+  onRecenter?: () => void;
   onOpenCompletionArt?: () => void;
   theme?: 'dark' | 'light';
 }
@@ -42,7 +43,6 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   onClose,
   onNext,
   onPrev,
-  onRecenter,
   onOpenCompletionArt,
   theme = 'dark'
 }) => {
@@ -149,16 +149,16 @@ export const RightPanel: React.FC<RightPanelProps> = ({
           </div>
         </div>
 
-        {/* Edition Switcher Row Directly Below Header */}
-        <div className="px-4 py-2 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)]/90 flex items-center justify-between gap-2 shrink-0">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <Sparkles className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />
-            <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] font-medium truncate">
-              {counterparts.hasBoth ? 'Available in both games' : 'Game Edition'}
-            </span>
-          </div>
+        {/* Edition Switcher Row Directly Below Header - Only shown for wonders available in both games */}
+        {counterparts.hasBoth && (
+          <div className="px-4 py-2 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)]/90 flex items-center justify-between gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <Sparkles className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />
+              <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] font-medium truncate">
+                Available in both games
+              </span>
+            </div>
 
-          {counterparts.hasBoth ? (
             <div className="flex items-center gap-1 bg-[var(--ks-graphite)] p-0.5 rounded-xs border border-[var(--ks-rule)] shrink-0">
               <button
                 type="button"
@@ -195,18 +195,8 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 Civ VI
               </button>
             </div>
-          ) : (
-            <span
-              className={`font-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-xs border ${
-                isCiv6
-                  ? 'bg-orange-100 text-orange-950 border-orange-300 dark:bg-orange-950/70 dark:text-orange-300 dark:border-orange-500/40'
-                  : 'bg-blue-100 text-blue-950 border-blue-300 dark:bg-blue-950/70 dark:text-blue-200 dark:border-blue-500/40'
-              }`}
-            >
-              {isCiv6 ? 'Civ VI Exclusive' : 'Civ V Exclusive'}
-            </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Title, Icon & Coordinates Ribbon */}
         <div className="px-4 pt-3.5 pb-3 border-b border-[var(--ks-rule)] bg-[var(--ks-raised-lacquer)] shrink-0">
@@ -225,31 +215,9 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                 />
               )}
               <div className="min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--ks-champagne)] leading-tight inline">
-                    {wonder.name}
-                  </h2>
-                  <div className="wonder-title-icons inline-flex items-center gap-1.5 shrink-0">
-                    <img
-                      src={getWonderTypeLogo(wonder.type, 'auto', theme)}
-                      alt={isWorld ? 'World Wonder' : 'Natural Wonder'}
-                      title={isWorld ? 'World Wonder' : 'Natural Wonder'}
-                      className="wonder-title-icon w-5 h-5 sm:w-5.5 sm:h-5.5 object-contain shrink-0"
-                      onError={(e) => {
-                        (e.target as HTMLElement).style.display = 'none';
-                      }}
-                    />
-                    <img
-                      src={getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme)}
-                      alt={isCiv6 ? 'Civilization VI' : 'Civilization V'}
-                      title={isCiv6 ? 'Civilization VI' : 'Civilization V'}
-                      className="wonder-title-icon w-5 h-5 sm:w-5.5 sm:h-5.5 object-contain shrink-0"
-                      onError={(e) => {
-                        (e.target as HTMLElement).style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </div>
+                <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--ks-champagne)] leading-tight">
+                  {wonder.name}
+                </h2>
                 <div className="flex items-center gap-1.5 text-xs text-[var(--ks-text-muted)] mt-1 font-body">
                   <span className="shrink-0 text-sm leading-none" title={wonder.location.modernCountry}>
                     {getCountryFlag(wonder.location.modernCountry)}
@@ -592,12 +560,16 @@ export const RightPanel: React.FC<RightPanelProps> = ({
             <ChevronLeft className="w-3.5 h-3.5" />
             <span>Prev</span>
           </button>
-          <button
-            onClick={onRecenter}
-            className="px-3 py-1.5 rounded-xs bg-transparent hover:bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border border-[var(--ks-rule-strong)] text-xs font-medium transition-colors"
+          <a
+            href={`https://www.google.com/search?q=${encodeURIComponent(wonder.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs bg-transparent hover:bg-[var(--ks-graphite)] text-[var(--ks-kinpaku)] border border-[var(--ks-rule-strong)] text-xs font-medium transition-colors cursor-pointer"
+            title={`Search "${wonder.name}" on Google`}
           >
-            Center Map
-          </button>
+            <Search className="w-3.5 h-3.5" />
+            <span>Google it</span>
+          </a>
           <button
             onClick={onNext}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xs bg-[var(--ks-graphite)] hover:bg-[var(--ks-graphite-2)] text-xs text-[var(--ks-champagne)] font-medium transition-colors border border-[var(--ks-rule)]"

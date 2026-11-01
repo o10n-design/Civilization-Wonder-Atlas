@@ -11,6 +11,7 @@ interface WorldMapProps {
   wonders: CivWonder[];
   selectedWonder: CivWonder | null;
   onSelectWonder: (wonder: CivWonder) => void;
+  onDeselect?: () => void;
   mapStyle: MapTileStyle;
   showWorldWonders: boolean;
   showNaturalWonders: boolean;
@@ -65,6 +66,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
   wonders,
   selectedWonder,
   onSelectWonder,
+  onDeselect,
   mapStyle,
   showWorldWonders,
   showNaturalWonders,
@@ -76,6 +78,11 @@ export const WorldMap: React.FC<WorldMapProps> = ({
   const mapInstanceRef = useRef<L.Map | null>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
   const markersLayerGroupRef = useRef<L.LayerGroup | null>(null);
+  const onDeselectRef = useRef(onDeselect);
+
+  useEffect(() => {
+    onDeselectRef.current = onDeselect;
+  }, [onDeselect]);
 
   // Initialize Map
   useEffect(() => {
@@ -104,6 +111,13 @@ export const WorldMap: React.FC<WorldMapProps> = ({
     markersLayerGroupRef.current = markersGroup;
 
     mapInstanceRef.current = map;
+
+    map.on('click', (e) => {
+      const target = e.originalEvent?.target as HTMLElement;
+      if (!target?.closest('.clean-marker') && !target?.closest('.leaflet-popup')) {
+        onDeselectRef.current?.();
+      }
+    });
 
     const resizeObserver = new ResizeObserver(() => {
       map.invalidateSize();
@@ -177,7 +191,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
         <div class="relative group cursor-pointer">
           ${
             isSelected
-              ? `<div class="absolute -inset-2 rounded-full animate-ping opacity-70 ${
+              ? `<div class="absolute -inset-2 rounded-full wonder-selection-pulse ${
                   isWorld ? 'bg-[var(--ks-kinpaku)]' : 'bg-[var(--ks-patina)]'
                 }"></div>`
               : ''
@@ -292,8 +306,13 @@ export const WorldMap: React.FC<WorldMapProps> = ({
         minWidth: 260
       });
 
-      marker.on('click', () => {
-        onSelectWonder(wonder);
+      marker.on('click', (e) => {
+        L.DomEvent.stopPropagation(e);
+        if (selectedWonder?.id === wonder.id) {
+          onDeselect?.();
+        } else {
+          onSelectWonder(wonder);
+        }
       });
 
       marker.on('mouseover', () => {
@@ -308,7 +327,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
 
       markersGroup.addLayer(marker);
     });
-  }, [wonders, selectedWonder, onSelectWonder, showWorldWonders, showNaturalWonders, theme]);
+  }, [wonders, selectedWonder, onSelectWonder, onDeselect, showWorldWonders, showNaturalWonders, theme]);
 
   // Fly to selected wonder
   useEffect(() => {

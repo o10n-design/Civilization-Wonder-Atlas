@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1f262e" />
+      <stop offset="70%" stop-color="#101418" />
+      <stop offset="100%" stop-color="#0a0d10" />
+    </radialGradient>
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe89e" />
+      <stop offset="50%" stop-color="#f5be2c" />
+      <stop offset="100%" stop-color="#9a6e1a" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background Disc -->
+  <circle cx="64" cy="64" r="62" fill="url(#bgGrad)" stroke="url(#goldRim)" stroke-width="3" />
+  <circle cx="64" cy="64" r="57" fill="none" stroke="#f5be2c" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6" />
+  <!-- Wonder Art -->
+  <g transform="translate(14, 14)">
+    
+    <!-- Monumental Curved Concrete Arch-Gravity Dam & Energy -->
+    <!-- Canyon Rock Walls -->
+    <polygon points="12,24 28,40 22,86 12,86" fill="#4a3728" stroke="#f5be2c" stroke-width="1.5"/>
+    <polygon points="88,24 72,40 78,86 88,86" fill="#4a3728" stroke="#f5be2c" stroke-width="1.5"/>
+    <!-- Dam Crest & Massive Wall -->
+    <path d="M26,38 C38,46 62,46 74,38 L78,84 C64,74 36,74 22,84 Z" fill="#64748b" stroke="#ffe89e" stroke-width="2.5"/>
+    <!-- Vertical Intake Towers -->
+    <rect x="34" y="26" width="5" height="18" fill="#e2e8f0" stroke="#f5be2c" stroke-width="1.2"/>
+    <rect x="61" y="26" width="5" height="18" fill="#e2e8f0" stroke="#f5be2c" stroke-width="1.2"/>
+    <!-- Electrical Lightning Bolt -->
+    <polygon points="52,48 44,62 50,62 46,78 58,60 51,60" fill="#f5be2c" stroke="#ffe89e" stroke-width="1"/>
+    <!-- Water Tailrace -->
+    <path d="M30 84 Q50 80 70 84" fill="none" stroke="#46d2bc" stroke-width="3"/>
+  
+  </g>
+</svg>

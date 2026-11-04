@@ -30,7 +30,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Civilization IV Wonder Quote (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'The Pyramids are one of the most powerful and influential World Wonders in Civilization IV. Constructing them unlocks every government civic in the game regardless of your technology tree progress, allowing an early transition into Representation for massive specialist research or Police State for total wartime production.',
     historicalContext: 'Built as monumental royal tombs during Egypt’s Old Kingdom, the Pyramids of Giza showcase astonishing geometric precision and architectural ambition.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/e/e3/Pyramids_%28Civ6%29.png/revision/latest?cb=20161117163821',
+    iconUrl: '/src/assets/images/icons/great-pyramids.png',
     visualUrl: '/src/assets/images/pyramids_giza_civ_1792262637264.jpg'
   },
   {
@@ -61,7 +61,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Civilization IV Wonder Quote (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'In Civilization IV, Stonehenge is the definitive early-game empire expander. By granting a free Monument in every existing and newly founded settlement, your borders rapidly push outwards across neighboring lands without requiring individual cultural investments.',
     historicalContext: 'A ring of standing stones set within earthworks on Salisbury Plain, aligned towards the sunrise of the summer solstice.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/6/66/Stonehenge_%28Civ6%29.png/revision/latest?cb=20161117163854',
+    iconUrl: '/src/assets/images/icons/stonehenge.png',
     visualUrl: '/src/assets/images/wonders/stonehenge.png'
   },
   {
@@ -93,8 +93,8 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Geographica',
     civilopediaExcerpt: 'The Great Lighthouse of Alexandria in Civilization IV is an economic juggernaut. Granting two extra trade routes to all coastal cities creates an unstoppable seafaring commercial empire that easily finances research and expansion.',
     historicalContext: 'Constructed by the Ptolemaic Kingdom on the island of Pharos, estimated to have been between 100 and 130 meters tall, guiding ships for over a millennium.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/2/29/Great_Lighthouse_%28Civ5%29.png/revision/latest?cb=20120921021422',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/7/7f/Great_Lighthouse_splash_%28Civ5%29.jpg/revision/latest?cb=20130928092823'
+    iconUrl: '/assets/wonder-icons/great-lighthouse.svg',
+    visualUrl: '/src/assets/images/wonders/colossus-of-rhodes.png'
   },
   {
     id: 'civ4-statue-of-zeus',
@@ -124,8 +124,8 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'The Iliad (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'Introduced in Civilization IV: Beyond the Sword, the Statue of Zeus is the ultimate psychological and defensive deterrent. Any nation foolish enough to declare war on its owner suffers double war weariness, quickly plunging their empire into strikes, famine, and civil unrest.',
     historicalContext: 'A giant chryselephantine (ivory plates and gold panels) sculpture created by the master Greek sculptor Phidias in the Temple of Zeus at Olympia.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/5/5a/Statue_of_Zeus_%28Civ6%29.png/revision/latest?cb=20210130070116',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/9/9f/Statue_of_Zeus_%28Civ6%29_splash.jpg/revision/latest?cb=20211029191104'
+    iconUrl: '/assets/wonder-icons/statue-of-zeus.svg',
+    visualUrl: '/src/assets/images/wonders/colossus-of-rhodes.png'
   },
   {
     id: 'civ4-parthenon',
@@ -155,8 +155,8 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'The Problem (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'The Parthenon in Civ IV is the crown jewel of any civilization pursuing a Specialist Economy or Cultural Victory. Boosting the birth rate of Great People by 50% across the board sparks a relentless cascade of Great Scientists, Artists, and Engineers.',
     historicalContext: 'Dedicated to the goddess Athena Parthenos, built under the political leadership of Pericles, standing as the zenith of the Doric order of architecture.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/6/68/Parthenon_%28Civ5%29.png/revision/latest?cb=20130704043232',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/3/36/Parthenon_splash_%28Civ5%29.jpg/revision/latest?cb=20130928092837'
+    iconUrl: '/assets/wonder-icons/parthenon.svg',
+    visualUrl: '/src/assets/images/wonders/great-library.png'
   },
   {
     id: 'civ4-mausoleum',
@@ -186,8 +186,8 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Dialogues of the Dead (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'In Civilization IV: Beyond the Sword, the Mausoleum of Maussollos extends all Golden Ages by 50%. In the hands of a skilled player chaining Great People, it keeps your empire in a permanent, shimmering Golden Age of boosted commerce and production.',
     historicalContext: 'Built for Mausolus, a satrap of the Achaemenid Empire. The beauty and scale of the tomb were so celebrated that Antipater of Sidon identified it as one of the Seven Wonders of the Ancient World.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/1/1a/Mausoleum_at_Halicarnassus_%28Civ6%29.png/revision/latest?cb=20180210080646',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/6/64/Mausoleum_at_Halicarnassus_%28Civ6%29_splash.jpg/revision/latest?cb=20211029191056'
+    iconUrl: '/assets/wonder-icons/mausoleum-of-maussollos.svg',
+    visualUrl: '/src/assets/images/wonders/great-pyramids.png'
   },
 
   // ===================== CIV IV MEDIEVAL & RENAISSANCE =====================
@@ -219,7 +219,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'The Rihla (Travels)',
     civilopediaExcerpt: 'The Malwiya or Spiral Minaret of the Great Mosque of Samarra in Civilization IV is a premier economic engine for spiritual empires. Every single temple and cathedral of your state religion generates +2 Gold per turn, completely underwriting imperial expansion.',
     historicalContext: 'A 52-meter high sandstone minaret with ascending spiral conical ramp, built under Abbasid caliph Al-Mutawakkil.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/0/07/CivilizationIV_Icon.png/revision/latest?cb=20161117163820',
+    iconUrl: '/assets/wonder-icons/spiral-minaret.svg',
     visualUrl: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=80'
   },
   {
@@ -250,7 +250,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Dictatus Papae (1075)',
     civilopediaExcerpt: 'Introduced in Civ IV: Beyond the Sword, the Apostolic Palace brings religious global diplomacy into the medieval age. The builder can pass international resolutions—enforcing trade embargoes, mandating open borders, assigning holy wars, or securing an early Religious Diplomatic Victory.',
     historicalContext: 'The papal palace complex in Vatican City containing the Papal Apartments, the Catholic Church government offices, and the Sistine Chapel.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/0/07/CivilizationIV_Icon.png/revision/latest?cb=20161117163820',
+    iconUrl: '/assets/wonder-icons/apostolic-palace.svg',
     visualUrl: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=80'
   },
   {
@@ -281,8 +281,8 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Civilization IV Wonder Quote (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'One of three ancient centers of learning located in Timbuktu, Mali. In Civilization IV, the University of Sankore turns piety directly into intellectual breakthrough, converting each religious sanctuary into a research laboratory.',
     historicalContext: 'Reached its peak of prosperity under the reign of Mansa Musa and the Songhai Empire, housing over 25,000 students and one of the largest manuscript libraries in the medieval world.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/1/1a/University_of_Sankore_%28Civ6%29.png/revision/latest?cb=20190226065434',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/2/29/University_of_Sankore_%28Civ6%29_splash.jpg/revision/latest?cb=20211029191107'
+    iconUrl: '/assets/wonder-icons/university-of-sankore.svg',
+    visualUrl: '/src/assets/images/wonders/petra.png'
   },
   {
     id: 'civ4-shwedagon-paya',
@@ -312,7 +312,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Letters of Marque (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'The Great Dagon Pagoda of Yangon is the most sacred Buddhist pagoda in Myanmar. In Civilization IV: Beyond the Sword, building Shwedagon Paya mirrors the Pyramids for religion: it unlocks all Religious Civics from the dawn of history.',
     historicalContext: 'A 112-meter gilded stupa encrusted with thousands of diamonds and rubies, enshrining relics of the four previous Buddhas of the present kalpa.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/0/07/CivilizationIV_Icon.png/revision/latest?cb=20161117163820',
+    iconUrl: '/assets/wonder-icons/shwedagon-paya.svg',
     visualUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80'
   },
   {
@@ -343,7 +343,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Instruction pour les jardins fruitiers (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'Constructing Versailles in a distant conquered province or far-flung colony serves as a second imperial palace. In Civ IV, distance-to-capital maintenance can bankrupt an empire; Versailles cuts costs in half across entire overseas continents.',
     historicalContext: 'The principal royal residence of France from 1682 under Louis XIV until the French Revolution in 1789, designed by Louis Le Vau and Jules Hardouin-Mansart.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/0/07/CivilizationIV_Icon.png/revision/latest?cb=20161117163820',
+    iconUrl: '/assets/wonder-icons/versailles.svg',
     visualUrl: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=80'
   },
 
@@ -376,7 +376,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Swimming (1956 Poem, Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'A hydroelectric gravity dam that spans the Yangtze River. In Civilization IV, the Three Gorges Dam is the ultimate industrial wonder, supercharging the manufacturing output of every city on your continent with clean electricity.',
     historicalContext: 'The world’s largest power station by installed capacity (22,500 MW), controlling catastrophic historic Yangtze floods and generating massive green power.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/0/07/CivilizationIV_Icon.png/revision/latest?cb=20161117163820',
+    iconUrl: '/assets/wonder-icons/three-gorges-dam.svg',
     visualUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80'
   },
   {
@@ -407,8 +407,8 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Annie Get Your Gun (1946)',
     civilopediaExcerpt: 'Broadway represents the pinnacle of commercial musical theatre. In Civ IV, Broadway manufactures five tradeable Hit Musical commodities that bring happiness to your population or immense gold revenues from international diplomacy.',
     historicalContext: 'The famous theater district surrounding Times Square in Midtown Manhattan, where theatrical entertainment evolved into a multi-billion dollar cultural titan.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/b/b5/Broadway_%28Civ5%29.png/revision/latest?cb=20130704043217',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/d/df/Broadway_splash_%28Civ5%29.jpg/revision/latest?cb=20130928092807'
+    iconUrl: '/assets/wonder-icons/broadway.svg',
+    visualUrl: '/src/assets/images/wonders/sydney-opera-house.png'
   },
   {
     id: 'civ4-space-elevator',
@@ -438,7 +438,7 @@ export const CIV4_WONDERS: CivWonder[] = [
     quoteWork: 'Speech at the International Astronautical Congress (Narrated by Leonard Nimoy)',
     civilopediaExcerpt: 'A proposed type of planet-to-space transportation system consisting of a cable anchored to the equator and extending into space. In Civilization IV, constructing this technological titan doubles spaceship construction speed across your entire empire.',
     historicalContext: 'First proposed by Russian scientist Konstantin Tsiolkovsky in 1895 inspired by the Eiffel Tower, requiring carbon nanotube materials with extraordinary tensile strength.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/0/07/CivilizationIV_Icon.png/revision/latest?cb=20161117163820',
+    iconUrl: '/assets/wonder-icons/space-elevator.svg',
     visualUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80'
   }
 ];

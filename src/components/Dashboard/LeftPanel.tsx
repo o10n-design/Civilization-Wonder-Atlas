@@ -4,6 +4,7 @@ import { CivWonder, CivEra, GameFilter } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
 import { getCountryFlag } from '../../utils/countryFlags';
 import { getCivSeriesLogo, getWonderTypeLogo, CIV_SERIES_LOGOS } from '../../data/civSeriesLogos';
+import { getWonderAvatarUrl, getWonderAvatarFallback } from '../../utils/wonderAvatar';
 
 interface LeftPanelProps {
   wonders: CivWonder[];
@@ -422,32 +423,37 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                         )}
                       </div>
 
-                      {/* Wonder Icon Thumbnail - Increased Dimension (48px / w-12 h-12) */}
-                      {wonder.iconUrl ? (
-                        <div className="relative w-12 h-12 shrink-0 self-center">
-                          <img
-                            src={wonder.iconUrl}
-                            alt={wonder.name}
-                            referrerPolicy="no-referrer"
-                            className="w-12 h-12 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5 shadow-sm transition-transform hover:scale-105"
-                            onError={(e) => {
-                              const target = e.target as HTMLElement;
-                              target.onerror = null;
-                              target.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 self-center border ${
-                            isWorld
-                              ? 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-strong)] text-[var(--ks-kinpaku)]'
-                              : 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-patina)] text-[var(--ks-patina)]'
-                          }`}
-                        >
-                          <span className="text-[11px] font-mono font-bold">{isWorld ? 'WW' : 'NW'}</span>
-                        </div>
-                      )}
+                      {/* Wonder Icon Thumbnail - 48px / w-12 h-12 with guaranteed resolution */}
+                      {(() => {
+                        const avatarUrl = getWonderAvatarUrl(wonder);
+                        const fallbackUrl = getWonderAvatarFallback(wonder);
+                        return avatarUrl ? (
+                          <div className="relative w-12 h-12 shrink-0 self-center">
+                            <img
+                              src={avatarUrl}
+                              alt={wonder.name}
+                              referrerPolicy="no-referrer"
+                              className="w-12 h-12 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5 shadow-sm transition-transform hover:scale-105"
+                              onError={(e) => {
+                                const img = e.currentTarget as HTMLImageElement;
+                                if (img.src !== fallbackUrl) {
+                                  img.src = fallbackUrl;
+                                }
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 self-center border ${
+                              isWorld
+                                ? 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-strong)] text-[var(--ks-kinpaku)]'
+                                : 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-patina)] text-[var(--ks-patina)]'
+                            }`}
+                          >
+                            <span className="text-[11px] font-mono font-bold">{isWorld ? 'WW' : 'NW'}</span>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     {/* Quick Yield Badges preview */}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { CivWonder } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
@@ -35,6 +35,11 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose, onNext, onPrev]);
+
+  const [imgError, setImgError] = useState(false);
+  useEffect(() => {
+    setImgError(false);
+  }, [wonder?.id]);
 
   if (!isOpen || !wonder) return null;
 
@@ -116,18 +121,14 @@ export const CompletionArtModal: React.FC<CompletionArtModalProps> = ({
         <div className="flex-1 overflow-y-auto clean-scrollbar p-5 space-y-4">
           {/* Main Completion Artwork Painting */}
           <div className="relative w-full rounded-xs overflow-hidden bg-[var(--ks-lacquer-deep)] border border-[var(--ks-rule)] aspect-[16/9] sm:aspect-[2/1] group flex items-center justify-center">
-            {artworkSrc ? (
+            {!imgError && artworkSrc ? (
               <img
                 src={artworkSrc}
                 alt={`${wonder.name} Completion Art`}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover sm:object-contain bg-[var(--ks-lacquer-deep)]"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null;
-                  if (wonder.imageUrl && !target.src.endsWith(wonder.imageUrl)) {
-                    target.src = wonder.imageUrl;
-                  }
+                onError={() => {
+                  setImgError(true);
                 }}
               />
             ) : (

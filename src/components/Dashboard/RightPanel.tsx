@@ -21,6 +21,7 @@ import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
 import { getWonderCounterparts } from '../../utils/wonderCounterparts';
 import { getCivSeriesLogo, getWonderTypeLogo, CIV_SERIES_LOGOS, CivSeriesGame } from '../../data/civSeriesLogos';
+import { getWonderAvatarUrl, getWonderAvatarFallback } from '../../utils/wonderAvatar';
 
 interface RightPanelProps {
   wonder: CivWonder | null;
@@ -181,18 +182,24 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         <div className="px-4 pt-3.5 pb-3 border-b border-[var(--ks-rule)] bg-[var(--ks-raised-lacquer)] shrink-0">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-start gap-3 min-w-0">
-              {wonder.iconUrl && (
-                <img
-                  src={wonder.iconUrl}
-                  alt={wonder.name}
-                  referrerPolicy="no-referrer"
-                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-[var(--ks-rule)] p-1 bg-[var(--ks-lacquer-deep)] object-cover shrink-0 mt-0.5 shadow-md"
-                  onError={(e) => {
-                    const target = e.target as HTMLElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              )}
+              {(() => {
+                const avatarUrl = getWonderAvatarUrl(wonder);
+                const fallbackUrl = getWonderAvatarFallback(wonder);
+                return avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={wonder.name}
+                    referrerPolicy="no-referrer"
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-[var(--ks-rule)] p-1 bg-[var(--ks-lacquer-deep)] object-cover shrink-0 mt-0.5 shadow-md"
+                    onError={(e) => {
+                      const img = e.currentTarget as HTMLImageElement;
+                      if (img.src !== fallbackUrl) {
+                        img.src = fallbackUrl;
+                      }
+                    }}
+                  />
+                ) : null;
+              })()}
               <div className="min-w-0">
                 <h2 className="font-headline text-2xl sm:text-3xl font-semibold text-[var(--ks-champagne)] leading-tight">
                   {wonder.name}

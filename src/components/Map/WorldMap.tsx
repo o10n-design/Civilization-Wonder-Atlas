@@ -4,6 +4,7 @@ import { CivWonder, MapTileStyle } from '../../types/wonder';
 import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
 import { getCivSeriesLogo, getWonderTypeLogo, CIV_SERIES_LOGOS } from '../../data/civSeriesLogos';
+import { getWonderAvatarUrl, getWonderAvatarFallback } from '../../utils/wonderAvatar';
 import { Plus, Minus, Maximize2 } from 'lucide-react';
 import { Civ6FogOverlay } from './Civ6FogOverlay';
 
@@ -179,9 +180,11 @@ export const WorldMap: React.FC<WorldMapProps> = ({
     filteredWonders.forEach((wonder) => {
       const isSelected = selectedWonder?.id === wonder.id;
       const isWorld = wonder.type === 'world_wonder';
+      const avatarUrl = getWonderAvatarUrl(wonder);
+      const fallbackUrl = getWonderAvatarFallback(wonder);
 
-      const iconImgHtml = wonder.iconUrl
-        ? `<img src="${wonder.iconUrl}" referrerpolicy="no-referrer" class="w-7 h-7 rounded-full object-cover p-0.5" alt="" />`
+      const iconImgHtml = avatarUrl
+        ? `<img src="${avatarUrl}" referrerpolicy="no-referrer" class="w-7 h-7 rounded-full object-cover p-0.5" alt="${wonder.name}" onerror="this.onerror=null; this.src='${fallbackUrl}';" />`
         : isWorld
         ? `<svg viewBox="0 0 100 100" class="w-5 h-5 text-[var(--ks-kinpaku)]"><polygon points="50 15, 85 85, 15 85" fill="none" stroke="currentColor" stroke-width="6"/></svg>`
         : `<svg viewBox="0 0 100 100" class="w-5 h-5 text-[var(--ks-patina)]"><path d="M28 70 L48 34 L60 52 L68 40 L80 70 Z" fill="none" stroke="currentColor" stroke-width="6"/></svg>`;
@@ -267,12 +270,15 @@ export const WorldMap: React.FC<WorldMapProps> = ({
       const categoryIconUrl = getWonderTypeLogo(wonder.type, 'auto', theme);
       const gameIconUrl = getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme);
 
+      const popupAvatarUrl = getWonderAvatarUrl(wonder);
+      const popupFallbackUrl = getWonderAvatarFallback(wonder);
+
       const popupHtml = `
         <div class="p-3 font-body text-[var(--ks-text-warm)] w-max max-w-[420px] bg-[var(--ks-raised-lacquer)]">
           <div class="flex items-center gap-2.5 mb-2">
             ${
-              wonder.iconUrl
-                ? `<img src="${wonder.iconUrl}" referrerpolicy="no-referrer" class="w-9 h-9 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] shrink-0 object-cover" alt="" />`
+              popupAvatarUrl
+                ? `<img src="${popupAvatarUrl}" referrerpolicy="no-referrer" class="w-9 h-9 rounded-full border border-[var(--ks-rule)] p-0.5 bg-[var(--ks-lacquer-deep)] shrink-0 object-cover" alt="" onerror="this.onerror=null; this.src='${popupFallbackUrl}';" />`
                 : ''
             }
             <div class="min-w-0 flex-1">

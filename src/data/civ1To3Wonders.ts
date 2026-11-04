@@ -30,7 +30,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Sid Meier’s Civilization (1991) Civilopedia',
     civilopediaExcerpt: 'In the original 1991 masterpiece designed by Sid Meier, the Pyramids granted the player the revolutionary ability to adopt any government form whenever desired, bypassing the perilous turns of Anarchy that paralyzed competing empires.',
     historicalContext: 'Erected on the Giza Plateau for Pharaoh Khufu, the Great Pyramid was the tallest man-made structure on Earth for over 3,800 years.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/e/e3/Pyramids_%28Civ6%29.png/revision/latest?cb=20161117163821',
+    iconUrl: '/src/assets/images/icons/great-pyramids.png',
     visualUrl: '/src/assets/images/pyramids_giza_civ_1792262637264.jpg'
   },
   {
@@ -61,7 +61,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Greek Anthology',
     civilopediaExcerpt: 'Constructed at the harbor of Rhodes, the Colossus in Civ I boosted every trade-producing tile in its home city by +1 Trade, sparking an economic and technological explosion for the civilization that founded it.',
     historicalContext: 'A gigantic bronze statue of the sun-god Helios erected to celebrate Rhodes’ victorious defense against Demetrius Poliorcetes in 305 BCE.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/c/c8/Colossus_%28Civ6%29.png/revision/latest?cb=20161117163833',
+    iconUrl: '/src/assets/images/icons/colossus-of-rhodes.png',
     visualUrl: '/src/assets/images/wonders/colossus-of-rhodes.png'
   },
   {
@@ -92,7 +92,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Sid Meier’s Civilization (1991)',
     civilopediaExcerpt: 'The Great Library in Civilization I was the ultimate technological catch-up wonder. By freely acquiring every breakthrough discovered by at least two other empires, players could focus domestic production on military and infrastructure while letting rivals subsidize their scientific progress.',
     historicalContext: 'Part of the larger research institute known as the Mouseion of Alexandria, holding hundreds of thousands of papyrus scrolls gathering the wisdom of the ancient Mediterranean.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/9/90/Great_Library_%28Civ6%29.png/revision/latest?cb=20161117163842',
+    iconUrl: '/src/assets/images/icons/great-library.png',
     visualUrl: '/src/assets/images/wonders/great-library.png'
   },
   {
@@ -123,7 +123,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Circumnavigation Records',
     civilopediaExcerpt: 'In Civilization I, naval speed was paramount for island colonization and sudden amphibious landings. Magellan’s Expedition gave all naval ships +1 movement point, shrinking global sea lanes and ensuring the builder’s armada could intercept any enemy armada.',
     historicalContext: 'Ferdinand Magellan set sail with five ships in 1519. Although Magellan died in the Philippines, Juan Sebastián Elcano guided the Victoria back to Spain in 1522, achieving humanity’s first circumnavigation.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/2/22/Great_Lighthouse_%28Civ6%29.png/revision/latest?cb=20161117163845',
+    iconUrl: '/assets/wonder-icons/magellans-expedition.svg',
     visualUrl: '/src/assets/images/great_barrier_reef_1792264354012.jpg'
   },
   {
@@ -154,7 +154,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Civilization (1991) Civilopedia',
     civilopediaExcerpt: 'A signature late-game World Wonder in original Civilization, Cure for Cancer represented humanity’s triumph over biological decay. Its empire-wide happiness bonus permanently quelled civil unrest in large metropolitan populations.',
     historicalContext: 'The global quest for oncological therapies revolutionized biotechnology, molecular genetics, mRNA vaccines, and targeted immunotherapies across the late 20th and 21st centuries.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/8/87/Amundsen-Scott_South_Pole_Station_%28Civ6%29.png/revision/latest?cb=20180208221841',
+    iconUrl: '/assets/wonder-icons/cure-for-cancer.svg',
     visualUrl: '/src/assets/images/wonders/hubble-space-telescope.png'
   },
   {
@@ -185,7 +185,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Cosmos',
     civilopediaExcerpt: 'The Search for Extraterrestrial Intelligence (SETI) wonder allowed late-game empires to hyper-accelerate their Space Race research. Building SETI frequently enabled players to unlock the Alpha Centauri spaceship modules turns ahead of rival superpowers.',
     historicalContext: 'Pioneered by astronomers Frank Drake and Carl Sagan, SETI used giant radio telescopes like Arecibo to scan the cosmos for narrow-band electromagnetic transmissions from alien civilizations.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/8/87/Amundsen-Scott_South_Pole_Station_%28Civ6%29.png/revision/latest?cb=20180208221841',
+    iconUrl: '/assets/wonder-icons/seti-program.svg',
     visualUrl: '/src/assets/images/wonders/hubble-space-telescope.png'
   },
 
@@ -219,7 +219,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Codex Atlanticus',
     civilopediaExcerpt: 'Legendary among Civilization II veterans, Leonardo’s Workshop is widely considered one of the most cost-effective wonders ever conceived in the franchise. It modernized obsolete units across every corner of the empire without spending a single coin of treasury gold.',
     historicalContext: 'Leonardo da Vinci’s sketchbooks contained visionary engineering blueprints for helicopters, armored tanks, automated crossbows, and hydraulic pumps centuries ahead of their industrial realization.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/2/2f/Venetian_Arsenal_%28Civ6%29.png/revision/latest?cb=20170119205317',
+    iconUrl: '/assets/wonder-icons/leonardos-workshop.svg',
     visualUrl: '/src/assets/images/wonders/leaning-tower-of-pisa.png'
   },
   {
@@ -250,7 +250,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Third Crusade Chronicles',
     civilopediaExcerpt: 'In Civilization II, King Richard’s Crusade gave the city that built it an extraordinary production boost by augmenting every shield-bearing tile. Players placed it in high-resource mountain or river valleys to pump out crusaders and wonder projects in record turns.',
     historicalContext: 'Richard I of England led the Third Crusade alongside Philip II of France, capturing the strategic fortress of Acre and defeating Saladin at the Battle of Arsuf.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/a/a2/Mont_St._Michel_%28Civ6%29.png/revision/latest?cb=20170119205118',
+    iconUrl: '/assets/wonder-icons/king-richards-crusade.svg',
     visualUrl: '/src/assets/images/wonders/notre-dame.png'
   },
   {
@@ -281,7 +281,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'The Art of War (孫子兵法)',
     civilopediaExcerpt: 'Sun Tzu’s War Academy in Civ II was the premier military milestone. By bestowing instant Veteran status and eliminating barracks upkeep across every city, it enabled massive, unstoppable conqueror campaigns.',
     historicalContext: 'Sun Tzu was a general and military strategist in ancient China during the Spring and Autumn period, whose 13-chapter treatise remains the world’s definitive military classic.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/c/c2/Terracotta_Army_%28Civ6%29.png/revision/latest?cb=20161117163914',
+    iconUrl: '/assets/wonder-icons/sun-tzus-war-academy.svg',
     visualUrl: '/src/assets/images/wonders/terracotta-army.png'
   },
   {
@@ -313,7 +313,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Musical Maxims',
     civilopediaExcerpt: 'Bach’s Cathedral was the savior of liberal democracies in Civilization II and III. By soothing two unhappy citizens in every continental city, it allowed high-tax and high-science democratic societies to expand without plunging into anarchy.',
     historicalContext: 'Johann Sebastian Bach served as Thomaskantor in Leipzig from 1723 until his death, composing the Brandenburg Concertos, the Mass in B minor, and the St. Matthew Passion.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/a/a2/Mont_St._Michel_%28Civ6%29.png/revision/latest?cb=20170119205118',
+    iconUrl: '/assets/wonder-icons/js-bachs-cathedral.svg',
     visualUrl: '/src/assets/images/wonders/notre-dame.png'
   },
   {
@@ -344,7 +344,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'As You Like It',
     civilopediaExcerpt: 'Constructing Shakespeare’s Theatre in Civilization II transformed a single metropolis into an unrest-proof supercity. Even under massive war weariness or famine, the populace remained delighted and productive.',
     historicalContext: 'Built in 1599 by Shakespeare’s playing company, the Lord Chamberlain’s Men, on the south bank of the River Thames, hosting original productions of Hamlet, Othello, and King Lear.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/d/df/Bolshoi_Theatre_%28Civ6%29.png/revision/latest?cb=20170119205021',
+    iconUrl: '/assets/wonder-icons/shakespeares-theatre.svg',
     visualUrl: '/src/assets/images/wonders/sydney-opera-house.png'
   },
   {
@@ -374,7 +374,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Dedication of Hoover Dam (1935)',
     civilopediaExcerpt: 'The undisputed industrial titan of mid-to-late Civilization II and III. Hoover Dam delivered clean electrical power to every factory across an entire landmass, sparking unprecedented production surges without risking global warming.',
     historicalContext: 'A concrete arch-gravity dam on the Colorado River that impounded Lake Mead, generating 2,000 megawatts of clean hydropower and controlling seasonal desert flooding.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/6/6f/Ruhr_Valley_%28Civ6%29.png/revision/latest?cb=20170119205228',
+    iconUrl: '/assets/wonder-icons/hoover-dam.svg',
     visualUrl: '/src/assets/images/wonders/big-ben.png'
   },
 
@@ -408,7 +408,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'The Iliad',
     civilopediaExcerpt: 'Introduced in Civilization III: Conquests, the Statue of Zeus was the terror of the Classical age. Every five turns, a free elite Ancient Cavalry rode forth from the city, enabling unstoppable early-game expansion.',
     historicalContext: 'Crafted by the renowned Athenian sculptor Phidias inside the Temple of Zeus at Olympia, the chryselephantine (gold and ivory) colossus was honored as one of the Seven Wonders of the Ancient World.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/8/82/Statue_of_Zeus_%28Civ6%29.png/revision/latest?cb=20201120005748',
+    iconUrl: '/assets/wonder-icons/statue-of-zeus.svg',
     visualUrl: '/src/assets/images/wonders/colossus-of-rhodes.png'
   },
   {
@@ -440,7 +440,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Psalm 115',
     civilopediaExcerpt: 'The Knights Templar in Civ III Conquests served as an autonomous crusade headquarters. Producing high-powered Crusaders automatically every five turns, it allowed builders to sustain relentless holy wars without slowing economic infrastructure.',
     historicalContext: 'A Catholic military order founded in Jerusalem in 1119 to protect Christian pilgrims traveling along Mediterranean roadways, becoming one of the most powerful financial and military bodies in Christendom.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/a/a2/Mont_St._Michel_%28Civ6%29.png/revision/latest?cb=20170119205118',
+    iconUrl: '/assets/wonder-icons/knights-templar.svg',
     visualUrl: '/src/assets/images/wonders/notre-dame.png'
   },
   {
@@ -471,7 +471,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Dialogues of the Dead',
     civilopediaExcerpt: 'Constructed at Halicarnassus, the Mausoleum of Mausolos was introduced to the series in Civ III. Its profound happiness bonus (+3 content citizens) permitted early cities to grow beyond initial population limits before acquiring luxuries.',
     historicalContext: 'Built for Mausolos, ruler of Caria, and his sister-wife Artemisia II. Its architectural brilliance was so celebrated that the word mausoleum came to designate any grand sepulchral monument.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/9/9f/Mausoleum_at_Halicarnassus_%28Civ6%29.png/revision/latest?cb=20171019230553',
+    iconUrl: '/assets/wonder-icons/mausoleum-of-maussollos.svg',
     visualUrl: '/src/assets/images/wonders/great-pyramids.png'
   },
   {
@@ -503,7 +503,7 @@ export const CIV1_TO_3_WONDERS: CivWonder[] = [
     quoteWork: 'Letter to Robert Hooke (1675)',
     civilopediaExcerpt: 'The quintessential scientific wonder of Civilization II and III. Placed in a high-trade capital with Copernicus’ Observatory, Newton’s University created a scientific powerhouse capable of discovering high-tier technologies every 4 turns.',
     historicalContext: 'Sir Isaac Newton formulated the laws of motion and universal gravitation at Trinity College, Cambridge, publishing Philosophiæ Naturalis Principia Mathematica in 1687.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/2/23/Oxford_University_%28Civ6%29.png/revision/latest?cb=20170119205139',
+    iconUrl: '/assets/wonder-icons/newtons-university.svg',
     visualUrl: '/src/assets/images/wonders/great-library.png'
   }
 ];

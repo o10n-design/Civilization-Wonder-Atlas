@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1f262e" />
+      <stop offset="70%" stop-color="#101418" />
+      <stop offset="100%" stop-color="#0a0d10" />
+    </radialGradient>
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe89e" />
+      <stop offset="50%" stop-color="#46d2bc" />
+      <stop offset="100%" stop-color="#9a6e1a" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background Disc -->
+  <circle cx="64" cy="64" r="62" fill="url(#bgGrad)" stroke="url(#goldRim)" stroke-width="3" />
+  <circle cx="64" cy="64" r="57" fill="none" stroke="#46d2bc" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6" />
+  <!-- Wonder Art -->
+  <g transform="translate(14, 14)">
+    
+    <!-- Cure for Cancer: Caduceus & DNA Helix with Healing Radiance -->
+    <circle cx="50" cy="50" r="42" fill="none" stroke="#46d2bc" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="50" cy="50" r="32" fill="#46d2bc" opacity="0.1"/>
+    <!-- Sunburst Radiance -->
+    <path d="M50 8 L50 18 M50 82 L50 92 M8 50 L18 50 M82 50 L92 50 M20 20 L27 27 M73 73 L80 80 M80 20 L73 27 M20 80 L27 73" stroke="#f5be2c" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <!-- Medical Caduceus Staff -->
+    <line x1="50" y1="18" x2="50" y2="84" stroke="#f5be2c" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="50" cy="18" r="4" fill="#f5be2c"/>
+    <!-- Winged Header -->
+    <path d="M50 25 C38 16 28 20 24 28 C34 29 44 26 50 32 C56 26 66 29 76 28 C72 20 62 16 50 25 Z" fill="#ffe89e"/>
+    <!-- Entwined Healing Serpents / Double Helix -->
+    <path d="M30 42 C40 36 60 36 70 42 C78 48 70 56 50 56 C30 56 22 64 30 70 C40 76 60 76 70 70" fill="none" stroke="#46d2bc" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="50" cy="56" r="3" fill="#46d2bc"/>
+  
+  </g>
+</svg>

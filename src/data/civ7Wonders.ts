@@ -29,7 +29,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Speech to the Army of the Orient (1798)',
     civilopediaExcerpt: 'The Great Pyramid of Giza is the oldest and only surviving Wonder of the Ancient World. In Civilization VII, constructed during the Antiquity Age, the Pyramids anchor early riverine empires and provide enduring cultural mastery across age transitions.',
     historicalContext: 'Built as a tomb for Fourth Dynasty pharaoh Khufu over a roughly 27-year period, standing as the tallest human-made structure in the world for over 3,800 years.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/e/e3/Pyramids_%28Civ6%29.png/revision/latest?cb=20161117163821',
+    iconUrl: '/src/assets/images/icons/great-pyramids.png',
     visualUrl: '/src/assets/images/pyramids_giza_civ_1792262637264.jpg'
   },
   {
@@ -59,7 +59,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Bibliotheca Historica (1st Century BCE)',
     civilopediaExcerpt: 'Ascending tiered gardens containing a vast variety of trees, shrubs, and vines, resembling a large green mountain constructed of mud brick. In Civilization VII, it turns ancient river capitals into flourishing demographic metropolises.',
     historicalContext: 'Supposedly built by King Nebuchadnezzar II for his Median wife, Queen Amytis, who missed the verdant green hills of her homeland.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/5/5a/Hanging_Gardens_%28Civ6%29.png/revision/latest?cb=20161117163836',
+    iconUrl: '/src/assets/images/icons/hanging-gardens.png',
     visualUrl: '/src/assets/images/wonders/hanging-gardens.png'
   },
   {
@@ -89,8 +89,8 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Childe Harold’s Pilgrimage (1812)',
     civilopediaExcerpt: 'The largest ancient amphitheatre ever built, constructed of travertine limestone and tuff. In Civilization VII, the Colosseum satisfies popular unrest and binds multi-cultural provinces into a cohesive imperial citizenry.',
     historicalContext: 'Inaugurated under Emperor Titus in 80 CE with one hundred days of public games, capable of holding an estimated 50,000 to 80,000 spectators.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/2/22/Colosseum_%28Civ6%29.png/revision/latest?cb=20161117163829',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/2/23/Colosseum_%28Civ6%29_splash.jpg/revision/latest?cb=20211029191054'
+    iconUrl: '/assets/wonder-icons/colosseum.svg',
+    visualUrl: '/src/assets/images/wonders/leaning-tower-of-pisa.png'
   },
   {
     id: 'civ7-great-library',
@@ -119,7 +119,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Deipnosophistae',
     civilopediaExcerpt: 'One of the largest and most significant libraries of the ancient world, dedicated to the Muses. In Civilization VII, it preserves the foundational philosophy and science of antiquity across the ages.',
     historicalContext: 'Part of a larger research institution called the Mouseion at Alexandria, functioning as a global scholarly repository until tragic destructions across Roman civil conflicts.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/8/87/Great_Library_%28Civ6%29.png/revision/latest?cb=20180210080645',
+    iconUrl: '/src/assets/images/icons/great-library.png',
     visualUrl: '/src/assets/images/wonders/great-library.png'
   },
   {
@@ -149,8 +149,8 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Inscriptions on the Temple of Apollo at Delphi',
     civilopediaExcerpt: 'The Pythia, commonly known as the Oracle of Delphi, served as the prestigious priestess of the Temple of Apollo. In Civilization VII, consulting the Oracle elevates statecraft, foresight, and spiritual guidance.',
     historicalContext: 'Established along the slopes of Mount Parnassus, consulting the Oracle was mandatory for Greek city-states before founding colonies or waging war.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/d/df/Oracle_%28Civ6%29.png/revision/latest?cb=20161117163842',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/7/7b/Oracle_%28Civ6%29_splash.jpg/revision/latest?cb=20211029191058'
+    iconUrl: '/assets/wonder-icons/oracle.svg',
+    visualUrl: '/src/assets/images/wonders/notre-dame.png'
   },
 
   // ===================== CIV VII EXPLORATION AGE =====================
@@ -181,7 +181,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Chilam Balam',
     civilopediaExcerpt: 'A major focal point in the Northern Maya Lowlands from the Late Classic through the Terminal Classic periods. In Civilization VII, Chichen Itza harnesses astronomical tracking and jungle mastery.',
     historicalContext: 'Dominated by the Temple of Kukulcan (El Castillo), where spring and autumn equinoxes cast shadows creating the illusion of a feathered serpent crawling down the pyramid balustrade.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/5/54/Chichen_Itza_%28Civ6%29.png/revision/latest?cb=20161117163826',
+    iconUrl: '/src/assets/images/icons/chichen-itza.png',
     visualUrl: '/src/assets/images/wonders/chichen-itza.png'
   },
   {
@@ -211,7 +211,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Inca Land (1922)',
     civilopediaExcerpt: 'A 15th-century Inca citadel situated on an Andean mountain ridge 2,430 meters above sea level. In Civilization VII, Machu Picchu masters vertical highland geography and trans-continental trading.',
     historicalContext: 'Constructed under emperor Pachacuti as a royal estate and religious sanctuary, built using dry-stone ashlar walls that withstand fierce seismic earthquakes.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/a/a2/Machu_Picchu_%28Civ6%29.png/revision/latest?cb=20190226065431',
+    iconUrl: '/src/assets/images/icons/machu-picchu.png',
     visualUrl: '/src/assets/images/machu_picchu_civ_1792262637384.jpg'
   },
   {
@@ -241,7 +241,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'India Revisited (1886)',
     civilopediaExcerpt: 'An ivory-white marble mausoleum on the right bank of the Yamuna River in Agra, commissioned by Mughal emperor Shah Jahan. In Civilization VII, the Taj Mahal stands as the ultimate triumph of artistic devotion and statecraft.',
     historicalContext: 'Built to house the tomb of Mumtaz Mahal, it employed thousands of artisans, stonecutters, and calligraphers from across Central Asia, India, and Persia.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/2/23/Taj_Mahal_%28Civ6%29.png/revision/latest?cb=20180210080649',
+    iconUrl: '/src/assets/images/icons/taj-mahal.png',
     visualUrl: '/src/assets/images/wonders/taj-mahal.png'
   },
   {
@@ -272,7 +272,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'The Hunchback of Notre-Dame (1831)',
     civilopediaExcerpt: 'A medieval Catholic cathedral on the Île de la Cité, Notre-Dame de Paris is one of the finest examples of French Gothic architecture. In Civilization VII, it unites medieval provinces with unmatched spiritual grandeur.',
     historicalContext: 'Distinguished by pioneering rib vaults, flying buttresses, enormous colorful rose windows, and rich sculptural ornamentation.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/7/7b/Notre_Dame_%28Civ5%29.png/revision/latest?cb=20120921021430',
+    iconUrl: '/src/assets/images/icons/notre-dame.png',
     visualUrl: '/src/assets/images/wonders/notre-dame.png'
   },
 
@@ -304,7 +304,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Interview (1890)',
     civilopediaExcerpt: 'A wrought-iron lattice tower named after engineer Gustave Eiffel, whose company designed and built it as the entrance to the 1889 World’s Fair. In Civilization VII, it symbolizes the soaring heights of modern engineering.',
     historicalContext: 'Standing 330 meters tall, it was the tallest man-made structure in the world until the completion of the Chrysler Building in New York in 1930.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/d/d3/Eiffel_Tower_%28Civ6%29.png/revision/latest?cb=20161117163833',
+    iconUrl: '/src/assets/images/icons/eiffel-tower.png',
     visualUrl: '/src/assets/images/wonders/eiffel-tower.png'
   },
   {
@@ -334,7 +334,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'The New Colossus (1883)',
     civilopediaExcerpt: 'A colossal neoclassical sculpture on Liberty Island in New York Harbor, designed by French sculptor Frédéric-Auguste Bartholdi. In Civilization VII, Lady Liberty stands as an enduring beacon of democracy and alliance leadership.',
     historicalContext: 'A gift from the people of France to the United States to celebrate the centennial of the Declaration of Independence and Franco-American friendship.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/f/f7/Statue_of_Liberty_%28Civ6%29.png/revision/latest?cb=20180210080648',
+    iconUrl: '/src/assets/images/icons/statue-of-liberty.png',
     visualUrl: '/src/assets/images/wonders/statue-of-liberty.png'
   },
 
@@ -366,7 +366,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Desert Survey Records',
     civilopediaExcerpt: 'The world’s largest gypsum dunefield, spanning 275 square miles of white sand in the Chihuahuan Desert. In Civilization VII, this extraordinary desert basin nurtures scientific experimentation and natural wonder preservation.',
     historicalContext: 'Formed from gypsum dissolved from surrounding mountains and deposited into ancient Lake Otero, which dried into wind-swept brilliant white crystals.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/b/b3/Natural_Wonder_%28Civ6%29.png/revision/latest?cb=20161117164214',
+    iconUrl: '/assets/wonder-icons/white-sands.svg',
     visualUrl: 'https://images.unsplash.com/photo-1508873696983-2df5293cb395?auto=format&fit=crop&w=1200&q=80'
   },
   {
@@ -397,7 +397,7 @@ export const CIV7_WONDERS: CivWonder[] = [
     quoteWork: 'Lore of the Descending Dragon',
     civilopediaExcerpt: 'A UNESCO World Heritage Site featuring thousands of limestone karsts and isles in various shapes and sizes rising sheer from emerald waters. In Civilization VII, Ha Long Bay provides naval dominance and cultural tourism.',
     historicalContext: 'Carved over 500 million years of geological formation and 20 million years of tropical karst evolution.',
-    iconUrl: 'https://static.wikia.nocookie.net/civilization/images/3/36/Ha_Long_Bay_%28Civ6%29.png/revision/latest?cb=20171024194042',
-    visualUrl: 'https://static.wikia.nocookie.net/civilization/images/0/05/Natural_Wonder_Ha_Long_Bay_%28Civ6%29.jpg/revision/latest?cb=20171020211110'
+    iconUrl: '/assets/wonder-icons/ha-long-bay.svg',
+    visualUrl: '/src/assets/images/great_barrier_reef_1792264354012.jpg'
   }
 ];

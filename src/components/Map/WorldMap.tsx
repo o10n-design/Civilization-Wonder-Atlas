@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { CivWonder, MapTileStyle } from '../../types/wonder';
 import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
-import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
+import { getCivSeriesLogo, getWonderTypeLogo, CIV_SERIES_LOGOS } from '../../data/civSeriesLogos';
 import { Plus, Minus, Maximize2 } from 'lucide-react';
 import { Civ6FogOverlay } from './Civ6FogOverlay';
 
@@ -280,7 +280,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
                 <span class="whitespace-nowrap">${wonder.name}</span>
                 <span class="wonder-title-icons inline-flex items-center gap-1 shrink-0">
                   ${categoryIconUrl ? `<img src="${categoryIconUrl}" alt="${categoryLabel}" title="${categoryLabel}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
-                  ${gameIconUrl ? `<img src="${gameIconUrl}" alt="${isCiv6 ? 'Civ VI' : 'Civ V'}" title="${isCiv6 ? 'Civ VI' : 'Civ V'}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
+                  ${gameIconUrl ? `<img src="${gameIconUrl}" alt="${CIV_SERIES_LOGOS[wonder.game || 'civ5']?.title || 'Civilization'}" title="${CIV_SERIES_LOGOS[wonder.game || 'civ5']?.title || 'Civilization'}" class="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0" />` : ''}
                 </span>
               </div>
               <div class="font-mono text-[8.5px] uppercase tracking-[0.16em] font-semibold mt-0.5 ${
@@ -292,7 +292,7 @@ export const WorldMap: React.FC<WorldMapProps> = ({
           </div>
           <div class="text-[11px] text-[var(--ks-text-muted)] flex items-center gap-1.5 font-body">
             <span>${flag}</span>
-            <span class="truncate">${wonder.location.modernCountry}</span>
+            <span>${wonder.location.modernCountry}</span>
           </div>
           ${yieldsHtml}
         </div>

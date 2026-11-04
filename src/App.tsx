@@ -6,7 +6,10 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { CIV5_WONDERS } from './data/civWonders';
 import { CIV6_WONDERS } from './data/civ6Wonders';
-import { CivWonder, MapTileStyle, AppTheme, GameFilter } from './types/wonder';
+import { CIV4_WONDERS } from './data/civ4Wonders';
+import { CIV7_WONDERS } from './data/civ7Wonders';
+import { CIV1_TO_3_WONDERS } from './data/civ1To3Wonders';
+import { CivWonder, MapTileStyle, AppTheme, GameFilter, CivGame } from './types/wonder';
 import { WorldMap } from './components/Map/WorldMap';
 import { TopHUD } from './components/Dashboard/TopHUD';
 import { LeftPanel } from './components/Dashboard/LeftPanel';
@@ -17,9 +20,18 @@ import { civAudio } from './utils/audio';
 import { Sun, Moon, Layers, ChevronDown, Check, Scale, Eye, EyeOff } from 'lucide-react';
 
 export default function App() {
-  const allWonders = useMemo<CivWonder[]>(() => [...CIV5_WONDERS, ...CIV6_WONDERS], []);
+  const allWonders = useMemo<CivWonder[]>(
+    () => [
+      ...CIV5_WONDERS,
+      ...CIV6_WONDERS,
+      ...CIV4_WONDERS,
+      ...CIV7_WONDERS,
+      ...CIV1_TO_3_WONDERS
+    ],
+    []
+  );
 
-  // Game filter: 'all' | 'civ6' | 'civ5' (Default: 'all' series)
+  // Game filter: 'all' | 'civ1' | ... | 'civ7' (Default: 'all' series)
   const [gameFilter, setGameFilter] = useState<GameFilter>('all');
 
   const wonders = useMemo(() => {
@@ -122,6 +134,25 @@ export default function App() {
   const naturalWondersCount = wonders.filter((w) => w.type === 'natural_wonder').length;
   const civ5Count = CIV5_WONDERS.length;
   const civ6Count = CIV6_WONDERS.length;
+
+  const civCounts = useMemo<Record<CivGame, number>>(() => {
+    const counts: Record<CivGame, number> = {
+      civ1: 0,
+      civ2: 0,
+      civ3: 0,
+      civ4: 0,
+      civ5: 0,
+      civ6: 0,
+      civ7: 0
+    };
+    for (const w of allWonders) {
+      const g = (w.game || 'civ5') as CivGame;
+      if (counts[g] !== undefined) {
+        counts[g]++;
+      }
+    }
+    return counts;
+  }, [allWonders]);
 
   const handleSelectWonder = useCallback((wonder: CivWonder) => {
     setSelectedWonder(wonder);
@@ -247,9 +278,10 @@ export default function App() {
       } else if (e.key.toLowerCase() === 'g') {
         civAudio.playSwitchSound();
         setGameFilter((prev) => {
-          if (prev === 'all') return 'civ6';
-          if (prev === 'civ6') return 'civ5';
-          return 'all';
+          const sequence: GameFilter[] = ['all', 'civ7', 'civ6', 'civ5', 'civ4', 'civ3', 'civ2', 'civ1'];
+          const currentIndex = sequence.indexOf(prev);
+          const nextIndex = (currentIndex + 1) % sequence.length;
+          return sequence[nextIndex];
         });
       } else if (e.key === '1') {
         civAudio.playSwitchSound();
@@ -271,13 +303,14 @@ export default function App() {
     <div className="relative w-screen h-screen overflow-hidden bg-[var(--ks-lacquer)] select-none text-[var(--ks-text-warm)] font-body transition-colors">
       {/* 1. Header Navigation Bar with Theme & Game Switcher */}
       <TopHUD
-        totalCount={wonders.length}
+        totalCount={allWonders.length}
         worldWondersCount={worldWondersCount}
         naturalWondersCount={naturalWondersCount}
         gameFilter={gameFilter}
         onSelectGameFilter={handleSelectGameFilter}
         civ5Count={civ5Count}
         civ6Count={civ6Count}
+        civCounts={civCounts}
         mapStyle={mapStyle}
         onSelectMapStyle={(style) => {
           civAudio.playSwitchSound();

@@ -95,7 +95,7 @@ export const YieldBadge: React.FC<YieldBadgeProps> = ({ yields, game = 'civ5', c
             ) : (
               <span>⭐</span>
             )}
-            <span className="truncate max-w-[140px]">{yields.greatPersonPoints}</span>
+            <span className="font-medium whitespace-nowrap">{yields.greatPersonPoints}</span>
           </span>
         )}
       </div>
@@ -125,7 +125,7 @@ export const YieldBadge: React.FC<YieldBadgeProps> = ({ yields, game = 'civ5', c
               ) : (
                 <span className="text-xs">{item.fallbackIcon}</span>
               )}
-              <span className="text-xs text-[var(--ks-text-warm)] font-medium truncate">{item.label}</span>
+              <span className="text-xs text-[var(--ks-text-warm)] font-medium whitespace-nowrap">{item.label}</span>
             </div>
             <span className="text-xs font-mono font-bold tabular-nums shrink-0 ml-1">+{item.value}</span>
           </div>

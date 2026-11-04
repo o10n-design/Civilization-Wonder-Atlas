@@ -121,11 +121,12 @@ export function getCivSeriesLogo(
  * Supports light and dark plain versions based on variant/theme.
  */
 export function getWonderTypeLogo(
-  type: 'world_wonder' | 'natural_wonder',
+  type: string,
   variant: 'light' | 'dark' | 'auto' = 'auto',
   theme: 'dark' | 'light' = 'dark'
 ): string {
-  const info = WONDER_TYPE_LOGOS[type];
+  const normalized = type === 'natural_wonder' ? 'natural_wonder' : 'world_wonder';
+  const info = WONDER_TYPE_LOGOS[normalized as keyof typeof WONDER_TYPE_LOGOS];
   if (!info) return '';
   if (variant === 'light') return info.lightSvgUrl;
   if (variant === 'dark') return info.darkSvgUrl;

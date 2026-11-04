@@ -20,7 +20,7 @@ import { civAudio } from '../../utils/audio';
 import { getYieldIconUrl } from '../../data/yieldIcons';
 import { getCountryFlag } from '../../utils/countryFlags';
 import { getWonderCounterparts } from '../../utils/wonderCounterparts';
-import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
+import { getCivSeriesLogo, getWonderTypeLogo, CIV_SERIES_LOGOS, CivSeriesGame } from '../../data/civSeriesLogos';
 
 interface RightPanelProps {
   wonder: CivWonder | null;
@@ -48,7 +48,17 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   const [copiedCoords, setCopiedCoords] = useState(false);
 
   const counterparts = useMemo(() => {
-    if (!wonder) return { civ5Wonder: null, civ6Wonder: null, hasBoth: false };
+    if (!wonder) {
+      return {
+        editions: [],
+        editionsByGame: {},
+        hasMultiple: false,
+        games: [],
+        civ5Wonder: null,
+        civ6Wonder: null,
+        hasBoth: false
+      };
+    }
     return getWonderCounterparts(wonder, allWonders);
   }, [wonder, allWonders]);
 
@@ -85,17 +95,17 @@ export const RightPanel: React.FC<RightPanelProps> = ({
             <div className="inline-flex items-center gap-1.5">
               <img
                 src={getCivSeriesLogo(wonder.game || 'civ5', 'auto', theme)}
-                alt={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                alt={CIV_SERIES_LOGOS[wonder.game || 'civ5']?.title || 'Civilization'}
                 className="w-4.5 h-4.5 object-contain shrink-0"
               />
               <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.14em] text-[var(--ks-champagne)]">
-                {isCiv6 ? 'Civ VI' : 'Civ V'}
+                {CIV_SERIES_LOGOS[wonder.game || 'civ5']?.title || 'Civ ' + (wonder.game?.replace('civ', '').toUpperCase())}
               </span>
             </div>
             {wonder.era && wonder.era !== 'Timeless' && (
               <>
                 <span className="text-[var(--ks-rule)]">·</span>
-                <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium truncate">
+                <span className="font-mono text-[10px] text-[var(--ks-text-muted)] font-medium">
                   {wonder.era}
                 </span>
               </>
@@ -127,51 +137,42 @@ export const RightPanel: React.FC<RightPanelProps> = ({
           </div>
         </div>
 
-        {/* Edition Switcher Row Directly Below Header - Only shown for wonders available in both games */}
-        {counterparts.hasBoth && (
-          <div className="px-4 py-2 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)]/90 flex items-center justify-between gap-2 shrink-0">
+        {/* Edition Switcher Row Directly Below Header - Shown when wonder appears across multiple Civilization games */}
+        {counterparts.hasMultiple && (
+          <div className="px-4 py-2 border-b border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)]/90 flex items-center justify-between gap-2 shrink-0 flex-wrap">
             <div className="flex items-center gap-1.5 min-w-0">
               <Sparkles className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />
-              <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] font-medium truncate">
-                Available in both games
+              <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--ks-text-muted)] font-medium">
+                Appears in {counterparts.editions.length} series editions
               </span>
             </div>
 
-            <div className="flex items-center gap-1 bg-[var(--ks-graphite)] p-0.5 rounded-xs border border-[var(--ks-rule)] shrink-0">
-              <button
-                type="button"
-                onClick={() => {
-                  if (isCiv6 && counterparts.civ5Wonder && onSelectWonder) {
-                    civAudio.playSwitchSound();
-                    onSelectWonder(counterparts.civ5Wonder);
-                  }
-                }}
-                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
-                  !isCiv6
-                    ? 'bg-blue-600 text-white dark:bg-blue-600 dark:text-blue-100 shadow-xs border border-blue-500'
-                    : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
-                }`}
-                title="Switch Codex view to Civilization V"
-              >
-                Civ V
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (!isCiv6 && counterparts.civ6Wonder && onSelectWonder) {
-                    civAudio.playSwitchSound();
-                    onSelectWonder(counterparts.civ6Wonder);
-                  }
-                }}
-                className={`px-2.5 py-0.5 rounded-xs font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer ${
-                  isCiv6
-                    ? 'bg-orange-600 text-white dark:bg-orange-600 dark:text-orange-100 shadow-xs border border-orange-500'
-                    : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
-                }`}
-                title="Switch Codex view to Civilization VI"
-              >
-                Civ VI
-              </button>
+            <div className="flex items-center gap-1 bg-[var(--ks-graphite)] p-0.5 rounded-xs border border-[var(--ks-rule)] shrink-0 overflow-x-auto no-scrollbar">
+              {counterparts.editions.map((editionWonder) => {
+                const eGame = (editionWonder.game || 'civ5') as CivSeriesGame;
+                const isCurrent = eGame === (wonder.game || 'civ5');
+                const logoInfo = CIV_SERIES_LOGOS[eGame];
+                return (
+                  <button
+                    key={editionWonder.id}
+                    type="button"
+                    onClick={() => {
+                      if (!isCurrent && onSelectWonder) {
+                        civAudio.playSwitchSound();
+                        onSelectWonder(editionWonder);
+                      }
+                    }}
+                    className={`px-2 py-0.5 rounded-xs font-mono text-[10px] font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1 ${
+                      isCurrent
+                        ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-champagne)] shadow-xs border border-[var(--ks-rule-strong)]'
+                        : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)] hover:bg-[var(--ks-graphite-2)]'
+                    }`}
+                    title={`Switch Codex view to ${logoInfo?.title || eGame}`}
+                  >
+                    <span>{logoInfo?.romanNumeral ? `Civ ${logoInfo.romanNumeral}` : eGame.toUpperCase()}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -200,7 +201,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                   <span className="shrink-0 text-sm leading-none" title={wonder.location.modernCountry}>
                     {getCountryFlag(wonder.location.modernCountry)}
                   </span>
-                  <span className="truncate">
+                  <span>
                     {wonder.location.modernRegion}, {wonder.location.modernCountry}
                   </span>
                 </div>
@@ -384,7 +385,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                   “{wonder.quote}”
                 </p>
                 <div className="pt-2 border-t border-[var(--ks-rule)] flex items-center justify-between">
-                  <div className="text-[11px] text-[var(--ks-champagne)] font-medium truncate">
+                  <div className="text-[11px] text-[var(--ks-champagne)] font-medium">
                     — {wonder.quoteAuthor}
                     {wonder.quoteWork && <span className="text-[var(--ks-text-muted)]">, {wonder.quoteWork}</span>}
                   </div>
@@ -402,7 +403,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                     <div>
                       <span className="font-mono-eyebrow text-[9px] text-[var(--ks-text-muted)] flex items-center gap-1.5">
                         <img
-                          src={getYieldIconUrl('science', isCiv6 ? 'civ6' : 'civ5')}
+                          src={getYieldIconUrl('science', (wonder.game as any) || 'civ5')}
                           alt=""
                           referrerPolicy="no-referrer"
                           className="w-3.5 h-3.5 object-contain shrink-0"
@@ -419,7 +420,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                     <div>
                       <span className="font-mono-eyebrow text-[9px] text-[var(--ks-text-muted)] flex items-center gap-1.5">
                         <img
-                          src={getYieldIconUrl('culture', isCiv6 ? 'civ6' : 'civ5')}
+                          src={getYieldIconUrl('culture', (wonder.game as any) || 'civ5')}
                           alt=""
                           referrerPolicy="no-referrer"
                           className="w-3.5 h-3.5 object-contain shrink-0"
@@ -436,7 +437,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
                     <div>
                       <span className="font-mono-eyebrow text-[9px] text-[var(--ks-text-muted)] flex items-center gap-1.5">
                         <img
-                          src={getYieldIconUrl('production', isCiv6 ? 'civ6' : 'civ5')}
+                          src={getYieldIconUrl('production', (wonder.game as any) || 'civ5')}
                           alt=""
                           referrerPolicy="no-referrer"
                           className="w-3.5 h-3.5 object-contain shrink-0"

@@ -6,7 +6,8 @@ import {
   Maximize,
   Minimize
 } from 'lucide-react';
-import { MapTileStyle, AppTheme, GameFilter } from '../../types/wonder';
+import { MapTileStyle, AppTheme, GameFilter, CivGame } from '../../types/wonder';
+import { CIV_SERIES_LOGOS } from '../../data/civSeriesLogos';
 
 interface TopHUDProps {
   totalCount: number;
@@ -14,8 +15,9 @@ interface TopHUDProps {
   naturalWondersCount: number;
   gameFilter: GameFilter;
   onSelectGameFilter: (filter: GameFilter) => void;
-  civ5Count: number;
-  civ6Count: number;
+  civ5Count?: number;
+  civ6Count?: number;
+  civCounts?: Partial<Record<CivGame, number>>;
   mapStyle: MapTileStyle;
   onSelectMapStyle: (style: MapTileStyle) => void;
   showWorldWonders: boolean;
@@ -40,12 +42,14 @@ interface TopHUDProps {
 }
 
 export const TopHUD: React.FC<TopHUDProps> = ({
+  totalCount,
   worldWondersCount,
   naturalWondersCount,
   gameFilter,
   onSelectGameFilter,
-  civ5Count,
-  civ6Count,
+  civ5Count = 0,
+  civ6Count = 0,
+  civCounts,
   mapStyle,
   onSelectMapStyle,
   showWorldWonders,
@@ -70,6 +74,15 @@ export const TopHUD: React.FC<TopHUDProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const getGameCount = (g: CivGame) => {
+    if (civCounts && typeof civCounts[g] === 'number') {
+      return civCounts[g]!;
+    }
+    if (g === 'civ5') return civ5Count;
+    if (g === 'civ6') return civ6Count;
+    return 0;
+  };
+
   const mapStyleLabels: Record<MapTileStyle, { name: string; desc: string }> = {
     civ6fog: {
       name: 'Civ VI Fog of War',
@@ -86,11 +99,10 @@ export const TopHUD: React.FC<TopHUDProps> = ({
   };
 
   // Compute a concise summary label for the merged filter button
-  let filterSummaryLabel = 'All Wonders';
-  if (gameFilter === 'civ6') {
-    filterSummaryLabel = 'Civ VI';
-  } else if (gameFilter === 'civ5') {
-    filterSummaryLabel = 'Civ V';
+  let filterSummaryLabel = 'All Series';
+  if (gameFilter !== 'all') {
+    const info = CIV_SERIES_LOGOS[gameFilter as keyof typeof CIV_SERIES_LOGOS];
+    filterSummaryLabel = info ? `Civ ${info.romanNumeral}` : gameFilter;
   }
 
   if (showWorldWonders && !showNaturalWonders) {
@@ -99,8 +111,6 @@ export const TopHUD: React.FC<TopHUDProps> = ({
     filterSummaryLabel += ' · Natural';
   } else if (!showWorldWonders && !showNaturalWonders) {
     filterSummaryLabel += ' · None';
-  } else if (gameFilter === 'all') {
-    filterSummaryLabel = 'All Wonders';
   }
 
   return (
@@ -114,25 +124,21 @@ export const TopHUD: React.FC<TopHUDProps> = ({
         />
         <div className="flex flex-col">
           <span className="font-wordmark text-[1.125rem] sm:text-[1.25rem] text-[var(--ks-champagne)] font-semibold tracking-[0.08em] leading-tight whitespace-nowrap">
-            {gameFilter === 'civ6'
-              ? 'CIVILIZATION VI ATLAS'
-              : gameFilter === 'civ5'
-              ? 'CIVILIZATION V ATLAS'
-              : 'CIVILIZATION ATLAS'}
+            {gameFilter === 'all'
+              ? 'CIVILIZATION ATLAS'
+              : `${(CIV_SERIES_LOGOS[gameFilter as keyof typeof CIV_SERIES_LOGOS]?.title || gameFilter).toUpperCase()} ATLAS`}
           </span>
           <span className="font-mono-eyebrow text-[9px] text-[var(--ks-text-muted)] tracking-[0.18em] leading-none">
-            {gameFilter === 'civ6'
-              ? 'Civ VI World & Natural Wonders'
-              : gameFilter === 'civ5'
-              ? 'Civ V Wonders & Natural Relics'
-              : 'Civ V & Civ VI World Wonders'}
+            {gameFilter === 'all'
+              ? 'All 7 Series Editions · World & Natural Wonders'
+              : `${CIV_SERIES_LOGOS[gameFilter as keyof typeof CIV_SERIES_LOGOS]?.title || 'Civilization'} Wonders & Relics`}
           </span>
         </div>
       </div>
 
       {/* Zone 2: Navigation & Streamlined Dropdown Filters */}
       <nav className="hidden lg:flex items-center gap-2">
-        {/* 1. Unified Filter Dropdown (Civ VI/V Series + World/Natural Category) */}
+        {/* 1. Unified Filter Dropdown (All 7 Series + World/Natural Category) */}
         <div className="relative" ref={filterMenuRef}>
           <button
             onClick={() => {
@@ -156,12 +162,12 @@ export const TopHUD: React.FC<TopHUDProps> = ({
 
           {isFilterMenuOpen && (
             <div className="absolute left-0 mt-1.5 w-68 rounded-xs bg-[var(--ks-raised-lacquer)] border border-[var(--ks-rule-strong)] shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-100 space-y-2.5">
-              {/* Section A: Game Edition */}
+              {/* Section A: Game Edition (All 7 Civilization Games) */}
               <div>
                 <div className="px-2 py-1 text-[9px] font-mono-eyebrow text-[var(--ks-text-muted)] uppercase tracking-wider">
                   Civilization Edition
                 </div>
-                <div className="space-y-0.5 mt-1">
+                <div className="space-y-0.5 mt-1 max-h-56 overflow-y-auto clean-scrollbar pr-0.5">
                   <button
                     onClick={() => {
                       onSelectGameFilter('all');
@@ -179,53 +185,44 @@ export const TopHUD: React.FC<TopHUDProps> = ({
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="font-mono text-[10px] text-[var(--ks-text-faint)]">
-                        ({civ5Count + civ6Count})
+                        ({totalCount})
                       </span>
                       {gameFilter === 'all' && <Check className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />}
                     </div>
                   </button>
 
-                  <button
-                    onClick={() => {
-                      onSelectGameFilter('civ6');
-                      setIsFilterMenuOpen(false);
-                    }}
-                    className={`w-full text-left px-2.5 py-1.5 rounded-xs text-xs transition-colors flex items-center justify-between ${
-                      gameFilter === 'civ6'
-                        ? 'bg-[var(--ks-graphite)] text-[var(--ks-champagne)] font-medium border-l-2 border-amber-500'
-                        : 'text-[var(--ks-text-warm)] hover:bg-[var(--ks-graphite)] hover:text-[var(--ks-champagne)]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                      <span>Civilization VI</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-mono text-[10px] text-[var(--ks-text-faint)]">({civ6Count})</span>
-                      {gameFilter === 'civ6' && <Check className="w-3.5 h-3.5 text-amber-500 shrink-0" />}
-                    </div>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      onSelectGameFilter('civ5');
-                      setIsFilterMenuOpen(false);
-                    }}
-                    className={`w-full text-left px-2.5 py-1.5 rounded-xs text-xs transition-colors flex items-center justify-between ${
-                      gameFilter === 'civ5'
-                        ? 'bg-[var(--ks-graphite)] text-[var(--ks-champagne)] font-medium border-l-2 border-[var(--ks-kinpaku)]'
-                        : 'text-[var(--ks-text-warm)] hover:bg-[var(--ks-graphite)] hover:text-[var(--ks-champagne)]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--ks-kinpaku)]" />
-                      <span>Civilization V</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-mono text-[10px] text-[var(--ks-text-faint)]">({civ5Count})</span>
-                      {gameFilter === 'civ5' && <Check className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />}
-                    </div>
-                  </button>
+                  {(['civ7', 'civ6', 'civ5', 'civ4', 'civ3', 'civ2', 'civ1'] as CivGame[]).map((g) => {
+                    const info = CIV_SERIES_LOGOS[g];
+                    const isSelected = gameFilter === g;
+                    const count = getGameCount(g);
+                    return (
+                      <button
+                        key={g}
+                        onClick={() => {
+                          onSelectGameFilter(g);
+                          setIsFilterMenuOpen(false);
+                        }}
+                        className={`w-full text-left px-2.5 py-1.5 rounded-xs text-xs transition-colors flex items-center justify-between ${
+                          isSelected
+                            ? 'bg-[var(--ks-graphite)] text-[var(--ks-champagne)] font-medium border-l-2 border-[var(--ks-kinpaku)]'
+                            : 'text-[var(--ks-text-warm)] hover:bg-[var(--ks-graphite)] hover:text-[var(--ks-champagne)]'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 font-mono text-[10px] font-bold text-[var(--ks-kinpaku)] text-center">
+                            {info.romanNumeral}
+                          </span>
+                          <span>{info.title}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono text-[10px] text-[var(--ks-text-faint)]">
+                            ({count})
+                          </span>
+                          {isSelected && <Check className="w-3.5 h-3.5 text-[var(--ks-kinpaku)] shrink-0" />}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

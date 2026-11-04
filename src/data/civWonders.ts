@@ -1145,9 +1145,9 @@ export const CIV5_WONDERS: CivWonder[] = BASE_CIV5_WONDERS.map((w) => {
   return {
     ...w,
     game: 'civ5',
-    iconUrl: w.iconUrl || fandom?.iconUrl || undefined,
-    visualUrl: w.visualUrl || fandom?.visualUrl || w.imageUrl,
-    imageUrl: w.imageUrl || fandom?.visualUrl || w.visualUrl
+    iconUrl: fandom?.iconUrl || (w.iconUrl && !w.iconUrl.includes('nocookie.net') ? w.iconUrl : undefined),
+    visualUrl: (w.visualUrl && !w.visualUrl.includes('nocookie.net') ? w.visualUrl : undefined) || fandom?.visualUrl || w.imageUrl,
+    imageUrl: (w.imageUrl && !w.imageUrl.includes('nocookie.net') ? w.imageUrl : undefined) || fandom?.visualUrl || w.visualUrl
   };
 });
 

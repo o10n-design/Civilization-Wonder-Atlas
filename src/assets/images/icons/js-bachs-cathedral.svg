@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1f262e" />
+      <stop offset="70%" stop-color="#101418" />
+      <stop offset="100%" stop-color="#0a0d10" />
+    </radialGradient>
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe89e" />
+      <stop offset="50%" stop-color="#f5be2c" />
+      <stop offset="100%" stop-color="#9a6e1a" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Background Disc -->
+  <circle cx="64" cy="64" r="62" fill="url(#bgGrad)" stroke="url(#goldRim)" stroke-width="3" />
+  <circle cx="64" cy="64" r="57" fill="none" stroke="#f5be2c" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6" />
+  <!-- Wonder Art -->
+  <g transform="translate(14, 14)">
+    
+    <!-- Gothic Cathedral Spires and Pipe Organ -->
+    <!-- Rose Window -->
+    <circle cx="50" cy="38" r="10" fill="#2a323c" stroke="#f5be2c" stroke-width="2"/>
+    <circle cx="50" cy="38" r="4" fill="#ffe89e"/>
+    <!-- Spires -->
+    <polygon points="26,50 34,14 42,50" fill="#2a323c" stroke="#f5be2c" stroke-width="2"/>
+    <polygon points="58,50 66,14 74,50" fill="#2a323c" stroke="#f5be2c" stroke-width="2"/>
+    <!-- Cross on spires -->
+    <line x1="34" y1="10" x2="34" y2="15" stroke="#ffe89e" stroke-width="2"/>
+    <line x1="31" y1="12" x2="37" y2="12" stroke="#ffe89e" stroke-width="2"/>
+    <line x1="66" y1="10" x2="66" y2="15" stroke="#ffe89e" stroke-width="2"/>
+    <line x1="63" y1="12" x2="69" y2="12" stroke="#ffe89e" stroke-width="2"/>
+    <!-- Pipe Organ Tubes in Facade -->
+    <rect x="44" y="52" width="2" height="24" fill="#ffe89e"/>
+    <rect x="47" y="48" width="2" height="28" fill="#ffe89e"/>
+    <rect x="51" y="48" width="2" height="28" fill="#ffe89e"/>
+    <rect x="54" y="52" width="2" height="24" fill="#ffe89e"/>
+    <!-- Musical Note -->
+    <path d="M78 60 L78 74 M78 60 C84 62 88 66 88 70" fill="none" stroke="#f5be2c" stroke-width="2"/>
+    <circle cx="75" cy="74" r="3" fill="#f5be2c"/>
+  
+  </g>
+</svg>

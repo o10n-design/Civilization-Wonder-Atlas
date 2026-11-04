@@ -1,4 +1,4 @@
-export type WonderType = 'world_wonder' | 'natural_wonder';
+export type WonderType = 'world_wonder' | 'natural_wonder' | 'national_wonder';
 
 export type CivEra =
   | 'Ancient'
@@ -9,6 +9,9 @@ export type CivEra =
   | 'Modern'
   | 'Atomic'
   | 'Information'
+  | 'Future'
+  | 'Antiquity'
+  | 'Exploration'
   | 'Timeless';
 
 export type YieldType =
@@ -42,8 +45,8 @@ export interface WonderYields {
   greatPersonPoints?: string;
 }
 
-export type CivGame = 'civ5' | 'civ6';
-export type GameFilter = 'all' | 'civ5' | 'civ6';
+export type CivGame = 'civ1' | 'civ2' | 'civ3' | 'civ4' | 'civ5' | 'civ6' | 'civ7';
+export type GameFilter = 'all' | CivGame;
 
 export interface CivWonder {
   id: string;

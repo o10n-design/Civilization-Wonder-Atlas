@@ -3,7 +3,8 @@ import { Search, ChevronLeft, X, SlidersHorizontal } from 'lucide-react';
 import { CivWonder, CivEra, GameFilter } from '../../types/wonder';
 import { YieldBadge } from '../Common/YieldBadge';
 import { getCountryFlag } from '../../utils/countryFlags';
-import { getCivSeriesLogo, getWonderTypeLogo } from '../../data/civSeriesLogos';
+import { getCivSeriesLogo, getWonderTypeLogo, CIV_SERIES_LOGOS } from '../../data/civSeriesLogos';
+import { getWonderAvatarUrl, getWonderAvatarFallback } from '../../utils/wonderAvatar';
 
 interface LeftPanelProps {
   wonders: CivWonder[];
@@ -32,16 +33,19 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
   const [yieldFilter, setYieldFilter] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Available Eras
+  // Available Eras across all 7 editions
   const eras: CivEra[] = [
+    'Antiquity',
     'Ancient',
     'Classical',
     'Medieval',
+    'Exploration',
     'Renaissance',
     'Industrial',
     'Modern',
     'Atomic',
-    'Information'
+    'Information',
+    'Future'
   ];
 
   // Filtered wonders
@@ -171,38 +175,37 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
               </button>
             </div>
 
-            {/* Game Filter Switcher Inside Catalog */}
-            <div className="mt-2.5 grid grid-cols-3 gap-1 bg-[var(--ks-graphite)] p-0.5 rounded-xs border border-[var(--ks-rule)] text-xs">
+            {/* Game Filter Switcher Inside Catalog: All 7 Civilization Games */}
+            <div className="mt-2.5 flex items-center gap-1 bg-[var(--ks-graphite)] p-1 rounded-xs border border-[var(--ks-rule)] text-xs overflow-x-auto no-scrollbar">
               <button
                 onClick={() => onSelectGameFilter('all')}
-                className={`py-1 text-[11px] font-medium rounded-xs transition-all ${
+                className={`px-2 py-1 text-[11px] font-medium rounded-xs transition-all shrink-0 ${
                   gameFilter === 'all'
                     ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-champagne)] shadow-xs font-semibold'
                     : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
                 }`}
+                title="All 7 Civilization Games"
               >
                 All Series
               </button>
-              <button
-                onClick={() => onSelectGameFilter('civ6')}
-                className={`py-1 text-[11px] font-medium rounded-xs transition-all ${
-                  gameFilter === 'civ6'
-                    ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-kinpaku)] shadow-xs font-semibold'
-                    : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
-                }`}
-              >
-                Civ VI
-              </button>
-              <button
-                onClick={() => onSelectGameFilter('civ5')}
-                className={`py-1 text-[11px] font-medium rounded-xs transition-all ${
-                  gameFilter === 'civ5'
-                    ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-kinpaku)] shadow-xs font-semibold'
-                    : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)]'
-                }`}
-              >
-                Civ V
-              </button>
+              {(['civ7', 'civ6', 'civ5', 'civ4', 'civ3', 'civ2', 'civ1'] as GameFilter[]).map((g) => {
+                const info = CIV_SERIES_LOGOS[g as keyof typeof CIV_SERIES_LOGOS];
+                const isActive = gameFilter === g;
+                return (
+                  <button
+                    key={g}
+                    onClick={() => onSelectGameFilter(g)}
+                    className={`px-2 py-1 text-[11px] font-mono font-medium rounded-xs transition-all shrink-0 ${
+                      isActive
+                        ? 'bg-[var(--ks-graphite-pill)] text-[var(--ks-kinpaku)] shadow-xs font-bold'
+                        : 'text-[var(--ks-text-muted)] hover:text-[var(--ks-champagne)] hover:bg-[var(--ks-graphite-2)]'
+                    }`}
+                    title={info?.title || g}
+                  >
+                    {info?.romanNumeral || g.replace('civ', '')}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Impeccable Input Field */}
@@ -386,8 +389,8 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                             {gameIconUrl && (
                               <img
                                 src={gameIconUrl}
-                                alt={isCiv6 ? 'Civilization VI' : 'Civilization V'}
-                                title={isCiv6 ? 'Civilization VI' : 'Civilization V'}
+                                alt={CIV_SERIES_LOGOS[wonder.game || 'civ5']?.title || 'Civilization'}
+                                title={CIV_SERIES_LOGOS[wonder.game || 'civ5']?.title || 'Civilization'}
                                 className="wonder-title-icon w-[18px] h-[18px] object-contain shrink-0"
                                 onError={(e) => {
                                   (e.target as HTMLElement).style.display = 'none';
@@ -402,11 +405,11 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                           <span className="shrink-0 text-xs leading-none" title={wonder.location.modernCountry}>
                             {getCountryFlag(wonder.location.modernCountry)}
                           </span>
-                          <span className="truncate">{wonder.location.modernCountry}</span>
+                          <span>{wonder.location.modernCountry}</span>
                           {wonder.era && wonder.era !== 'Timeless' && (
                             <>
                               <span className="text-[var(--ks-rule)]">·</span>
-                              <span className="font-mono text-[9.5px] text-[var(--ks-text-faint)] truncate">
+                              <span className="font-mono text-[9.5px] text-[var(--ks-text-faint)]">
                                 {wonder.era}
                               </span>
                             </>
@@ -414,38 +417,43 @@ export const LeftPanel: React.FC<LeftPanelProps> = ({
                         </div>
 
                         {(wonder.civicRequirement || wonder.techRequirement) && (
-                          <div className="mt-1 font-mono text-[9px] text-[var(--ks-text-faint)] truncate">
+                          <div className="mt-1 font-mono text-[9px] text-[var(--ks-text-faint)]">
                             {wonder.civicRequirement ? `Civic: ${wonder.civicRequirement}` : `Tech: ${wonder.techRequirement}`}
                           </div>
                         )}
                       </div>
 
-                      {/* Wonder Icon Thumbnail - Increased Dimension (48px / w-12 h-12) */}
-                      {wonder.iconUrl ? (
-                        <div className="relative w-12 h-12 shrink-0 self-center">
-                          <img
-                            src={wonder.iconUrl}
-                            alt={wonder.name}
-                            referrerPolicy="no-referrer"
-                            className="w-12 h-12 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5 shadow-sm transition-transform hover:scale-105"
-                            onError={(e) => {
-                              const target = e.target as HTMLElement;
-                              target.onerror = null;
-                              target.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 self-center border ${
-                            isWorld
-                              ? 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-strong)] text-[var(--ks-kinpaku)]'
-                              : 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-patina)] text-[var(--ks-patina)]'
-                          }`}
-                        >
-                          <span className="text-[11px] font-mono font-bold">{isWorld ? 'WW' : 'NW'}</span>
-                        </div>
-                      )}
+                      {/* Wonder Icon Thumbnail - 48px / w-12 h-12 with guaranteed resolution */}
+                      {(() => {
+                        const avatarUrl = getWonderAvatarUrl(wonder);
+                        const fallbackUrl = getWonderAvatarFallback(wonder);
+                        return avatarUrl ? (
+                          <div className="relative w-12 h-12 shrink-0 self-center">
+                            <img
+                              src={avatarUrl}
+                              alt={wonder.name}
+                              referrerPolicy="no-referrer"
+                              className="w-12 h-12 rounded-full object-cover border border-[var(--ks-rule)] bg-[var(--ks-lacquer-deep)] p-0.5 shadow-sm transition-transform hover:scale-105"
+                              onError={(e) => {
+                                const img = e.currentTarget as HTMLImageElement;
+                                if (img.src !== fallbackUrl) {
+                                  img.src = fallbackUrl;
+                                }
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 self-center border ${
+                              isWorld
+                                ? 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-strong)] text-[var(--ks-kinpaku)]'
+                                : 'bg-[var(--ks-lacquer-deep)] border-[var(--ks-rule-patina)] text-[var(--ks-patina)]'
+                            }`}
+                          >
+                            <span className="text-[11px] font-mono font-bold">{isWorld ? 'WW' : 'NW'}</span>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     {/* Quick Yield Badges preview */}
